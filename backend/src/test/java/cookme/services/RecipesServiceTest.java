@@ -8,5 +8,6 @@ class RecipesServiceTest {
 
     @Test
     void getAllRecipes() {
+
     }
 }

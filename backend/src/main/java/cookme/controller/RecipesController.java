@@ -14,22 +14,22 @@ public class RecipesController {
 
     @GetMapping()
     public List<Recipes> getAll(){
-      return recipesService.getAllRecipes();
+      return recipesService.findAllRecipes();
     }
     @GetMapping("/{id}")
     public Recipes getRecipe(@PathVariable String id){
-        return recipesService.getRecipesById(id);
+        return recipesService.findRecipesById(id);
     }
 
     @PostMapping()
     public Recipes addRecipe(@RequestBody RecipesModelDto recipe){
         Recipes newRecipe=new Recipes(null,recipe.name(),recipe.description(),recipe.time(),
                 recipe.imageUrl(),recipe.preparation(),recipe.status(),recipe.ingredients());
-        return recipesService.saveRecipes(newRecipe);
+        return recipesService.addRecipes(newRecipe);
     }
     @PutMapping("/update/{id}")
     public Recipes updateRecipe(@PathVariable String id, @RequestBody RecipesModelDto recipe){
-        return recipesService.updateRecipe(id,recipe);
+        return recipesService.editRecipe(id,recipe);
     }
     @DeleteMapping("/{id}")
     public void deleteRecipe(@PathVariable String id){

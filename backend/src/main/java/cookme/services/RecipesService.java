@@ -12,19 +12,19 @@ import java.util.*;
 @RequiredArgsConstructor
 public class RecipesService {
     private final RecipesRepo recipesRepo;
-    public List<Recipes> getAllRecipes(){
+    public List<Recipes> findAllRecipes(){
         return recipesRepo.findAll();
     }
-    public Recipes getRecipesById(String id){
+    public Recipes findRecipesById(String id){
         return recipesRepo.findById(id).orElseThrow(()->new NoSuchElementException("No Recipes found with this id"));
     }
-    public Recipes saveRecipes(Recipes recipe){
+    public Recipes addRecipes(Recipes recipe){
      String id = UUID.randomUUID().toString();
      Recipes savedRecipe = new Recipes(id, recipe.name(),recipe.description(),recipe.time()
                                       ,recipe.imageUrl(),recipe.preparation(),recipe.status(),recipe.ingredients());
         return recipesRepo.save(savedRecipe);
     }
-    public Recipes updateRecipe(String id, RecipesModelDto recipe){
+    public Recipes editRecipe(String id, RecipesModelDto recipe){
         Optional<Recipes> find= recipesRepo.findById(id);
         if(find.isPresent()){
             Recipes updatedRecipe= new Recipes(id,
