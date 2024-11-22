@@ -12,22 +12,25 @@ import java.util.*;
 @RequiredArgsConstructor
 public class RecipesService {
     private final RecipesRepo recipesRepo;
-    public List<Recipes> findAllRecipes(){
+
+    public List<Recipes> findAllRecipes() {
         return recipesRepo.findAll();
     }
-    public Recipes findRecipesById(String id){
-        return recipesRepo.findById(id).orElseThrow(()->new NoSuchElementException("No Recipes found with this id"));
+
+    public Recipes findRecipesById(String id) {
+        return recipesRepo.findById(id).orElseThrow(() -> new NoSuchElementException("No Recipes found with this id"));
     }
-    public Recipes addRecipes(Recipes recipe){
-     String id = UUID.randomUUID().toString();
-     Recipes savedRecipe = new Recipes(id, recipe.name(),recipe.description(),recipe.time()
-                                      ,recipe.imageUrl(),recipe.preparation(),recipe.status(),recipe.ingredients());
-        return recipesRepo.save(savedRecipe);
+
+    public Recipes addRecipes(Recipes recipe) {
+        String id = UUID.randomUUID().toString();
+        Recipes newRecipe = recipe.withId(id);
+        return recipesRepo.save(newRecipe);
     }
-    public Recipes editRecipe(String id, RecipesModelDto recipe){
-        Optional<Recipes> find= recipesRepo.findById(id);
-        if(find.isPresent()){
-            Recipes updatedRecipe= new Recipes(id,
+
+    public Recipes editRecipe(String id, RecipesModelDto recipe) {
+        Optional<Recipes> find = recipesRepo.findById(id);
+        if (find.isPresent()) {
+            Recipes updatedRecipe = new Recipes(id,
                     recipe.name(),
                     recipe.description(),
                     recipe.time(),
