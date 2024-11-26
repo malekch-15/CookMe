@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 
 @RestController
@@ -36,13 +37,12 @@ public class RecipesController {
     public Recipes updateRecipe(@PathVariable String id, @RequestBody RecipesModelDto recipe) {
         return recipesService.editRecipe(id, recipe);
     }
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+
     @DeleteMapping("/{id}")
     public void deleteRecipeWithId(@PathVariable String id) {
-        Recipes recipe = recipesService.findRecipesById(id);
-        if (recipe != null) {
-            recipesService.deleteRecipe(id);
-        }else throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+    recipesService.findRecipesById(id);
+    recipesService.deleteRecipe(id);
+
     }
 
 

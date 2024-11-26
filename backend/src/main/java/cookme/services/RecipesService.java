@@ -18,7 +18,7 @@ public class RecipesService {
     }
 
     public Recipes findRecipesById(String id) {
-        return recipesRepo.findById(id).orElseThrow(() -> new NoSuchElementException("No Recipes found with this id"));
+        return recipesRepo.findById(id).orElseThrow(() -> new NoSuchElementException("No Recipes found with this "+id));
     }
 
     public Recipes addRecipes(Recipes recipe) {
@@ -42,7 +42,6 @@ public class RecipesService {
         }else throw new NoSuchElementException("No Recipes found with this id");
     }
     public void deleteRecipe(String id){
-
        recipesRepo.deleteById(id);
     }
 
