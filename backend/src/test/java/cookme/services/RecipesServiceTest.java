@@ -28,7 +28,7 @@ class RecipesServiceTest {
     List<Recipes> recipes = List.of(recipe1, recipe2);
 
     @Test
-    void getAllRecipes() {
+    void getAllRecipes_return2Recipe_when2RecipeSaved() {
 
         when(mockrecipesRepo.findAll()).thenReturn(recipes);
 
@@ -39,7 +39,7 @@ class RecipesServiceTest {
     }
 
     @Test
-    void getRecipeById() {
+    void getRecipeById_returnRecipeWithId2_whenRecipeWithId2Saved() {
         when(mockrecipesRepo.findById("2")).thenReturn(Optional.of(recipe2));
 
         Recipes actual = recipesService.findRecipesById("2");
@@ -49,7 +49,7 @@ class RecipesServiceTest {
     }
 
     @Test
-    void addRecipe() {
+    void addRecipe_returnTheGivenRecipe_whenRecipeSaved() {
         Recipes addRecipe = new Recipes(null, "a", "a", 12, "a",
                 "a", Favorite.FAVORITE, List.of("a", "b", "c"));
         Recipes expectedRecipe = addRecipe.withId("3");
@@ -61,7 +61,7 @@ class RecipesServiceTest {
     }
 
     @Test
-    void updateRecipe() {
+    void updateRecipe_returnUpdatedRecipe_whenRecipeSaved() {
         //GIVEN
         String id = "3";
         Recipes existRecipe = new Recipes("3", "a", "a", 12, "a", "a"
@@ -89,7 +89,7 @@ class RecipesServiceTest {
     }
 
     @Test
-    void deleteRecipe() {
+    void deleteRecipe_shouldDeleteRecipeWithValidId() {
         String id = "2";
         when(mockrecipesRepo.findById(id)).thenReturn(Optional.of(recipe2));
        recipesService.deleteRecipe(id);

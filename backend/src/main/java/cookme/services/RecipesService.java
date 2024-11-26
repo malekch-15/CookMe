@@ -42,6 +42,7 @@ public class RecipesService {
         }else throw new NoSuchElementException("No Recipes found with this id");
     }
     public void deleteRecipe(String id){
+
        recipesRepo.deleteById(id);
     }
 

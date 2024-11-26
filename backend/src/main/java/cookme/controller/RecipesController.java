@@ -4,12 +4,15 @@ import cookme.recipesmodel.Recipes;
 import cookme.recipesmodel.RecipesModelDto;
 import cookme.services.RecipesService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
+
 @RestController
-@RequestMapping("api/cookme")
+@RequestMapping("/api/cookMe")
 @RequiredArgsConstructor
 public class RecipesController {
     private final RecipesService recipesService;
@@ -20,10 +23,10 @@ public class RecipesController {
     }
 
     @GetMapping("/{id}")
-    public Recipes getRecipe(@PathVariable String id) {
+    public Recipes getRecipeWithId(@PathVariable String id) {
         return recipesService.findRecipesById(id);
     }
-
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping()
     public Recipes addRecipe(@RequestBody Recipes recipe) {
         return recipesService.addRecipes(recipe);
@@ -33,9 +36,16 @@ public class RecipesController {
     public Recipes updateRecipe(@PathVariable String id, @RequestBody RecipesModelDto recipe) {
         return recipesService.editRecipe(id, recipe);
     }
-
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
-    public void deleteRecipe(@PathVariable String id) {
-        recipesService.deleteRecipe(id);
+    public void deleteRecipeWithId(@PathVariable String id) {
+        Recipes recipe = recipesService.findRecipesById(id);
+        if (recipe != null) {
+            recipesService.deleteRecipe(id);
+        }else throw new ResponseStatusException(HttpStatus.NOT_FOUND);
     }
+
+
+
+
 }
