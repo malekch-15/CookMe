@@ -24,6 +24,7 @@ public class RecipesController {
     public Recipes getRecipeWithId(@PathVariable String id) {
         return recipesService.findRecipesById(id);
     }
+
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping()
     public Recipes addRecipe(@RequestBody Recipes recipe) {
