@@ -6,11 +6,8 @@ import cookme.services.RecipesService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.NoSuchElementException;
-
 
 @RestController
 @RequestMapping("/api/cookMe")
@@ -42,7 +39,6 @@ public class RecipesController {
     public void deleteRecipeWithId(@PathVariable String id) {
     recipesService.findRecipesById(id);
     recipesService.deleteRecipe(id);
-
     }
 
 

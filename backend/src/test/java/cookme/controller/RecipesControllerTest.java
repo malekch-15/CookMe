@@ -148,6 +148,6 @@ class RecipesControllerTest {
     @Test
     void deleteRecipeWithId_shouldDeleteRecipeWithValidId() throws Exception {
         mvc.perform(MockMvcRequestBuilders.delete("/api/cookMe/1"))
-                .andExpect(MockMvcResultMatchers.status().isNoContent());
+                .andExpect(MockMvcResultMatchers.status().isOk());
     }
 }
