@@ -34,7 +34,8 @@
 
 .details-ingredients,
 .details-preparation {
-    margin-bottom: 20px;
+    display: grid;
+    justify-items: center;
 }
 
 .details-ingredients ul {
@@ -63,3 +64,7 @@
 .details-button:hover {
     background-color: #0056b3;
 }
+.details{
+    display: grid;
+    justify-items: center;
+ }
