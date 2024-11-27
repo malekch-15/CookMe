@@ -3,12 +3,15 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 import {Recipe} from "./Model/Recipe.ts";
 import Home from "./Home.tsx";
+import {Route, Routes} from "react-router-dom";
+import Details from "./Details/Details.tsx";
 
 
 
 
 function App() {
     const [recipe, setRecipe] = useState<Recipe[]>([]);
+
 
     const fetchRecipe = () => {
         axios.get("/api/cookMe")
@@ -34,8 +37,10 @@ function App() {
     return (
         <>
             <div>
-                <h1>Recipe</h1>
-              <Home recipe={recipe} onDelete={handelDelete}/>
+                <Routes>
+                    <Route path={"/"} element={ <Home recipe={recipe} onDelete={handelDelete}/>}/>
+                    <Route path={"/details/:id"} element={<Details/>}/>
+                </Routes>
             </div>
         </>
     )

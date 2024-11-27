@@ -12,7 +12,7 @@ export default function Home(props:HomeProps){
     return(
        <div>
            {props.recipe.map((r)=>(<RecipeCard key={r.id} Recipe={r}
-                                               onDelete={props.onDelete} showDeleteButton={true}/>))}
+                                               onDelete={props.onDelete}  showDeleteButton={true}/>))}
        </div>
     )
 }
