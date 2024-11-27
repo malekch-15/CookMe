@@ -4,6 +4,9 @@ import axios from "axios";
 import {Recipe} from "./Model/Recipe.ts";
 import Home from "./Home.tsx";
 
+
+
+
 function App() {
     const [recipe, setRecipe] = useState<Recipe[]>([]);
 
@@ -17,11 +20,22 @@ function App() {
             })
     };
     useEffect(fetchRecipe, [])
+    const handelDelete=(id:string)=>{
+        axios.delete(`api/cookMe/${id}`)
+            .then(()=>{
+               setRecipe(prevState => prevState.filter(recipe=>recipe.id!==id))
+            })
+            .catch(error=>{
+                console.error(error)
+            })
+
+    }
+
     return (
         <>
             <div>
                 <h1>Recipe</h1>
-              <Home recipe={recipe}/>
+              <Home recipe={recipe} onDelete={handelDelete}/>
             </div>
         </>
     )

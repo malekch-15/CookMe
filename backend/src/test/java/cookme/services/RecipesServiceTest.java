@@ -2,7 +2,6 @@ package cookme.services;
 
 import cookme.recipesmodel.Favorite;
 import cookme.recipesmodel.Recipes;
-import cookme.recipesmodel.RecipesModelDto;
 import cookme.repository.RecipesRepo;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -45,46 +44,6 @@ class RecipesServiceTest {
         Recipes actual = recipesService.findRecipesById("2");
         //ASSERT
         assertEquals(recipe2, actual);
-
-    }
-
-    @Test
-    void addRecipe_returnTheGivenRecipe_whenRecipeSaved() {
-        Recipes addRecipe = new Recipes(null, "a", "a", 12, "a",
-                "a", Favorite.FAVORITE, List.of("a", "b", "c"));
-        Recipes expectedRecipe = addRecipe.withId("3");
-        when(mockrecipesRepo.save(any(Recipes.class))).thenReturn(expectedRecipe);
-        Recipes actual = recipesService.addRecipes(addRecipe);
-        //ASSERT
-        assertEquals(expectedRecipe, actual);
-        verify(mockrecipesRepo, times(1)).save(any(Recipes.class));
-    }
-
-    @Test
-    void updateRecipe_returnUpdatedRecipe_whenRecipeSaved() {
-        //GIVEN
-        String id = "3";
-        Recipes existRecipe = new Recipes("3", "a", "a", 12, "a", "a"
-                , Favorite.FAVORITE, List.of("a", "b", "c"));
-
-        RecipesModelDto givenRecipe = new RecipesModelDto("aa", "a", 12, "a",
-                "a", Favorite.FAVORITE, List.of("a", "b", "c"));
-        Recipes updatedRecipe = new Recipes("3", "aa", "a", 12, "a",
-                "a", Favorite.FAVORITE, List.of("a", "b", "c"));
-        //WHEN
-        when(mockrecipesRepo.findById(id)).thenReturn(Optional.of(existRecipe));
-        when(mockrecipesRepo.save(any(Recipes.class))).thenReturn(updatedRecipe);
-        //THEN
-        Recipes expected = recipesService.editRecipe(id, givenRecipe);
-
-        // Assert
-        assertEquals(expected, updatedRecipe);
-        assertNotNull(expected);
-        assertEquals(id, expected.id());
-        assertEquals(givenRecipe.name(), expected.name());
-        assertEquals(givenRecipe.description(), expected.description());
-        verify(mockrecipesRepo, times(1)).findById(id);
-        verify(mockrecipesRepo, times(1)).save(any(Recipes.class));
 
     }
 

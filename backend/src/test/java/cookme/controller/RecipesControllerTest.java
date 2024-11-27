@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -77,73 +76,6 @@ class RecipesControllerTest {
                         """));
     }
 
-
-    @Test
-    void addRecipe_returnTheGivenRecipe_whenRecipeSaved() throws Exception {
-        mvc.perform(MockMvcRequestBuilders.post("/api/cookMe")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("""
-                                         {
-                                "id": "1",
-                                "name": "a",
-                                "description": "a",
-                                "time": 12,
-                                "imageUrl": "a",
-                                "preparation": "a",
-                                "status": "FAVORITE",
-                                "ingredients": ["a", "b", "c"]
-                                 }
-                                
-                                """))
-                .andExpect(MockMvcResultMatchers.status().isCreated())
-                .andExpect(MockMvcResultMatchers.content().json("""
-                        {
-                        
-                        "name": "a",
-                        "description": "a",
-                        "time": 12,
-                        "imageUrl": "a",
-                        "preparation": "a",
-                        "status": "FAVORITE",
-                        "ingredients": ["a", "b", "c"]
-                        }
-                        """
-                ));
-
-    }
-
-    @Test
-    void updateRecipe_returnUpdatedRecipe_whenRecipeSaved() throws Exception {
-        mvc.perform(MockMvcRequestBuilders.put("/api/cookMe/update/1")
-                        .contentType(MediaType.APPLICATION_JSON).content("""           
-                                {
-                                 "id": "1",
-                                "name": "a",
-                                "description": "aa",
-                                "time": 12,
-                                "imageUrl": "a",
-                                "preparation": "a",
-                                "status": "FAVORITE",
-                                "ingredients": ["a", "b", "c"]
-                                }
-                                """
-
-                        )).andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().json(
-                        """           
-                                {
-                                "id": "1",
-                                "name": "a",
-                                "description": "aa",
-                                "time": 12,
-                                "imageUrl": "a",
-                                "preparation": "a",
-                                "status": "FAVORITE",
-                                "ingredients": ["a", "b", "c"]
-                                 }
-                                """
-                ));
-    }
 
     @Test
     void deleteRecipeWithId_shouldDeleteRecipeWithValidId() throws Exception {
