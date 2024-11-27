@@ -1,42 +1,140 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+/* General Reset */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f8f8f8;
+}
+
+/* Gallery Container */
+.gallery-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* Creates 4 equal columns */
+  gap: 20px; /* Gap between cards */
+  padding: 20px;
+  justify-items: center; /* Centers the cards horizontally within the grid */
+}
+
+/* Recipe Card */
+.recipe-card {
+  position: relative;
+  width: 100%;
+  max-width: 300px; /* Adjust the max-width if needed */
+  margin: 0;
+  padding: 15px;
+  background-color: #fff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
   text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+/* Add Button */
+.add-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+  font-weight: bold;
+  color: #ffffff;
+  border: none;
+  background: none;
+  cursor: pointer;
+  outline: none;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+.add-button:hover {
+  color: #000;
+  transform: scale(1.1);
+}
+
+.add-button:active {
+  transform: scale(1);
+  color: #555;
+}
+
+/* Header Section */
+.recipe-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+.recipe-name {
+  font-size: 20px;
+  font-weight: bold;
+  margin: 0;
+  color: #333;
+}
+
+.recipe-image {
+  width: 100%;
+  height: auto;
+  max-width: 200px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+/* Description and Time */
+.recipe-description {
+  font-size: 14px;
+  color: #666;
+  margin: 10px 0 5px;
+}
+
+.recipe-time {
+  font-size: 14px;
+  color: #999;
+  margin: 5px 0 15px;
+}
+
+/* Action Buttons */
+.recipe-actions {
+  display: flex;
+  justify-content: space-between;
+}
+
+.delete-button, .show-more-button {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.delete-button {
+  background-color: #b3e8a3;
+  color: #150000;
+}
+
+.delete-button:hover {
+  background-color: #d32f2f;
+}
+
+.show-more-button {
+  background-color: #b3e8a3;
+  color: #150000;
+}
+
+.show-more-button:hover {
+  background-color: #1976d2;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .gallery-container {
+    grid-template-columns: repeat(3, 1fr); /* 3 cards per row on medium screens */
   }
-  to {
-    transform: rotate(360deg);
+}
+
+@media (max-width: 900px) {
+  .gallery-container {
+    grid-template-columns: repeat(2, 1fr); /* 2 cards per row on smaller screens */
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+@media (max-width: 600px) {
+  .gallery-container {
+    grid-template-columns: 1fr; /* 1 card per row on small screens */
   }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
 }

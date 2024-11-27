@@ -1,0 +1,27 @@
+/* Gallery Container - Displaying Recipe Cards in a Grid */
+.gallery-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);  /* 4 cards per row */
+    gap: 20px;  /* Space between cards */
+    padding: 20px;
+    justify-items: center;  /* Center the cards horizontally */
+}
+
+/* Responsive Design - Adjust Grid Layout on Smaller Screens */
+@media (max-width: 1200px) {
+    .gallery-container {
+        grid-template-columns: repeat(3, 1fr);  /* 3 cards per row */
+    }
+}
+
+@media (max-width: 900px) {
+    .gallery-container {
+        grid-template-columns: repeat(2, 1fr);  /* 2 cards per row */
+    }
+}
+
+@media (max-width: 600px) {
+    .gallery-container {
+        grid-template-columns: 1fr;  /* 1 card per row */
+    }
+}

@@ -22,7 +22,7 @@ export default function Details() {
         return <div className="loading">loading....</div>
     }
     return (
-        <div className="details-container">
+        <div>
             {recipe.imageUrl ? (
                 <img
                     src={recipe.imageUrl}

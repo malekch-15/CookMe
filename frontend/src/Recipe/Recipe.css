@@ -8,13 +8,15 @@ body {
 /* Recipe Card Container */
 .recipe-card {
     position: relative;
-    width: 200px;
+    width: 100%;
+    max-width: 300px;
     margin: 20px auto;
     padding: 15px;
     background-color: #fff;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     overflow: hidden;
+    text-align: center;
 }
 
 /* Add Button */
@@ -24,22 +26,27 @@ body {
     right: 10px;
     font-size: 24px;
     font-weight: bold;
-    color: #ffffff; /* Adjust color as needed */
+    color: #ffffff;
     border: none;
     background: none;
     cursor: pointer;
-    outline: none; /* Remove focus outline */
+    outline: none;
 }
 
 .add-button:hover {
-    color: #000; /* Darker color on hover */
-    transform: scale(1.1); /* Slight scaling effect */
+    color: #000;
+    transform: scale(1.1);
 }
 
 .add-button:active {
-    transform: scale(1); /* Reset scaling on click */
-    color: #555; /* Slightly lighter on click */
+    transform: scale(1);
+    color: #555;
 }
+
+.add-button:focus {
+    outline: 2px solid #1976d2; /* Outline on focus */
+}
+
 /* Header Section */
 .recipe-header {
     display: flex;
@@ -56,11 +63,11 @@ body {
 }
 
 .recipe-image {
-    width: 200px;
+
     height: 300px;
+    max-width: 300px;
     border-radius: 10px;
     object-fit: cover;
-
 }
 
 /* Description and Time */
@@ -107,6 +114,8 @@ body {
 .show-more-button:hover {
     background-color: #1976d2;
 }
+
+/* Popup Overlay */
 .popup-overlay {
     position: fixed;
     top: 0;
@@ -126,7 +135,8 @@ body {
     padding: 20px;
     border-radius: 8px;
     text-align: center;
-    width: 300px;
+    width: 90%;
+    max-width: 300px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 

@@ -20,7 +20,7 @@ export default function RecipeCard(props: RecipeCardProps) {
     };
 
     const handleConfirmDelete = () => {
-        props.onDelete(props.Recipe.id); // Perform delete
+        props.onDelete(props.Recipe.id);
         setShowPopup(false);
 
     };
