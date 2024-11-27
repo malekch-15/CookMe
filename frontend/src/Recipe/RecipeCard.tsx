@@ -10,7 +10,7 @@ export default function RecipeCard({Recipe}:RecipeCardProps){
         <div className="recipe-card">
             <button className="add-button">+</button>
             <div className="recipe-header">
-                <img className="recipe-image" src={"/src/assets/spagetti.jpg"}/>
+                <img className="recipe-image" src={Recipe.imageUrl}/>
             </div>
             <h2 className="recipe-name">{Recipe.name}</h2>
             <p className="recipe-description">{Recipe.description}</p>
