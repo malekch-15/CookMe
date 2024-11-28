@@ -22,11 +22,11 @@ export default function Home(props:HomeProps){
     };
     return(
 
-        <div className="gallery-container">
+        <div>
             <div>
                 <Searchbar onSearch={handleSearch}/>
             </div>
-            <div className="recipe-grid">
+            <div className="gallery-container">
                 {filteredRecipes.length === 0 ? (
                     <p>No recipes found for your search.</p>
                 ) : (
