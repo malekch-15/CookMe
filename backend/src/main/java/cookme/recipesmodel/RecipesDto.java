@@ -7,6 +7,6 @@ public record RecipesDto(String name,
                          Integer time,
                          String imageUrl,
                          String preparation,
-                         Favorite status,
+                         Status status,
                          List<String> ingredients) {
 }
