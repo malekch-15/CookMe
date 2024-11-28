@@ -1,7 +1,7 @@
 package cookme.controller;
 
-import cookme.recipesmodel.Favorite;
 import cookme.recipesmodel.Recipes;
+import cookme.recipesmodel.Status;
 import cookme.repository.RecipesRepo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,7 +28,7 @@ class RecipesControllerTest {
         recipesRepo.deleteAll();
 
         Recipes recipe1 = new Recipes("1", "a", "a", 12, "a",
-                "a", Favorite.FAVORITE, List.of("a", "b", "c"));
+                "a", Status.FAVORITE, List.of("a", "b", "c"));
 
         recipesRepo.save(recipe1);
     }

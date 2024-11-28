@@ -1,6 +1,6 @@
 package cookme.recipesmodel;
 
-public enum Favorite {
+public enum Status {
     FAVORITE,
     NOT_FAVORITE
 }

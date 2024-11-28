@@ -1,0 +1,37 @@
+/* Search Bar Container */
+.search-bar-container {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+/* Search Input Field */
+.search-bar-container input[type="text"] {
+    width: 80%;
+    max-width: 600px;
+    padding: 12px 20px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 25px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+/* Focus Effect */
+.search-bar-container input[type="text"]:focus {
+    border-color: #183eff; /* Green border on focus */
+    box-shadow: 0 0 8px rgb(68, 97, 248);
+}
+
+/* Placeholder Styling */
+.search-bar-container input[type="text"]::placeholder {
+    color: #999;
+    font-style: italic;
+}
+
+/* Optional: Add a search icon inside the input */
+.search-bar-container input[type="text"]::before {
+    content: '🔍'; /* Unicode for search icon */
+    margin-right: 10px;
+    color: #ccc;
+}

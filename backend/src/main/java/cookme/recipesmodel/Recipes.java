@@ -10,6 +10,6 @@ public record Recipes(@With String id,
                       double time,
                       String imageUrl,
                       String preparation,
-                      Favorite status,
+                      Status status,
                       List<String> ingredients) {
 }

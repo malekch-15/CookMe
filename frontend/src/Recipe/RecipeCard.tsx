@@ -38,7 +38,7 @@ export default function RecipeCard(props: RecipeCardProps) {
             </div>
             <h2 className="recipe-name">{props.Recipe.name}</h2>
             <p className="recipe-description">{props.Recipe.description}</p>
-            <p className="recipe-time">{props.Recipe.time}</p>
+            <p className="recipe-time">{props.Recipe.time}min</p>
             <div className="recipe-actions">
                 {props.showDeleteButton && (<button className="delete-button" onClick={handleDeleteClick}
                                                     disabled={!props.onDelete}>Delete</button>)}
