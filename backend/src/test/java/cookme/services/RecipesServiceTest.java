@@ -1,6 +1,7 @@
 package cookme.services;
 
 import cookme.recipesmodel.Recipes;
+import cookme.recipesmodel.RecipesDto;
 import cookme.recipesmodel.Status;
 import cookme.repository.RecipesRepo;
 import org.junit.jupiter.api.Test;
@@ -44,6 +45,20 @@ class RecipesServiceTest {
         Recipes actual = recipesService.findRecipesById("2");
         //ASSERT
         assertEquals(recipe2, actual);
+
+    }
+    @Test
+    void postRecipe_returnRecipeWithId2_whenRecipeWithId2Saved() {
+        RecipesDto newRecipe=new RecipesDto( "a", "a", 12, "a",
+                "a", Status.FAVORITE, List.of("a", "b", "c"));
+        when(mockrecipesRepo.save(any(Recipes.class))).thenReturn(recipe2);
+        Recipes actual =recipesService.saveRecipes(newRecipe);
+        assertEquals(recipe2, actual);
+        assertEquals(recipe2.description(),actual.description());
+        assertEquals(recipe2.status(),actual.status());
+        assertEquals(recipe2.id(),actual.id());
+        assertEquals(recipe2.name(),actual.name());
+        assertEquals(recipe2.ingredients(),actual.ingredients());
 
     }
 

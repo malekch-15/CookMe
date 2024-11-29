@@ -8,10 +8,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.awt.*;
 import java.util.List;
 
 
@@ -74,6 +76,39 @@ class RecipesControllerTest {
                          }
                         
                         """));
+    }
+    @Test
+    void postRecipeWithId_returnRecipeWithId2_whenRecipeWithId2Saved() throws Exception {
+        mvc.perform(MockMvcRequestBuilders.post("/api/cookMe/add")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("""
+                                 {
+                        "name": "a",
+                        "description": "a",
+                        "time": 12,
+                        "imageUrl": "a",
+                        "preparation": "a",
+                        "status": "FAVORITE",
+                        "ingredients": ["a", "b", "c"]
+                         }
+                        
+                        """)
+        ).andExpect(MockMvcResultMatchers.status().isCreated())
+                .andExpect(MockMvcResultMatchers.content().json("""
+                                 {
+                        "id": "1",
+                        "name": "a",
+                        "description": "a",
+                        "time": 12,
+                        "imageUrl": "a",
+                        "preparation": "a",
+                        "status": "FAVORITE",
+                        "ingredients": ["a", "b", "c"]
+                         }
+                        
+                        """)
+                );
+
     }
 
 
