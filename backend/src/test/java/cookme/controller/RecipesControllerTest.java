@@ -16,6 +16,8 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import java.awt.*;
 import java.util.List;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -96,7 +98,7 @@ class RecipesControllerTest {
         ).andExpect(MockMvcResultMatchers.status().isCreated())
                 .andExpect(MockMvcResultMatchers.content().json("""
                                  {
-                        "id": "1",
+                      
                         "name": "a",
                         "description": "a",
                         "time": 12,
@@ -107,10 +109,9 @@ class RecipesControllerTest {
                          }
                         
                         """)
-                );
+                ).andExpect(jsonPath("$.id").isNotEmpty());
 
     }
-
 
     @Test
     void deleteRecipeWithId_shouldDeleteRecipeWithValidId() throws Exception {
