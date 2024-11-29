@@ -26,7 +26,7 @@ public class RecipesController {
         return recipesService.findRecipesById(id);
     }
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("add")
+    @PostMapping("/add")
     public Recipes postRecipe(@RequestBody RecipesDto recipe) {
         return recipesService.saveRecipes(recipe);
     }

@@ -1,7 +1,7 @@
 import {Status} from "./Status.ts";
 
 export type Recipe={
-     id:string,
+    id:string,
     name:string,
     description:string,
     time:number,

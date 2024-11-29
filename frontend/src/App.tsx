@@ -7,6 +7,7 @@ import {Route, Routes} from "react-router-dom";
 import Details from "./Details/Details.tsx";
 import Header from "./Home/Header.tsx";
 import Footer from "./Home/Footer.tsx";
+import AddRecipe from "./AddRecipe.tsx";
 
 
 function App() {
@@ -41,6 +42,7 @@ function App() {
                 <Routes>
                     <Route path={"/"} element={ <Home recipe={recipe} onDelete={handelDelete}/>}/>
                     <Route path={"/details/:id"} element={<Details/>}/>
+                    <Route path={"/savaRecipe"} element={<AddRecipe setRecipe={setRecipe}/>}/>
                 </Routes>
                 <Footer/>
             </div>
