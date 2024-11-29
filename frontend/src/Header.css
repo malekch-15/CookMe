@@ -1,0 +1,39 @@
+/* Add this to your CSS file */
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #ffffff; /* White background for a clean look */
+    padding: 10px 20px; /* Add spacing around the navbar */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    position: sticky; /* Make it stick to the top */
+    top: 0;
+    z-index: 1000; /* Ensure it stays above other elements */
+}
+
+.navbar img {
+    width: 60px; /* Adjust the logo size */
+    height: auto; /* Maintain aspect ratio */
+}
+
+.navbar-links {
+    display: flex;
+    gap: 20px; /* Even spacing between links */
+}
+
+.navbar a {
+    text-decoration: none; /* Remove underline */
+    color: #333; /* Neutral text color */
+    font-size: 16px; /* Slightly larger text */
+    font-weight: 600; /* Bold text for emphasis */
+    transition: color 0.3s ease; /* Smooth hover effect */
+}
+
+.navbar a:hover {
+    color: #b3e8a3; /* Blue color on hover */
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); /* Add a slight shadow */
+}
+
+.navbar a:active {
+    color: #b3e8a3; /* Darker blue when clicked */
+}

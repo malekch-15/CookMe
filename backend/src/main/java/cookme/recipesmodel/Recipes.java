@@ -7,9 +7,9 @@ import java.util.List;
 public record Recipes(@With String id,
                       String name,
                       String description,
-                      Integer time,
+                      double time,
                       String imageUrl,
                       String preparation,
-                      Favorite status,
+                      Status status,
                       List<String> ingredients) {
 }

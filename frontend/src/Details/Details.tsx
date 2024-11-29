@@ -22,7 +22,7 @@ export default function Details() {
         return <div className="loading">loading....</div>
     }
     return (
-        <div className="details-container">
+        <div>
             {recipe.imageUrl ? (
                 <img
                     src={recipe.imageUrl}
@@ -32,6 +32,7 @@ export default function Details() {
             ) : (
                 <div className="no-image">Image not available</div>
             )}
+            <div className="details">
             <h1 className="details-title">{recipe.name}</h1>
             <p className="details-info">Cooking Time: {recipe.time} minutes</p>
             <p className="details-description">{recipe.description}</p>
@@ -50,6 +51,7 @@ export default function Details() {
             <div className="details-button-container">
                 <button className="details-button">Edit</button>
             </div>
+        </div>
         </div>
     );
 }

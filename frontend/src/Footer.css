@@ -1,0 +1,47 @@
+/* Footer Styles */
+.footer {
+    background-color: #f8f9fa; /* Light gray background */
+    color: #333; /* Neutral text color */
+    padding: 20px 40px; /* Add spacing */
+    text-align: center; /* Center the content */
+    border-top: 2px solid #ddd; /* Optional border at the top */
+}
+
+.footer-container {
+    display: flex;
+    flex-wrap: wrap; /* Make it responsive */
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px; /* Add spacing between sections */
+}
+
+.footer-logo img {
+    width: 80px; /* Logo size */
+    height: auto; /* Maintain aspect ratio */
+}
+
+.footer-links a,
+.footer-socials a {
+    text-decoration: none;
+    color: #007bff; /* Blue links */
+    margin: 0 10px; /* Add spacing */
+    font-size: 14px;
+    transition: color 0.3s ease;
+}
+
+.footer-links a:hover,
+.footer-socials a:hover {
+    color: #0056b3; /* Darker blue on hover */
+}
+
+.footer-bottom {
+    margin-top: 20px; /* Space above copyright */
+    font-size: 12px;
+    color: #666; /* Lighter text */
+}
+
+.footer-logo p {
+    margin-top: 5px;
+    font-size: 14px;
+    color: #666; /* Lighter description text */
+}

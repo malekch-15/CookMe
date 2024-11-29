@@ -5,8 +5,8 @@ import {Recipe} from "./Model/Recipe.ts";
 import Home from "./Home.tsx";
 import {Route, Routes} from "react-router-dom";
 import Details from "./Details/Details.tsx";
-
-
+import Header from "./Header.tsx";
+import Footer from "./Footer.tsx";
 
 
 function App() {
@@ -37,10 +37,12 @@ function App() {
     return (
         <>
             <div>
+                <Header/>
                 <Routes>
                     <Route path={"/"} element={ <Home recipe={recipe} onDelete={handelDelete}/>}/>
                     <Route path={"/details/:id"} element={<Details/>}/>
                 </Routes>
+                <Footer/>
             </div>
         </>
     )

@@ -1,7 +1,7 @@
 package cookme.services;
 
-import cookme.recipesmodel.Favorite;
 import cookme.recipesmodel.Recipes;
+import cookme.recipesmodel.Status;
 import cookme.repository.RecipesRepo;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -21,9 +21,9 @@ class RecipesServiceTest {
     private RecipesService recipesService = new RecipesService(mockrecipesRepo);
 
     Recipes recipe1 = new Recipes("1", "a", "a", 12, "a",
-            "a", Favorite.FAVORITE, List.of("a", "b", "c"));
+            "a", Status.FAVORITE, List.of("a", "b", "c"));
     Recipes recipe2 = new Recipes("2", "a", "a", 12, "a",
-            "a", Favorite.FAVORITE, List.of("a", "b", "c"));
+            "a", Status.FAVORITE, List.of("a", "b", "c"));
     List<Recipes> recipes = List.of(recipe1, recipe2);
 
     @Test
