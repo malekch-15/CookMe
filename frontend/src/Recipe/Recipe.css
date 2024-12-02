@@ -76,6 +76,7 @@
 .recipe-actions {
     display: flex;
     justify-content: space-between;
+    flex-direction: row
 }
 
 .delete-button, .show-more-button {

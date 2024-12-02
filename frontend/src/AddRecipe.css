@@ -1,0 +1,122 @@
+/* Container Styling */
+.addRecipe {
+    font-family: Arial, sans-serif;
+    margin: 0 auto;
+    padding: 20px;
+    max-width: 600px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Heading Styling */
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Form Styling */
+.addRecipeForm{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    font-family: "Times New Roman", Times, serif;
+}
+.description_input{
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+
+textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    resize: vertical; /* Allows users to resize the textarea vertically */
+    min-height: 80px; /* Ensures a reasonable default height */
+    font-family: "Times New Roman", Times, serif;
+}
+
+textarea:focus {
+    border-color: #5c67f2;
+    outline: none;
+    box-shadow: 0 0 4px rgba(92, 103, 242, 0.4);
+}
+
+input:focus {
+    border-color: #5c67f2;
+    outline: none;
+    box-shadow: 0 0 4px rgba(92, 103, 242, 0.4);
+}
+
+/* Ingredient List Styling */
+label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+div > div {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Ingredient Row Styling */
+div > div > div {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+.ingredients_button{
+    display: flex;
+    flex-direction: row-reverse;
+;
+}
+button[type="button"] {
+    background-color: #b3e8a3;
+    color: #150000;
+}
+
+button[type="button"]:hover {
+    background-color: #b3e8a3;
+}
+
+button[type="submit"] {
+    background-color: #5c67f2;
+    color: #150000;
+}
+
+button[type="submit"]:hover {
+    background-color: #4a54d1;
+}
+
+/* Feedback Message Styling */
+p {
+    margin-top: 10px;
+    font-size: 14px;
+    font-weight: bold;
+    color: green;
+}

@@ -1,6 +1,7 @@
 import React, {ChangeEvent, useState} from "react";
 import {Recipe} from "./Model/Recipe";
 import axios from "axios";
+import "./AddRecipe.css"
 type addProps= {
     setRecipe: React.Dispatch<React.SetStateAction<Recipe[]>>
 }
@@ -16,13 +17,20 @@ export default function AddRecipe(props:addProps) {
         ingredients: [""],
     });
     const [message, setMessage] = useState<string>("");
+    const [preparationRows, setPreparationRows] = useState<number>(4);
 
-    const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+
+
+    const handleInputChange = (event: ChangeEvent<HTMLInputElement|HTMLTextAreaElement|HTMLSelectElement>) => {
         const {name, value} = event.target;
         setRecipe((prevRecipe) => ({
             ...prevRecipe,
             [name]: value,
         }));
+        if (name === "preparation") {
+            const lines = value.split("\n").length; // Count the lines based on newlines
+            setPreparationRows(Math.max(4, lines)); // Set at least 4 rows
+        }
     };
 
 
@@ -68,8 +76,8 @@ export default function AddRecipe(props:addProps) {
             <h1>
                 Let's add some  new Recipe
             </h1>
-        <form onSubmit={handleSubmit}>
-            <div>
+        <form className="addRecipeForm" onSubmit={handleSubmit}>
+            <div className="addRecipe">
                 <input
                     type="text"
                     name="name"
@@ -78,21 +86,24 @@ export default function AddRecipe(props:addProps) {
                     onChange={handleInputChange}
                     required
                 />
-                <input
-                    type="text"
+                <textarea
+                    className="description_input"
                     name="description"
                     placeholder="Description"
                     value={recipe.description}
                     onChange={handleInputChange}
+                    rows={2}
                     required
                 />
-                <input
-                    type="text"
+                <textarea
+                    className="textarea"
                     name="preparation"
                     placeholder="Preparation"
                     value={recipe.preparation}
                     onChange={handleInputChange}
                     required
+                    rows={preparationRows}
+
                 />
                 <input
                     type="text"
@@ -108,12 +119,15 @@ export default function AddRecipe(props:addProps) {
                     value={recipe.imageUrl}
                     onChange={handleInputChange}
                 />
-                <input
-                    type="text"
+                <select
                     name="status"
-                    placeholder="Status"
+                    value={recipe.status}
                     onChange={handleInputChange}
-                />
+                    required
+                >
+                    <option value="NOT_FAVORITE">Not Favorite</option>
+                    <option value="FAVORITE">Favorite</option>
+                </select>
             </div>
             <div>
                 <label>Ingredients:</label>
@@ -126,14 +140,17 @@ export default function AddRecipe(props:addProps) {
                             onChange={(e) => handleIngredientChange(index, e.target.value)}
                             required
                         />
+                        <div className="ingredients_button">
                         <button type="button" onClick={() => removeIngredient(index)}>
                             Remove
                         </button>
+                        <button type="button" onClick={addIngredient}>
+                            Add Ingredient
+                        </button>
+                        </div>
                     </div>
                 ))}
-                <button type="button" onClick={addIngredient}>
-                    Add Ingredient
-                </button>
+
             </div>
             <button type="submit">Submit Recipe</button>
             {message && <p>{message}</p>} {/* Feedback for user */}
