@@ -32,6 +32,19 @@ public class RecipesService {
                 recipe.ingredients());
         return recipesRepo.save(newRecipe);
     }
+    public Recipes updateRecipe(String id, RecipesDto recipe) {
+        Recipes updatedRecipe = findRecipesById(id);
+        if (updatedRecipe != null) {
+            Recipes newRecipe = new Recipes( id,recipe.name(),
+                    recipe.description(),
+                    recipe.time(),
+                    recipe.imageUrl(),
+                    recipe.preparation(),
+                    recipe.status(),
+                    recipe.ingredients());
+            return recipesRepo.save(newRecipe);
+        }else throw new NoSuchElementException("No Recipes found with this " + id);
+    }
 
     public void deleteRecipe(String id) {
         recipesRepo.deleteById(id);

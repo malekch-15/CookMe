@@ -31,6 +31,10 @@ public class RecipesController {
         return recipesService.saveRecipes(recipe);
     }
 
+    @PutMapping("/update/{id}")
+    public Recipes putRecipe(@RequestBody RecipesDto recipe, @PathVariable String id) {
+        return recipesService.updateRecipe(id,recipe);
+    }
     @DeleteMapping("/{id}")
     public void deleteRecipeWithId(@PathVariable String id) {
     recipesService.findRecipesById(id);

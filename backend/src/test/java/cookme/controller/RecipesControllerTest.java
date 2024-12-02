@@ -117,4 +117,31 @@ class RecipesControllerTest {
         mvc.perform(MockMvcRequestBuilders.delete("/api/cookMe/1"))
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
+
+    @Test
+    void putRecipeWithId_shouldUpdateRecipeWithValidId() throws Exception {
+        mvc.perform(MockMvcRequestBuilders.put("/api/cookMe/update/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("""
+                          {
+                        "name": "a",
+                        "description": "a",
+                        "time": 20,
+                        "imageUrl": "a",
+                        "preparation": "a",
+                        "status": "FAVORITE",
+                        "ingredients": ["a", "b", "c"]
+                         }
+                      """)).andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().json("""
+                        {"name": "a",
+                        "description": "a",
+                        "time": 20,
+                        "imageUrl": "a",
+                        "preparation": "a",
+                        "status": "FAVORITE",
+                        "ingredients": ["a", "b", "c"]
+                        }
+""")).andExpect(jsonPath("$.id").isNotEmpty());
+    }
 }
