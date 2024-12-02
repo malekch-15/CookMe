@@ -54,12 +54,6 @@ class RecipesServiceTest {
         when(mockrecipesRepo.save(any(Recipes.class))).thenReturn(recipe2);
         Recipes actual =recipesService.saveRecipes(newRecipe);
         assertEquals(recipe2, actual);
-        assertEquals(recipe2.description(),actual.description());
-        assertEquals(recipe2.status(),actual.status());
-        assertEquals(recipe2.id(),actual.id());
-        assertEquals(recipe2.name(),actual.name());
-        assertEquals(recipe2.ingredients(),actual.ingredients());
-
     }
 
     @Test
