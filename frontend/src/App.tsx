@@ -42,7 +42,7 @@ function App() {
                 <Routes>
                     <Route path={"/"} element={ <Home recipe={recipe} onDelete={handelDelete}/>}/>
                     <Route path={"/details/:id/*"} element={<DetailsPage setRecipes={setRecipe}/>}/>
-                    <Route path={"/savaRecipe"} element={<AddRecipe setRecipe={setRecipe}/>}/>
+                    <Route path={"/New_Recipe"} element={<AddRecipe setRecipe={setRecipe}/>}/>
 
                 </Routes>
                 <Footer/>
