@@ -10,7 +10,7 @@ export default function Header() {
                     <a >Meal Plan</a>
                     <a >Grocery</a>
                     <a>Shop List</a>
-                    <Link to={"/savaRecipe"}>Add Recipe</Link>
+                    <Link to={"/New_Recipe"}>Add Recipe</Link>
                 </div>
             </nav>
         </div>
