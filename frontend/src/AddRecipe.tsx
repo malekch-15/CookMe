@@ -118,7 +118,7 @@ export default function AddRecipe(props:addProps) {
             <div>
                 <label>Ingredients:</label>
                 {recipe.ingredients.map((ingredient, index) => (
-                    <div key={index} style={{display: "flex", alignItems: "center"}}>
+                    <div key={index}>
                         <input
                             type="text"
                             placeholder={`Ingredient ${index + 1}`}
