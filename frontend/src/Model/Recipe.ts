@@ -7,6 +7,6 @@ export type Recipe={
     time:number,
     imageUrl:string,
     preparation:string,
-    favorite:Status,
+    status:Status,
     ingredients:string[]
 }

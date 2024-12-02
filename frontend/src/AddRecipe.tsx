@@ -12,7 +12,7 @@ export default function AddRecipe(props:addProps) {
         preparation: "",
         time: 0,
         imageUrl: "",
-        favorite: "NOT_FAVORITE",
+        status: "NOT_FAVORITE",
         ingredients: [""],
     });
     const [message, setMessage] = useState<string>("");
@@ -110,7 +110,7 @@ export default function AddRecipe(props:addProps) {
                 />
                 <input
                     type="text"
-                    name="favorite"
+                    name="status"
                     placeholder="Status"
                     onChange={handleInputChange}
                 />
