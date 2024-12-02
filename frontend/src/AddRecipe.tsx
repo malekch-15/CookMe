@@ -1,4 +1,4 @@
-import {ChangeEvent, useState} from "react";
+import React, {ChangeEvent, useState} from "react";
 import {Recipe} from "./Model/Recipe";
 import axios from "axios";
 type addProps= {
@@ -12,7 +12,7 @@ export default function AddRecipe(props:addProps) {
         preparation: "",
         time: 0,
         imageUrl: "",
-        favorite: "FAVORITE",
+        favorite: "NOT_FAVORITE",
         ingredients: [""],
     });
     const [message, setMessage] = useState<string>("");
@@ -64,6 +64,10 @@ export default function AddRecipe(props:addProps) {
         }
 
     return (
+        <div>
+            <h1>
+                Let's add some  new Recipe
+            </h1>
         <form onSubmit={handleSubmit}>
             <div>
                 <input
@@ -94,7 +98,6 @@ export default function AddRecipe(props:addProps) {
                     type="text"
                     name="time"
                     placeholder="Time of Cooking"
-                    value={recipe.time}
                     onChange={handleInputChange}
                     required
                 />
@@ -109,7 +112,6 @@ export default function AddRecipe(props:addProps) {
                     type="text"
                     name="favorite"
                     placeholder="Status"
-                    value={recipe.favorite}
                     onChange={handleInputChange}
                 />
             </div>
@@ -136,5 +138,6 @@ export default function AddRecipe(props:addProps) {
             <button type="submit">Submit Recipe</button>
             {message && <p>{message}</p>} {/* Feedback for user */}
         </form>
+        </div>
     );
 }
