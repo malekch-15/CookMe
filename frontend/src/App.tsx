@@ -4,10 +4,10 @@ import axios from "axios";
 import {Recipe} from "./Model/Recipe.ts";
 import Home from "./Home/Home.tsx";
 import {Route, Routes} from "react-router-dom";
-import Details from "./Details/Details.tsx";
 import Header from "./Home/Header.tsx";
 import Footer from "./Home/Footer.tsx";
 import AddRecipe from "./AddRecipe.tsx";
+import DetailsPage from "./Details/DetailsPage.tsx";
 
 
 function App() {
@@ -41,8 +41,9 @@ function App() {
                 <Header/>
                 <Routes>
                     <Route path={"/"} element={ <Home recipe={recipe} onDelete={handelDelete}/>}/>
-                    <Route path={"/details/:id"} element={<Details/>}/>
+                    <Route path={"/details/:id/*"} element={<DetailsPage setRecipes={setRecipe}/>}/>
                     <Route path={"/savaRecipe"} element={<AddRecipe setRecipe={setRecipe}/>}/>
+
                 </Routes>
                 <Footer/>
             </div>

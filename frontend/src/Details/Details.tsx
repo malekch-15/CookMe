@@ -1,25 +1,16 @@
-import axios from "axios";
 import {Recipe} from "../Model/Recipe.ts";
-import {useEffect, useState} from "react";
-import {useParams} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import "./Details.css"
+type DetailsProps={
+    recipe:Recipe
+}
 
+export default function Details({recipe}:DetailsProps) {
 
-export default function Details() {
-    const para = useParams<{ id: string }>()
-    const [recipe, setRecipe] = useState<Recipe | null>(null);
-    const fetchDetails = () => {
-        axios.get(`/api/cookMe/${para.id}`)
-            .then((response => {
-                setRecipe(response.data)
-            })).catch((error) => console.log("no Recipe with this id", error));
+    const navigate= useNavigate()
 
-    }
-    useEffect(() => {
-        fetchDetails();
-    },[para.id]);
-    if (!recipe) {
-        return <div className="loading">loading....</div>
+    const handleEdit = (id: string) => {
+        navigate(`/details/${id}/edit`);
     }
     return (
         <div>
@@ -48,10 +39,10 @@ export default function Details() {
                 <h3>Preparation:</h3>
                 <p>{recipe.preparation}</p>
             </div>
-            <div className="details-button-container">
-                <button className="details-button">Edit</button>
+
+                <button className="show-more-button" onClick={() => handleEdit(recipe?.id)}>Edit
+                </button>
             </div>
-        </div>
         </div>
     );
 }
