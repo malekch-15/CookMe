@@ -6,6 +6,7 @@ import Searchbar from "./Searchbar.tsx";
 type HomeProps={
     recipe:Recipe[]
     onDelete:(id:string)=>void
+    onToggleWishlist: (id: string) => void
 }
 export default function Home(props:HomeProps){
     const [searchQuery, setSearchQuery] = useState("");
@@ -35,6 +36,7 @@ export default function Home(props:HomeProps){
                             Recipe={recipe}
                             onDelete={props.onDelete}
                             showDeleteButton={true}
+                            onToggleWishlist={props.onToggleWishlist}
                         />
                     ))
                 )}

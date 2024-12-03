@@ -11,9 +11,13 @@ body {
   grid-template-columns: repeat(4, 1fr); /* Creates 4 equal columns */
   gap: 20px; /* Gap between cards */
   padding: 20px;
-  justify-items: center; /* Centers the cards horizontally within the grid */
-}
 
+}
+.wishlist-card{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
 
 
 

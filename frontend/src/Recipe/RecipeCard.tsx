@@ -8,6 +8,7 @@ type RecipeCardProps = {
     onDelete: (id: string) => void
     showDeleteButton?: boolean
     onDetails?:(id:string)=>void
+    onToggleWishlist: (id: string) => void
 }
 export default function RecipeCard(props: RecipeCardProps) {
     const [showPopup, setShowPopup] = useState(false);
@@ -33,6 +34,10 @@ export default function RecipeCard(props: RecipeCardProps) {
     return (
         <div className="recipe-card">
             <button className="add-button">+</button>
+            <button id="" onClick={() => props.onToggleWishlist(props.Recipe.id)}
+                    className={props.Recipe.status === "FAVORITE" ? "red" : "black"}
+            >♥
+            </button>
             <div className="recipe-header">
                 <img className="recipe-image" src={props.Recipe.imageUrl} alt={"image recipe"}/>
             </div>
@@ -42,7 +47,8 @@ export default function RecipeCard(props: RecipeCardProps) {
             <div className="recipe-actions">
                 {props.showDeleteButton && (<button className="delete-button" onClick={handleDeleteClick}
                                                     disabled={!props.onDelete}>Delete</button>)}
-                <button className="show-more-button" onClick={()=>handleViewDetails(props.Recipe.id)}>Show More</button>
+                <button className="show-more-button" onClick={() => handleViewDetails(props.Recipe.id)}>Show More
+                </button>
             </div>
             {showPopup && (
                 <div className="popup-overlay">
