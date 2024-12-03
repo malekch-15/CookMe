@@ -130,8 +130,6 @@ export default function Edit(props:EditProps){
                             <option value="NOT_FAVORITE">Not Favorite</option>
                             <option value="FAVORITE">Favorite</option>
                         </select>
-                    </div>
-                    <div>
                         <label>Ingredients:</label>
                         {newRecipe.ingredients.map((ingredient, index) => (
                             <div key={index} style={{ display: "flex", alignItems: "center" }}>
@@ -152,6 +150,8 @@ export default function Edit(props:EditProps){
                                 </div>
                             </div>
                         ))}
+                    </div>
+                    <div>
                     </div>
                     <button type="submit">Update Recipe</button>
                     {message && <p>{message}</p>} {/* Feedback for user */}

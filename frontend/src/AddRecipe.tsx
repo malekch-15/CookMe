@@ -128,8 +128,6 @@ export default function AddRecipe(props:addProps) {
                     <option value="NOT_FAVORITE">Not Favorite</option>
                     <option value="FAVORITE">Favorite</option>
                 </select>
-            </div>
-            <div>
                 <label>Ingredients:</label>
                 {recipe.ingredients.map((ingredient, index) => (
                     <div key={index}>
@@ -141,17 +139,18 @@ export default function AddRecipe(props:addProps) {
                             required
                         />
                         <div className="ingredients_button">
-                        <button type="button" onClick={() => removeIngredient(index)}>
-                            Remove
-                        </button>
-                        <button type="button" onClick={addIngredient}>
-                            Add Ingredient
-                        </button>
+                            <button type="button" onClick={() => removeIngredient(index)}>
+                                Remove
+                            </button>
+                            <button type="button" onClick={addIngredient}>
+                                Add Ingredient
+                            </button>
                         </div>
                     </div>
                 ))}
-
             </div>
+
+
             <button type="submit">Submit Recipe</button>
             {message && <p>{message}</p>} {/* Feedback for user */}
         </form>
