@@ -67,4 +67,16 @@ class RecipesServiceTest {
         assertThrows(NoSuchElementException.class, () -> recipesService.findRecipesById(id));
     }
 
+    @Test
+    void updateRecipe_shouldUpdateRecipeWithValidId() {
+        String id = "2";
+        RecipesDto updatedRecipe=new RecipesDto( "a", "a", 20, "a",
+                "a", Status.FAVORITE, List.of("a", "b", "c"));
+        Recipes newRecipe=new Recipes( id,"a", "a", 20, "a",
+                "a", Status.FAVORITE, List.of("a", "b", "c"));
+        when(mockrecipesRepo.findById(id)).thenReturn(Optional.of(recipe2));
+        when(mockrecipesRepo.save(any(Recipes.class))).thenReturn(newRecipe);
+       Recipes expected = recipesService.updateRecipe(id, updatedRecipe);
+       assertEquals(newRecipe, expected);
+    }
 }

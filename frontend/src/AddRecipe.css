@@ -31,14 +31,28 @@ input {
     font-size: 16px;
     font-family: "Times New Roman", Times, serif;
 }
-.description_input{
+.description-input{
     width: 100%;
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 4px;
     font-size: 16px;
 }
-
+select,option {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    resize: vertical; /* Allows users to resize the textarea vertically */
+    font-family: "Times New Roman", Times, serif;
+    color: #666;
+}
+select:focus {
+    border-color: #5c67f2;
+    outline: none;
+    box-shadow: 0 0 4px rgba(92, 103, 242, 0.4);
+}
 
 textarea {
     width: 100%;
@@ -90,7 +104,7 @@ button {
     font-size: 14px;
     transition: background-color 0.3s;
 }
-.ingredients_button{
+.ingredients-button{
     display: flex;
     flex-direction: row-reverse;
 ;

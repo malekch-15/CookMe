@@ -9,7 +9,7 @@ export default function Header() {
                     <Link to={"/"}>Home</Link>
                     <a >Meal Plan</a>
                     <a >Grocery</a>
-                    <a>Shop List</a>
+                    <Link to={"/Favorite"}>Favorite</Link>
                     <Link to={"/New_Recipe"}>Add Recipe</Link>
                 </div>
             </nav>
