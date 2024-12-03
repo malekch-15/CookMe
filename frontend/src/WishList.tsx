@@ -8,6 +8,7 @@ type WishListProps={
     onToggleWishlist: (id: string) => void
 }
 export default function WishList(props:WishListProps){
+
     const favoriteRecipes = props.recipe.filter((r) => r.status === "FAVORITE");
     return(
         <div className="wishlist-card">
