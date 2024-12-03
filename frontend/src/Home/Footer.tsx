@@ -4,8 +4,8 @@ export default function Footer() {
     return (
         <footer className="footer">
             <div className="footer-container">
-                <div className="footer-logo">
-                    <img src="logo.png" alt="Logo"/>
+                <div className="logo">
+                    <img src="/src/assets/logo.png" alt="Logo"/>
                     <p>Crafting your meals with care.</p>
                 </div>
                 <div className="footer-links">
