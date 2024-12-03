@@ -132,7 +132,7 @@ export default function Edit(props:EditProps){
                         </select>
                         <label>Ingredients:</label>
                         {newRecipe.ingredients.map((ingredient, index) => (
-                            <div key={index} style={{ display: "flex", alignItems: "center" }}>
+                            <div key={index}>
                                 <input
                                     type="text"
                                     placeholder={`Ingredient ${index + 1}`}
@@ -140,7 +140,7 @@ export default function Edit(props:EditProps){
                                     onChange={(e) => handleIngredientChange(index, e.target.value)}
                                     required
                                 />
-                                <div className="ingredients_button">
+                                <div className="ingredients-button">
                                     <button type="button" onClick={() => removeIngredient(index)}>
                                         Remove
                                     </button>

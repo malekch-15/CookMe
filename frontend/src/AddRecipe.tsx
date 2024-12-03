@@ -87,7 +87,7 @@ export default function AddRecipe(props:addProps) {
                     required
                 />
                 <textarea
-                    className="description_input"
+                    className="description-input"
                     name="description"
                     placeholder="Description"
                     value={recipe.description}
@@ -138,7 +138,7 @@ export default function AddRecipe(props:addProps) {
                             onChange={(e) => handleIngredientChange(index, e.target.value)}
                             required
                         />
-                        <div className="ingredients_button">
+                        <div className="ingredients-button">
                             <button type="button" onClick={() => removeIngredient(index)}>
                                 Remove
                             </button>
