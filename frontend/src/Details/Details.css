@@ -7,7 +7,7 @@
 
 .details-image {
     position: relative;
-    width: 80%;
+
     height: 70vh;
     overflow: hidden;
     display: block;
@@ -67,8 +67,11 @@
 .details-button:hover {
     background-color: #0056b3;
 }
+
 .details{
-    display: grid;
-    justify-items: center;
-    margin: 5px 30px 30px 30px;
- }
+display: flex
+;
+gap: 10px;
+align-items: center;
+flex-direction: row;
+}

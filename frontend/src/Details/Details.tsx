@@ -13,7 +13,7 @@ export default function Details({recipe}:DetailsProps) {
         navigate(`/details/${id}/edit`);
     }
     return (
-        <div>
+        <div className="details">
             {recipe.imageUrl ? (
                 <img
                     src={recipe.imageUrl}
@@ -23,7 +23,8 @@ export default function Details({recipe}:DetailsProps) {
             ) : (
                 <div className="no-image">Image not available</div>
             )}
-            <div className="details">
+
+            <div className="details-text">
             <h1 className="details-title">{recipe.name}</h1>
             <p className="details-info">Cooking Time: {recipe.time} minutes</p>
             <p className="details-description">{recipe.description}</p>

@@ -39,7 +39,8 @@ export default function RecipeCard(props: RecipeCardProps) {
             >♥
             </button>
             <div className="recipe-header">
-                <img className="recipe-image" src={props.Recipe.imageUrl} alt={"image recipe"}/>
+                <img  className="recipe-image clickable" src={props.Recipe.imageUrl} alt={"image recipe"}
+                     onClick={() => handleViewDetails(props.Recipe.id)}/>
             </div>
             <h2 className="recipe-name">{props.Recipe.name}</h2>
             <p className="recipe-description">{props.Recipe.description}</p>
@@ -47,8 +48,6 @@ export default function RecipeCard(props: RecipeCardProps) {
             <div className="recipe-actions">
                 {props.showDeleteButton && (<button className="delete-button" onClick={handleDeleteClick}
                                                     disabled={!props.onDelete}>Delete</button>)}
-                <button className="show-more-button" onClick={() => handleViewDetails(props.Recipe.id)}>Show More
-                </button>
             </div>
             {showPopup && (
                 <div className="popup-overlay">
