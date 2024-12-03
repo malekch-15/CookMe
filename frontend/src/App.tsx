@@ -2,11 +2,12 @@ import './App.css'
 import {useEffect, useState} from "react";
 import axios from "axios";
 import {Recipe} from "./Model/Recipe.ts";
-import Home from "./Home.tsx";
+import Home from "./Home/Home.tsx";
 import {Route, Routes} from "react-router-dom";
 import Details from "./Details/Details.tsx";
-import Header from "./Header.tsx";
-import Footer from "./Footer.tsx";
+import Header from "./Home/Header.tsx";
+import Footer from "./Home/Footer.tsx";
+import AddRecipe from "./AddRecipe.tsx";
 
 
 function App() {
@@ -41,6 +42,7 @@ function App() {
                 <Routes>
                     <Route path={"/"} element={ <Home recipe={recipe} onDelete={handelDelete}/>}/>
                     <Route path={"/details/:id"} element={<Details/>}/>
+                    <Route path={"/New_Recipe"} element={<AddRecipe setRecipe={setRecipe}/>}/>
                 </Routes>
                 <Footer/>
             </div>

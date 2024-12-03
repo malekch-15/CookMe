@@ -1,5 +1,6 @@
 package cookme.services;
 
+import cookme.recipesmodel.RecipesDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import cookme.recipesmodel.Recipes;
@@ -17,11 +18,23 @@ public class RecipesService {
     }
 
     public Recipes findRecipesById(String id) {
-        return recipesRepo.findById(id).orElseThrow(() -> new NoSuchElementException("No Recipes found with this "+id));
+        return recipesRepo.findById(id).orElseThrow(() -> new NoSuchElementException("No Recipes found with this " + id));
     }
 
-    public void deleteRecipe(String id){
-       recipesRepo.deleteById(id);
+    public Recipes saveRecipes(RecipesDto recipe) {
+        String id = UUID.randomUUID().toString();
+        Recipes newRecipe = new Recipes(id, recipe.name(),
+                recipe.description(),
+                recipe.time(),
+                recipe.imageUrl(),
+                recipe.preparation(),
+                recipe.status(),
+                recipe.ingredients());
+        return recipesRepo.save(newRecipe);
+    }
+
+    public void deleteRecipe(String id) {
+        recipesRepo.deleteById(id);
     }
 
 }
