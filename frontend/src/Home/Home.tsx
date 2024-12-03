@@ -1,6 +1,5 @@
 import {Recipe} from "../Model/Recipe.ts";
 import RecipeCard from "../Recipe/RecipeCard.tsx";
-import "./Home.css"
 import {useState} from "react";
 import Searchbar from "./Searchbar.tsx";
 
