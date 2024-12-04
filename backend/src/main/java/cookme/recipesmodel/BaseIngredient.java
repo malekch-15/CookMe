@@ -1,4 +1,7 @@
 package cookme.recipesmodel;
 
-public record BaseIngredient(String id, String name) {
+import lombok.With;
+
+@With
+public record BaseIngredient(@With String id, String name) {
 }

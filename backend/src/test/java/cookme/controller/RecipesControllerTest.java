@@ -4,6 +4,7 @@ import cookme.recipesmodel.BaseIngredient;
 import cookme.recipesmodel.RecipeIngredient;
 import cookme.recipesmodel.Recipes;
 import cookme.recipesmodel.Status;
+import cookme.repository.IngredientsRepo;
 import cookme.repository.RecipesRepo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,23 +28,24 @@ class RecipesControllerTest {
     private MockMvc mvc;
     @Autowired
     private RecipesRepo recipesRepo;
+    @Autowired
+    private IngredientsRepo ingredientsRepo;
 
     @BeforeEach
     void setup() {
-        recipesRepo.deleteAll();
-//                           Ingredient
-        BaseIngredient ingredient1=new BaseIngredient("1","Eggs");
-        BaseIngredient ingredient2=new BaseIngredient("2","Potatoes");
-//                           RecipeIngredient
-        RecipeIngredient ingredients = new RecipeIngredient(2,ingredient1.id());
-        RecipeIngredient ingredients2 = new RecipeIngredient(2,ingredient2.id());
-        List<RecipeIngredient> ingredientsList= List.of(ingredients,ingredients2);
-//                                 Recipe
-        Recipes recipe1 = new Recipes("1", "a", "a", 12, "a",
-                "a", Status.FAVORITE, ingredientsList);
+        BaseIngredient ingredient1 = new BaseIngredient("1", "Eggs");
+        BaseIngredient ingredient2 = new BaseIngredient("2", "Potatoes");
+        ingredientsRepo.save(ingredient1);
+       ingredientsRepo.save(ingredient2);
 
+        RecipeIngredient ingredients = new RecipeIngredient(2, ingredient1);
+        RecipeIngredient ingredients2 = new RecipeIngredient(2, ingredient2);
+        List<RecipeIngredient> ingredientsList = List.of(ingredients, ingredients2);
+
+        Recipes recipe1 = new Recipes("1", "a", "a", 12, "a", "a", Status.FAVORITE, ingredientsList);
         recipesRepo.save(recipe1);
     }
+
 
     @Test
     void getAllRecipe_expectListWithOneRecipe_whenOneRecipeSaved() throws Exception {
@@ -65,11 +67,17 @@ class RecipesControllerTest {
                         "status": "FAVORITE",
                         "ingredients":[ {
                                              "quantity": 2,
-                                             "ingredientId": "1"
+                                                  "ingredient": {
+                                                "id": "1",
+                                                 "name": "Eggs"
+                                              }
                                            },
                                            {
                                              "quantity": 2,
-                                             "ingredientId": "2"
+                                             "ingredient": {
+                                                "id": "2",
+                                                 "name": "Potatoes"
+                                              }
                                            }
                                          ]
                         }
@@ -92,11 +100,17 @@ class RecipesControllerTest {
                         "status": "FAVORITE",
                         "ingredients": [ {
                                              "quantity": 2,
-                                             "ingredientId": "1"
+                                              "ingredient": {
+                                                "id": "1",
+                                                 "name": "Eggs"
+                                              }
                                            },
-                                           {
+                                          {
                                              "quantity": 2,
-                                             "ingredientId": "2"
+                                             "ingredient": {
+                                                "id": "2",
+                                                 "name": "Potatoes"
+                                              }
                                            }
                                          ]
                          }
@@ -117,11 +131,17 @@ class RecipesControllerTest {
                         "status": "FAVORITE",
                         "ingredients":[ {
                                              "quantity": 2,
-                                             "ingredientId": "1"
+                                             "ingredient": {
+                                                "id": "1",
+                                                 "name": "Eggs"
+                                              }
                                            },
                                            {
                                              "quantity": 2,
-                                             "ingredientId": "2"
+                                            "ingredient": {
+                                                "id": "1",
+                                                 "name": "Eggs"
+                                              }
                                            }
                                          ]
                          }
@@ -139,11 +159,17 @@ class RecipesControllerTest {
                         "status": "FAVORITE",
                         "ingredients": [ {
                                              "quantity": 2,
-                                             "ingredientId": "1"
+                                            "ingredient": {
+                                                "id": "1",
+                                                 "name": "Eggs"
+                                              }
                                            },
                                            {
                                              "quantity": 2,
-                                             "ingredientId": "2"
+                                             "ingredient": {
+                                                "id": "1",
+                                                 "name": "Eggs"
+                                              }
                                            }
                                          ]
                          }
@@ -173,11 +199,17 @@ class RecipesControllerTest {
                         "status": "FAVORITE",
                         "ingredients": [ {
                                              "quantity": 2,
-                                             "ingredientId": "1"
+                                             "ingredient": {
+                                                "id": "1",
+                                                 "name": "Eggs"
+                                              }
                                            },
                                            {
                                              "quantity": 2,
-                                             "ingredientId": "2"
+                                             "ingredient": {
+                                                "id": "1",
+                                                 "name": "Eggs"
+                                              }
                                            }
                                          ]
                          }
@@ -191,11 +223,17 @@ class RecipesControllerTest {
                         "status": "FAVORITE",
                         "ingredients": [ {
                                              "quantity": 2,
-                                             "ingredientId": "1"
+                                             "ingredient": {
+                                                "id": "1",
+                                                 "name": "Eggs"
+                                              }
                                            },
                                            {
                                              "quantity": 2,
-                                             "ingredientId": "2"
+                                             "ingredient": {
+                                                "id": "1",
+                                                 "name": "Eggs"
+                                              }
                                            }
                                          ]
                         }
