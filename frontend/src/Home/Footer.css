@@ -15,15 +15,31 @@
     gap: 20px; /* Add spacing between sections */
 }
 
-.footer-logo img {
-    width: 80px; /* Logo size */
-    height: auto; /* Maintain aspect ratio */
+.logo {
+    display: inline-block;
+    width: 100px;
+    height: auto;
+    margin: 10px;
+    cursor: pointer; /* Indicates it's clickable */
+    text-decoration: none; /* Removes any underline on the link */
+}
+
+.logo img {
+    max-width: 70%; /* Ensures the image scales properly within the container */
+    height: auto; /* Maintains the image's aspect ratio */
+    border-radius: 80px; /* Optional: Adds rounded corners */
+    transition: transform 0.3s ease; /* Smooth hover effect */
+    background-color: #C7EEAD;
+}
+
+.logo img:hover {
+    transform: scale(1.1); /* Slightly enlarges the logo on hover */
 }
 
 .footer-links a,
 .footer-socials a {
     text-decoration: none;
-    color: #007bff; /* Blue links */
+    color: #075705; /* Blue links */
     margin: 0 10px; /* Add spacing */
     font-size: 14px;
     transition: color 0.3s ease;
@@ -31,7 +47,7 @@
 
 .footer-links a:hover,
 .footer-socials a:hover {
-    color: #0056b3; /* Darker blue on hover */
+    color: #150000; /* Darker blue on hover */
 }
 
 .footer-bottom {

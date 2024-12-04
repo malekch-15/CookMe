@@ -6,6 +6,7 @@ import Searchbar from "./Searchbar.tsx";
 type HomeProps={
     recipe:Recipe[]
     onDelete:(id:string)=>void
+    onToggleWishlist: (id: string) => void
 }
 export default function Home(props:HomeProps){
     const [searchQuery, setSearchQuery] = useState("");
@@ -24,8 +25,13 @@ export default function Home(props:HomeProps){
         <div>
             <div>
                 <Searchbar onSearch={handleSearch}/>
+                <h1>Recipes</h1>
+                <p> CookMe is your source for thousands of delicious, easy and quick recipes, healthy meals,
+                    dinner ideas, recipes for kids, holiday menus, and more</p>
             </div>
+
             <div className="gallery-container">
+
                 {filteredRecipes.length === 0 ? (
                     <p>No recipes found for your search.</p>
                 ) : (
@@ -35,6 +41,7 @@ export default function Home(props:HomeProps){
                             Recipe={recipe}
                             onDelete={props.onDelete}
                             showDeleteButton={true}
+                            onToggleWishlist={props.onToggleWishlist}
                         />
                     ))
                 )}

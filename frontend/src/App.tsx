@@ -8,10 +8,12 @@ import Header from "./Home/Header.tsx";
 import Footer from "./Home/Footer.tsx";
 import AddRecipe from "./AddRecipe.tsx";
 import DetailsPage from "./Details/DetailsPage.tsx";
+import WishList from "./WishList.tsx";
+import {Status} from "./Model/Status.ts";
 
 
 function App() {
-    const [recipe, setRecipe] = useState<Recipe[]>([]);
+    const [recipes, setRecipe] = useState<Recipe[]>([]);
 
 
     const fetchRecipe = () => {
@@ -34,14 +36,25 @@ function App() {
             })
 
     }
+    const handelToggelWishList=(id:string)=>{
+        const recipe= recipes.find((r)=>r.id===id);
+        if(!recipe) return;
+        const updatedStatus:Status=recipe.status==="FAVORITE"?"NOT_FAVORITE":"FAVORITE";
+     const updateRecipe={...recipe,status: updatedStatus};
+     axios.put(`/api/cookMe/update/${id}`,updateRecipe)
+         .then((response)=>
+         setRecipe((prev)=>prev.map((p)=>p.id===id?response.data:p))
+         )
+    }
 
     return (
         <>
             <div>
                 <Header/>
                 <Routes>
-                    <Route path={"/"} element={ <Home recipe={recipe} onDelete={handelDelete}/>}/>
+                    <Route path={"/"} element={ <Home recipe={recipes} onDelete={handelDelete} onToggleWishlist={handelToggelWishList}/>}/>
                     <Route path={"/details/:id/*"} element={<DetailsPage setRecipes={setRecipe}/>}/>
+                    <Route path={"/WishList"} element={<WishList recipe={recipes} onToggleWishlist={handelToggelWishList} onDelete={handelDelete}/>}/>
                     <Route path={"/New_Recipe"} element={<AddRecipe setRecipe={setRecipe}/>}/>
                 </Routes>
                 <Footer/>

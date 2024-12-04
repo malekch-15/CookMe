@@ -11,6 +11,8 @@
     overflow: hidden;
     text-align: center;
 }
+
+
 /* Add Button */
 .add-button {
     position: absolute;
@@ -160,4 +162,12 @@
 
 .popup-cancel:hover {
     background-color: #c1c1c1;
+}
+.red{
+    color: #e82020;
+    align-self: baseline;
+}
+.black{
+    color:#000000;
+    align-self: baseline;
 }

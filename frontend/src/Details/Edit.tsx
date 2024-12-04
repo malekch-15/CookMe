@@ -57,8 +57,8 @@ export default function Edit(props:EditProps){
         }
     };
 
-    const handleSubmit = async (event: React.FormEvent) => {
-        event.preventDefault();
+    const handleSubmit = (e: React.FormEvent) => {
+       e.preventDefault();
 
         if (id && newRecipe) {
             axios
