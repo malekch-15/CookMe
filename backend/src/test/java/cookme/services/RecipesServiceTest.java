@@ -1,5 +1,6 @@
 package cookme.services;
 
+import cookme.recipesmodel.Ingredient;
 import cookme.recipesmodel.Recipes;
 import cookme.recipesmodel.RecipesDto;
 import cookme.recipesmodel.Status;
@@ -20,11 +21,14 @@ class RecipesServiceTest {
     private final RecipesRepo mockrecipesRepo = mock(RecipesRepo.class);
     @InjectMocks
     private RecipesService recipesService = new RecipesService(mockrecipesRepo);
-
+    Ingredient ingredient1=new Ingredient("1","Eggs",3);
+    Ingredient ingredient2=new Ingredient("2","Potatoes",4);
+    List<Ingredient> ingredients = List.of(ingredient1,ingredient2);
     Recipes recipe1 = new Recipes("1", "a", "a", 12, "a",
-            "a", Status.FAVORITE, List.of("a", "b", "c"));
+            "a", Status.FAVORITE, ingredients);
     Recipes recipe2 = new Recipes("2", "a", "a", 12, "a",
-            "a", Status.FAVORITE, List.of("a", "b", "c"));
+            "a", Status.FAVORITE, ingredients);
+
     List<Recipes> recipes = List.of(recipe1, recipe2);
 
     @Test
@@ -50,7 +54,7 @@ class RecipesServiceTest {
     @Test
     void postRecipe_returnRecipeWithId2_whenRecipeWithId2Saved() {
         RecipesDto newRecipe=new RecipesDto( "a", "a", 12, "a",
-                "a", Status.FAVORITE, List.of("a", "b", "c"));
+                "a", Status.FAVORITE, ingredients);
         when(mockrecipesRepo.save(any(Recipes.class))).thenReturn(recipe2);
         Recipes actual =recipesService.saveRecipes(newRecipe);
         assertEquals(recipe2, actual);
@@ -71,9 +75,9 @@ class RecipesServiceTest {
     void updateRecipe_shouldUpdateRecipeWithValidId() {
         String id = "2";
         RecipesDto updatedRecipe=new RecipesDto( "a", "a", 20, "a",
-                "a", Status.FAVORITE, List.of("a", "b", "c"));
+                "a", Status.FAVORITE, ingredients);
         Recipes newRecipe=new Recipes( id,"a", "a", 20, "a",
-                "a", Status.FAVORITE, List.of("a", "b", "c"));
+                "a", Status.FAVORITE, ingredients);
         when(mockrecipesRepo.findById(id)).thenReturn(Optional.of(recipe2));
         when(mockrecipesRepo.save(any(Recipes.class))).thenReturn(newRecipe);
        Recipes expected = recipesService.updateRecipe(id, updatedRecipe);
