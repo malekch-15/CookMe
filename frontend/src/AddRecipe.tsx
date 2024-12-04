@@ -2,6 +2,7 @@ import React, {ChangeEvent, useState} from "react";
 import {Recipe} from "./Model/Recipe";
 import axios from "axios";
 import "./AddRecipe.css"
+import {RecipeIngredient} from "./Model/RecipeIngredient.ts";
 type addProps= {
     setRecipe: React.Dispatch<React.SetStateAction<Recipe[]>>
 }
@@ -14,7 +15,7 @@ export default function AddRecipe(props:addProps) {
         time: 0,
         imageUrl: "",
         status: "NOT_FAVORITE",
-        ingredients: [""],
+        ingredients: [],
     });
     const [message, setMessage] = useState<string>("");
     const [preparationRows, setPreparationRows] = useState<number>(4);
@@ -34,7 +35,7 @@ export default function AddRecipe(props:addProps) {
     };
 
 
-    const handleIngredientChange = (index: number, value: string) => {
+    const handleIngredientChange = (index: number, value:RecipeIngredient) => {
         const updatedIngredients = [...recipe.ingredients];
         updatedIngredients[index] = value;
         setRecipe((prevRecipe) => ({
@@ -47,7 +48,7 @@ export default function AddRecipe(props:addProps) {
     const addIngredient = () => {
         setRecipe((prevRecipe) => ({
             ...prevRecipe,
-            ingredients: [...prevRecipe.ingredients, ""],
+            ingredients: [...prevRecipe.ingredients,{}],
         }));
     };
 

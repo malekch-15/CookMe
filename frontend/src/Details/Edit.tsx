@@ -1,7 +1,8 @@
 import {Recipe} from "../Model/Recipe.ts";
 import React, {ChangeEvent, useState} from "react";
 import axios from "axios";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
+import {RecipeIngredient} from "../Model/RecipeIngredient.ts";
 type EditProps={
     recipe:Recipe
     setRecipes: React.Dispatch<React.SetStateAction<Recipe[]>>
@@ -11,6 +12,7 @@ export default function Edit(props:EditProps){
     const [newRecipe, setNewRecipe] = useState<Recipe >(props.recipe);
     const [message, setMessage] = useState<string>("");
     const [preparationRows, setPreparationRows] = useState<number>(4);
+    const navigate = useNavigate();
 
     const HandelInputRecipe = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         const { name, value } = event.target;
@@ -27,7 +29,7 @@ export default function Edit(props:EditProps){
         }
     };
 
-    const handleIngredientChange = (index: number, value: string) => {
+    const handleIngredientChange = (index: number, value: RecipeIngredient) => {
         if (newRecipe) {
             const updatedIngredients = [...newRecipe.ingredients];
             updatedIngredients[index] = value;
@@ -42,7 +44,7 @@ export default function Edit(props:EditProps){
         if (newRecipe) {
             setNewRecipe((prevRecipe) => ({
                 ...prevRecipe!,
-                ingredients: [...prevRecipe!.ingredients, ""],
+                ingredients: [...prevRecipe!.ingredients, {quantity:0,ingredient:{id:"",name:""}}],
             }));
         }
     };
@@ -72,6 +74,7 @@ export default function Edit(props:EditProps){
                     console.log("Error updating recipe:", error);
                 });
         }
+        navigate(`/details/${id}`);
     };
 
     return (
@@ -136,7 +139,7 @@ export default function Edit(props:EditProps){
                                 <input
                                     type="text"
                                     placeholder={`Ingredient ${index + 1}`}
-                                    value={ingredient}
+                                    value={ingredient.ingredient.name}
                                     onChange={(e) => handleIngredientChange(index, e.target.value)}
                                     required
                                 />

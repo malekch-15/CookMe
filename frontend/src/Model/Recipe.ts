@@ -1,4 +1,5 @@
 import {Status} from "./Status.ts";
+import {RecipeIngredient} from "./RecipeIngredient.ts";
 
 export type Recipe={
     id:string,
@@ -8,5 +9,5 @@ export type Recipe={
     imageUrl:string,
     preparation:string,
     status:Status,
-    ingredients:string[]
+    ingredients:RecipeIngredient[]
 }
