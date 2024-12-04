@@ -1,9 +1,6 @@
 package cookme.services;
 
-import cookme.recipesmodel.Ingredient;
-import cookme.recipesmodel.Recipes;
-import cookme.recipesmodel.RecipesDto;
-import cookme.recipesmodel.Status;
+import cookme.recipesmodel.*;
 import cookme.repository.RecipesRepo;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -21,9 +18,9 @@ class RecipesServiceTest {
     private final RecipesRepo mockrecipesRepo = mock(RecipesRepo.class);
     @InjectMocks
     private RecipesService recipesService = new RecipesService(mockrecipesRepo);
-    Ingredient ingredient1=new Ingredient("1","Eggs",3);
-    Ingredient ingredient2=new Ingredient("2","Potatoes",4);
-    List<Ingredient> ingredients = List.of(ingredient1,ingredient2);
+    BaseIngredient ingredient1=new BaseIngredient("1","Eggs");
+    RecipeIngredient recipeIngredient=new RecipeIngredient(2,ingredient1.id());
+    List<RecipeIngredient> ingredients = List.of(recipeIngredient);
     Recipes recipe1 = new Recipes("1", "a", "a", 12, "a",
             "a", Status.FAVORITE, ingredients);
     Recipes recipe2 = new Recipes("2", "a", "a", 12, "a",

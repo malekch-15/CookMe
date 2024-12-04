@@ -1,6 +1,7 @@
 package cookme.controller;
 
-import cookme.recipesmodel.Ingredient;
+import cookme.recipesmodel.BaseIngredient;
+import cookme.recipesmodel.RecipeIngredient;
 import cookme.recipesmodel.Recipes;
 import cookme.recipesmodel.Status;
 import cookme.repository.RecipesRepo;
@@ -30,11 +31,16 @@ class RecipesControllerTest {
     @BeforeEach
     void setup() {
         recipesRepo.deleteAll();
-        Ingredient ingredient1=new Ingredient("1","Eggs",3);
-        Ingredient ingredient2=new Ingredient("2","Potatoes",4);
-        List<Ingredient> ingredients = List.of(ingredient1,ingredient2);
+//                           Ingredient
+        BaseIngredient ingredient1=new BaseIngredient("1","Eggs");
+        BaseIngredient ingredient2=new BaseIngredient("2","Potatoes");
+//                           RecipeIngredient
+        RecipeIngredient ingredients = new RecipeIngredient(2,ingredient1.id());
+        RecipeIngredient ingredients2 = new RecipeIngredient(2,ingredient2.id());
+        List<RecipeIngredient> ingredientsList= List.of(ingredients,ingredients2);
+//                                 Recipe
         Recipes recipe1 = new Recipes("1", "a", "a", 12, "a",
-                "a", Status.FAVORITE, ingredients);
+                "a", Status.FAVORITE, ingredientsList);
 
         recipesRepo.save(recipe1);
     }
@@ -57,9 +63,15 @@ class RecipesControllerTest {
                         "imageUrl": "a",
                         "preparation": "a",
                         "status": "FAVORITE",
-                        "ingredients": [{ "id": "1", "name": "Eggs", "quantity": 3 },
-                                        { "id": "2", "name": "Potatoes", "quantity": 4 }
-                                       ]
+                        "ingredients":[ {
+                                             "quantity": 2,
+                                             "ingredientId": "1"
+                                           },
+                                           {
+                                             "quantity": 2,
+                                             "ingredientId": "2"
+                                           }
+                                         ]
                         }
                         ]
                         """));
@@ -78,8 +90,15 @@ class RecipesControllerTest {
                         "imageUrl": "a",
                         "preparation": "a",
                         "status": "FAVORITE",
-                        "ingredients": [{ "id": "1", "name": "Eggs", "quantity": 3 },
-                                        { "id": "2", "name": "Potatoes", "quantity": 4 }]
+                        "ingredients": [ {
+                                             "quantity": 2,
+                                             "ingredientId": "1"
+                                           },
+                                           {
+                                             "quantity": 2,
+                                             "ingredientId": "2"
+                                           }
+                                         ]
                          }
                         
                         """));
@@ -96,8 +115,15 @@ class RecipesControllerTest {
                         "imageUrl": "a",
                         "preparation": "a",
                         "status": "FAVORITE",
-                        "ingredients": [{ "id": "1", "name": "Eggs", "quantity": 3 },
-                                        { "id": "2", "name": "Potatoes", "quantity": 4 }]
+                        "ingredients":[ {
+                                             "quantity": 2,
+                                             "ingredientId": "1"
+                                           },
+                                           {
+                                             "quantity": 2,
+                                             "ingredientId": "2"
+                                           }
+                                         ]
                          }
                         
                         """)
@@ -111,8 +137,15 @@ class RecipesControllerTest {
                         "imageUrl": "a",
                         "preparation": "a",
                         "status": "FAVORITE",
-                        "ingredients": [{ "id": "1", "name": "Eggs", "quantity": 3 },
-                                        { "id": "2", "name": "Potatoes", "quantity": 4 }]
+                        "ingredients": [ {
+                                             "quantity": 2,
+                                             "ingredientId": "1"
+                                           },
+                                           {
+                                             "quantity": 2,
+                                             "ingredientId": "2"
+                                           }
+                                         ]
                          }
                         
                         """)
@@ -138,8 +171,15 @@ class RecipesControllerTest {
                         "imageUrl": "a",
                         "preparation": "a",
                         "status": "FAVORITE",
-                        "ingredients": [{ "id": "1", "name": "Eggs", "quantity": 3 },
-                                        { "id": "2", "name": "Potatoes", "quantity": 4 }]
+                        "ingredients": [ {
+                                             "quantity": 2,
+                                             "ingredientId": "1"
+                                           },
+                                           {
+                                             "quantity": 2,
+                                             "ingredientId": "2"
+                                           }
+                                         ]
                          }
                       """)).andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json("""
@@ -149,8 +189,15 @@ class RecipesControllerTest {
                         "imageUrl": "a",
                         "preparation": "a",
                         "status": "FAVORITE",
-                        "ingredients": [{ "id": "1", "name": "Eggs", "quantity": 3 },
-                                        { "id": "2", "name": "Potatoes", "quantity": 4 }]
+                        "ingredients": [ {
+                                             "quantity": 2,
+                                             "ingredientId": "1"
+                                           },
+                                           {
+                                             "quantity": 2,
+                                             "ingredientId": "2"
+                                           }
+                                         ]
                         }
 """)).andExpect(jsonPath("$.id").isNotEmpty());
     }
