@@ -1,9 +1,11 @@
 import {Recipe} from "../Model/Recipe.ts";
 import React, {ChangeEvent, useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
+import {BaseIngredient} from "../Model/BaseIngredient.ts";
 type EditProps={
     recipe:Recipe
     updateRecipe:(newRecipe:Recipe,id:string)=>void
+    addIngredient:(ingredient:BaseIngredient)=>void
 }
 export default function Edit(props:EditProps){
     const { id } = useParams<{ id: string }>();
@@ -40,6 +42,7 @@ export default function Edit(props:EditProps){
                         name: event.target.value,
                     },
                 };
+
             } else if (field === 'quantity') {
                 updatedIngredients[index] = {
                     ...updatedIngredients[index],
@@ -54,10 +57,16 @@ export default function Edit(props:EditProps){
     };
 
     const addIngredient = () => {
-        if (newRecipe) {
+        const newIngredientname =prompt("add new ingredient")
+        if (newIngredientname) {
+            const newIngredient: BaseIngredient={
+                id:"",
+                name:newIngredientname
+            }
+            props.addIngredient(newIngredient)
             setNewRecipe((prevRecipe) => ({
                 ...prevRecipe!,
-                ingredients: [...prevRecipe!.ingredients, {quantity:0,ingredient:{id:"",name:""}}],
+                ingredients: [...prevRecipe!.ingredients, {quantity:0,ingredient:{id:"",name:newIngredientname}}],
             }));
         }
     };

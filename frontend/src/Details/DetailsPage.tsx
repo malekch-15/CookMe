@@ -4,11 +4,13 @@ import Edit from "./Edit.tsx";
 import React, {useEffect, useState} from "react";
 import {Recipe} from "../Model/Recipe.ts";
 import axios from "axios";
+import {BaseIngredient} from "../Model/BaseIngredient.ts";
 
 type DetailsPagesProps = {
     setRecipes: React.Dispatch<React.SetStateAction<Recipe[]>>
+    addIngredient:(ingredient:BaseIngredient)=>void
 }
-export default function DetailsPage({setRecipes}: DetailsPagesProps) {
+export default function DetailsPage({setRecipes,addIngredient}: DetailsPagesProps) {
     const para = useParams<{ id: string }>()
     const [recipe, setRecipe] = useState<Recipe | null>(null);
     const fetchDetails = () => {
@@ -40,7 +42,7 @@ export default function DetailsPage({setRecipes}: DetailsPagesProps) {
 
         <Routes>
             <Route index element={<Details recipe={recipe}/>}/>
-            <Route path={"edit"} element={<Edit recipe={recipe} updateRecipe={updateRecipe}/>}/>
+            <Route path={"edit"} element={<Edit recipe={recipe} updateRecipe={updateRecipe} addIngredient={addIngredient}/>}/>
         </Routes>
     )
 }
