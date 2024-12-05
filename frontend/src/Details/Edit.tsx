@@ -1,11 +1,9 @@
 import {Recipe} from "../Model/Recipe.ts";
 import React, {ChangeEvent, useState} from "react";
-import axios from "axios";
 import {useNavigate, useParams} from "react-router-dom";
-import {RecipeIngredient} from "../Model/RecipeIngredient.ts";
 type EditProps={
     recipe:Recipe
-    setRecipes: React.Dispatch<React.SetStateAction<Recipe[]>>
+    updateRecipe:(newRecipe:Recipe,id:string)=>void
 }
 export default function Edit(props:EditProps){
     const { id } = useParams<{ id: string }>();
@@ -29,10 +27,25 @@ export default function Edit(props:EditProps){
         }
     };
 
-    const handleIngredientChange = (index: number, value: RecipeIngredient) => {
+    const handleIngredientChange = (index: number, event: React.ChangeEvent<HTMLInputElement>, field: string) => {
         if (newRecipe) {
+
             const updatedIngredients = [...newRecipe.ingredients];
-            updatedIngredients[index] = value;
+
+            if (field === 'name') {
+                updatedIngredients[index] = {
+                    ...updatedIngredients[index],
+                    ingredient: {
+                        ...updatedIngredients[index].ingredient,
+                        name: event.target.value,
+                    },
+                };
+            } else if (field === 'quantity') {
+                updatedIngredients[index] = {
+                    ...updatedIngredients[index],
+                    quantity:parseFloat( event.target.value),
+                };
+            }
             setNewRecipe((prevRecipe) => ({
                 ...prevRecipe!,
                 ingredients: updatedIngredients,
@@ -61,27 +74,22 @@ export default function Edit(props:EditProps){
 
     const handleSubmit = (e: React.FormEvent) => {
        e.preventDefault();
-
         if (id && newRecipe) {
-            axios
-                .put(`/api/cookMe/update/${id}`, newRecipe)
-                .then((response) => {
-                    props.setRecipes((prev)=> prev. map((p)=>p.id==id ? response.data: p
-                    ))
-                    setMessage("Recipe updated successfully!");
-                })
-                .catch((error) => {
-                    console.log("Error updating recipe:", error);
-                });
+            props.updateRecipe(newRecipe,id)
+            setMessage("Recipe updated successfully!");
+            setTimeout(() => {
+                navigate(`/details/${id}`);
+            }, 1000); // Adjust the delay (in milliseconds) as needed
+
         }
-        navigate(`/details/${id}`);
+
     };
 
     return (
         <div>
             <h1>Edit Recipe</h1>
             {newRecipe && (
-                <form className="addRecipeForm" onSubmit={handleSubmit}>
+                <form className="addRecipeForm" >
                     <div className="addRecipe">
                         <input
                             type="text"
@@ -134,29 +142,40 @@ export default function Edit(props:EditProps){
                             <option value="FAVORITE">Favorite</option>
                         </select>
                         <label>Ingredients:</label>
+                        <div className="ingredients_button">
+
+                            <button type="button" onClick={addIngredient}>
+                                Add Ingredient
+                            </button>
+                        </div>
                         {newRecipe.ingredients.map((ingredient, index) => (
-                            <div key={index} style={{ display: "flex", alignItems: "center" }}>
-                                <input
-                                    type="text"
-                                    placeholder={`Ingredient ${index + 1}`}
-                                    value={ingredient.ingredient.name}
-                                    onChange={(e) => handleIngredientChange(index, e.target.value)}
-                                    required
-                                />
-                                <div className="ingredients_button">
-                                    <button type="button" onClick={() => removeIngredient(index)}>
-                                        Remove
-                                    </button>
-                                    <button type="button" onClick={addIngredient}>
-                                        Add Ingredient
-                                    </button>
+                            <div key={index}>
+                                <div className="ingredient-row">
+                                    <input
+                                        type="text"
+                                        placeholder={`Ingredient ${index + 1}`}
+                                        value={ingredient.ingredient.name}
+                                        onChange={(e) => handleIngredientChange(index, e, 'name')}
+                                        required
+                                    />
+                                    <input
+                                        type="number"
+                                        placeholder="Quantity"
+                                        value={ingredient.quantity} // Display the current quantity
+                                        onChange={(e) => handleIngredientChange(index, e, 'quantity')} // Handle quantity change
+                                        required
+                                    />
+
                                 </div>
+                                <button type="button" onClick={() => removeIngredient(index)}>
+                                    Remove
+                                </button>
                             </div>
                         ))}
                     </div>
                     <div>
                     </div>
-                    <button type="submit">Update Recipe</button>
+                    <button type="submit" onSubmit={handleSubmit}>Update Recipe</button>
                     {message && <p>{message}</p>} {/* Feedback for user */}
                 </form>
             )}

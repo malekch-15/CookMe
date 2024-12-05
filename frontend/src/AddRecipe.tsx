@@ -33,7 +33,18 @@ export default function AddRecipe(props:addProps) {
             setPreparationRows(Math.max(4, lines)); // Set at least 4 rows
         }
     };
+    const handleAddRecipeIngredient = (ingredientId: string, quantity: number) => {
+        const recipeIngredient = { quantity, ingredient: { id: ingredientId } };
 
+        axios
+            .post("/api/recipeIngredient", recipeIngredient) // Adjust endpoint as needed
+            .then((response) => {
+                console.log("Recipe ingredient added successfully:", response.data);
+            })
+            .catch((error) => {
+                console.error("Failed to add recipe ingredient", error);
+            });
+    };
 
     const handleIngredientChange = (index: number, value:RecipeIngredient) => {
         const updatedIngredients = [...recipe.ingredients];

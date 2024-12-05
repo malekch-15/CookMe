@@ -75,3 +75,28 @@ gap: 10px;
 align-items: center;
 flex-direction: row;
 }
+.ingredient-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center; /* Aligns items vertically centered */
+    gap: 10px; /* Adds space between the inputs */
+}
+
+.ingredient-row input {
+    flex: 1; /* Ensures inputs take equal width */
+    padding: 5px;
+}
+
+input[type="number"] {
+    width: 80px; /* Optional: Set the width of the quantity input */
+}
+input[type="text"] {
+    width: 80px; /* Optional: Set the width of the quantity input */
+}
+.ingredients_button{
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    align-items: center; /* Aligns items vertically centered */
+    gap: 10px; /* Adds space between the inputs */
+}

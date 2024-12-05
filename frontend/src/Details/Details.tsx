@@ -6,7 +6,7 @@ type DetailsProps={
 }
 
 export default function Details({recipe}:DetailsProps) {
-
+console.log(recipe)
     const navigate= useNavigate()
 
     const handleEdit = (id: string) => {
