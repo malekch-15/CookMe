@@ -8,9 +8,9 @@ import {BaseIngredient} from "../Model/BaseIngredient.ts";
 
 type DetailsPagesProps = {
     setRecipes: React.Dispatch<React.SetStateAction<Recipe[]>>
-    addIngredient:(ingredient:BaseIngredient)=>void
+    ingredient:BaseIngredient[]
 }
-export default function DetailsPage({setRecipes,addIngredient}: DetailsPagesProps) {
+export default function DetailsPage({setRecipes,ingredient}: DetailsPagesProps) {
     const para = useParams<{ id: string }>()
     const [recipe, setRecipe] = useState<Recipe | null>(null);
     const fetchDetails = () => {
@@ -42,7 +42,7 @@ export default function DetailsPage({setRecipes,addIngredient}: DetailsPagesProp
 
         <Routes>
             <Route index element={<Details recipe={recipe}/>}/>
-            <Route path={"edit"} element={<Edit recipe={recipe} updateRecipe={updateRecipe} addIngredient={addIngredient}/>}/>
+            <Route path={"edit"} element={<Edit recipe={recipe} updateRecipe={updateRecipe} ingredient={ingredient}/>}/>
         </Routes>
     )
 }

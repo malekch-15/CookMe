@@ -13,7 +13,7 @@ export default function Home(props:HomeProps){
     const filteredRecipes = props.recipe.filter((recipe) =>
         recipe.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         recipe.ingredients.some((ingredient) =>
-            ingredient.toLowerCase().includes(searchQuery.toLowerCase())
+            ingredient.ingredient.name.toLowerCase().includes(searchQuery.toLowerCase())
         )
     );
 

@@ -5,7 +5,7 @@ import {BaseIngredient} from "../Model/BaseIngredient.ts";
 type EditProps={
     recipe:Recipe
     updateRecipe:(newRecipe:Recipe,id:string)=>void
-    addIngredient:(ingredient:BaseIngredient)=>void
+    ingredient:BaseIngredient[]
 }
 export default function Edit(props:EditProps){
     const { id } = useParams<{ id: string }>();
@@ -27,6 +27,27 @@ export default function Edit(props:EditProps){
             const lines = value.split("\n").length;
             setPreparationRows(Math.max(4, lines));
         }
+    };
+    const handleIngredientSelection = (index: number, event: React.ChangeEvent<HTMLInputElement>) => {
+        const selectedIngredientName = event.target.value;
+        const selectedIngredient = props.ingredient.find(
+            (ingredient) => ingredient.name === selectedIngredientName
+        );
+        console.log(selectedIngredient)
+
+            const updatedIngredients = [...newRecipe.ingredients];
+            updatedIngredients[index] = {
+                ...updatedIngredients[index],
+                ingredient: {
+                    id: selectedIngredient?.id??"",
+                    name: selectedIngredientName,
+                },
+            };
+            setNewRecipe((prevRecipe) => ({
+                ...prevRecipe!,
+                ingredients: updatedIngredients,
+            }));
+
     };
 
     const handleIngredientChange = (index: number, event: React.ChangeEvent<HTMLInputElement>, field: string) => {
@@ -57,18 +78,16 @@ export default function Edit(props:EditProps){
     };
 
     const addIngredient = () => {
-        const newIngredientname =prompt("add new ingredient")
-        if (newIngredientname) {
+
             const newIngredient: BaseIngredient={
                 id:"",
-                name:newIngredientname
+                name:""
             }
-            props.addIngredient(newIngredient)
             setNewRecipe((prevRecipe) => ({
                 ...prevRecipe!,
-                ingredients: [...prevRecipe!.ingredients, {quantity:0,ingredient:{id:"",name:newIngredientname}}],
+                ingredients: [...prevRecipe!.ingredients, {quantity:0,ingredient:{id:"",name:newIngredient.name}}],
             }));
-        }
+
     };
 
     const removeIngredient = (index: number) => {
@@ -98,7 +117,7 @@ export default function Edit(props:EditProps){
         <div>
             <h1>Edit Recipe</h1>
             {newRecipe && (
-                <form className="addRecipeForm" >
+                <form className="addRecipeForm" onSubmit={handleSubmit}>
                     <div className="addRecipe">
                         <input
                             type="text"
@@ -152,7 +171,6 @@ export default function Edit(props:EditProps){
                         </select>
                         <label>Ingredients:</label>
                         <div className="ingredients_button">
-
                             <button type="button" onClick={addIngredient}>
                                 Add Ingredient
                             </button>
@@ -161,31 +179,35 @@ export default function Edit(props:EditProps){
                             <div key={index}>
                                 <div className="ingredient-row">
                                     <input
-                                        type="text"
-                                        placeholder={`Ingredient ${index + 1}`}
+                                        list="ingredient-options"
                                         value={ingredient.ingredient.name}
-                                        onChange={(e) => handleIngredientChange(index, e, 'name')}
+                                        onChange={(e) => handleIngredientSelection(index, e)}
+                                        placeholder="Search ingredient"
                                         required
                                     />
+                                    {/*<datalist id="ingredient-options">*/}
+                                    {/*    {props.ingredient.map((ing) => (*/}
+                                    {/*        <option key={ing.id} value={ing.name} />*/}
+                                    {/*    ))}*/}
+                                    {/*</datalist>*/}
                                     <input
                                         type="number"
                                         placeholder="Quantity"
-                                        value={ingredient.quantity} // Display the current quantity
-                                        onChange={(e) => handleIngredientChange(index, e, 'quantity')} // Handle quantity change
+                                        value={ingredient.quantity}
+                                        onChange={(e) => handleIngredientChange(index, e, 'quantity')}
                                         required
                                     />
-
                                 </div>
                                 <button type="button" onClick={() => removeIngredient(index)}>
                                     Remove
                                 </button>
                             </div>
                         ))}
-                    </div>
                     <div>
                     </div>
-                    <button type="submit" onSubmit={handleSubmit}>Update Recipe</button>
+                    <button type="submit" >Update Recipe</button>
                     {message && <p>{message}</p>} {/* Feedback for user */}
+                    </div>
                 </form>
             )}
         </div>
