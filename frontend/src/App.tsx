@@ -11,12 +11,12 @@ import DetailsPage from "./Details/DetailsPage.tsx";
 import WishList from "./WishList.tsx";
 import {Status} from "./Model/Status.ts";
 import Ingredient from "./Ingredient.tsx";
-import {BaseIngredient} from "./Model/BaseIngredient.ts";
+
 
 
 function App() {
     const [recipes, setRecipe] = useState<Recipe[]>([]);
-    const [ingredients,setIngredients]=useState<BaseIngredient []>([])
+
 
     const fetchRecipe = () => {
         axios.get("/api/cookMe")
@@ -48,24 +48,7 @@ function App() {
          setRecipe((prev)=>prev.map((p)=>p.id===id?response.data:p))
          )
     }
-    const FetchIngredient=()=>{
-        axios.get("api/ingredient")
-            .then((response)=>setIngredients(response.data))
-            .catch((error)=>{ console.log("no Ingredients ",error)})
-    }
-    useEffect(
-        FetchIngredient,[]
-    )
-    const handelAddIngredient = (newIngredient: Omit<BaseIngredient, "id">) => {
-        axios
-            .post("/api/ingredient", newIngredient) // Backend expects only the name
-            .then((response) => {
-                setIngredients((prev) => [...prev, response.data]); // Response will include id
-            })
-            .catch((error) => {
-                console.error("Failed to add ingredient", error);
-            });
-    };
+
 
 
     return (
@@ -77,7 +60,7 @@ function App() {
                     <Route path={"/details/:id/*"} element={<DetailsPage setRecipes={setRecipe}/>}/>
                     <Route path={"/WishList"} element={<WishList recipe={recipes} onToggleWishlist={handelToggelWishList} onDelete={handelDelete}/>}/>
                     <Route path={"/New_Recipe"} element={<AddRecipe setRecipe={setRecipe}/>}/>
-                     <Route path={"/Ingredient"} element={<Ingredient addIngredient={handelAddIngredient} ingredient={ingredients}/>}/>
+                     <Route path={"/Ingredient"} element={<Ingredient/>}/>
                 </Routes>
                 <Footer/>
             </div>
