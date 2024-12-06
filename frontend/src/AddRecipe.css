@@ -134,3 +134,9 @@ p {
     font-weight: bold;
     color: green;
 }
+.ingredients-field{
+    display: flex
+;
+    flex-direction: row;
+    justify-content: space-around;
+}

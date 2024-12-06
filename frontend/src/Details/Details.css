@@ -95,8 +95,8 @@ input[type="text"] {
 }
 .ingredients_button{
     display: flex;
-    justify-content: center;
-    flex-direction: row;
+    justify-content: flex-start;
+    flex-direction: row-reverse;
     align-items: center; /* Aligns items vertically centered */
     gap: 10px; /* Adds space between the inputs */
 }

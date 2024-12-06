@@ -28,7 +28,7 @@ export default function Edit(props:EditProps){
             setPreparationRows(Math.max(4, lines));
         }
     };
-    const handleIngredientSelection = (index: number, event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleIngredientSelection = (index: number, event: React.ChangeEvent<HTMLInputElement|HTMLSelectElement>) => {
         const selectedIngredientName = event.target.value;
         const selectedIngredient = props.ingredient.find(
             (ingredient) => ingredient.name === selectedIngredientName
@@ -55,16 +55,7 @@ export default function Edit(props:EditProps){
 
             const updatedIngredients = [...newRecipe.ingredients];
 
-            if (field === 'name') {
-                updatedIngredients[index] = {
-                    ...updatedIngredients[index],
-                    ingredient: {
-                        ...updatedIngredients[index].ingredient,
-                        name: event.target.value,
-                    },
-                };
-
-            } else if (field === 'quantity') {
+            if (field === 'quantity') {
                 updatedIngredients[index] = {
                     ...updatedIngredients[index],
                     quantity:parseFloat( event.target.value),
@@ -178,18 +169,19 @@ export default function Edit(props:EditProps){
                         {newRecipe.ingredients.map((ingredient, index) => (
                             <div key={index}>
                                 <div className="ingredient-row">
-                                    <input
-                                        list="ingredient-options"
-                                        value={ingredient.ingredient.name}
-                                        onChange={(e) => handleIngredientSelection(index, e)}
-                                        placeholder="Search ingredient"
+                                    <select
+                                        value={ingredient.ingredient.name} // Select the current ingredient name
+                                        onChange={(e) =>
+                                            handleIngredientSelection(index, e)}
                                         required
-                                    />
-                                    {/*<datalist id="ingredient-options">*/}
-                                    {/*    {props.ingredient.map((ing) => (*/}
-                                    {/*        <option key={ing.id} value={ing.name} />*/}
-                                    {/*    ))}*/}
-                                    {/*</datalist>*/}
+                                    >
+                                        <option value="">Select an ingredient</option>
+                                        {props.ingredient.map((ing) => (
+                                            <option key={ing.id} value={ing.name}>
+                                                {ing.name}
+                                            </option>
+                                        ))}
+                                    </select>
                                     <input
                                         type="number"
                                         placeholder="Quantity"
@@ -203,10 +195,10 @@ export default function Edit(props:EditProps){
                                 </button>
                             </div>
                         ))}
-                    <div>
-                    </div>
-                    <button type="submit" >Update Recipe</button>
-                    {message && <p>{message}</p>} {/* Feedback for user */}
+                        <div>
+                        </div>
+                        <button type="submit">Update Recipe</button>
+                        {message && <p>{message}</p>} {/* Feedback for user */}
                     </div>
                 </form>
             )}

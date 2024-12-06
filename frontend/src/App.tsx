@@ -79,7 +79,8 @@ const handelAddIngredient=(newIngredient:BaseIngredient)=>{
                     <Route path={"/"} element={ <Home recipe={recipes} onDelete={handelDelete} onToggleWishlist={handelToggelWishList}/>}/>
                     <Route path={"/details/:id/*"} element={<DetailsPage setRecipes={setRecipe} ingredient={ingredient}/>}/>
                     <Route path={"/WishList"} element={<WishList recipe={recipes} onToggleWishlist={handelToggelWishList} onDelete={handelDelete}/>}/>
-                    <Route path={"/New_Recipe"} element={<AddRecipe setRecipe={setRecipe}/>}/>
+                    <Route path={"/New_Recipe"} element={<AddRecipe setRecipe={setRecipe} ingredient={ingredient} newIngredient={newingredient}
+                                                                    onAddIngredient={handelAddIngredient}/>}/>
                     <Route path={"/Ingredient"} element={<Ingredient ingredient={ingredient}/>}/>
 
                 </Routes>
