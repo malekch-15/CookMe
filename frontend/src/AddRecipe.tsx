@@ -1,11 +1,11 @@
-import React, {ChangeEvent, SyntheticEvent, useState} from "react";
+import React, {ChangeEvent, useEffect, useState} from "react";
 import {Recipe} from "./Model/Recipe";
 import axios from "axios";
 import "./AddRecipe.css"
 import {Autocomplete, createFilterOptions, TextField} from "@mui/material";
 import { styled } from "@mui/material/styles";
 import {BaseIngredient} from "./Model/BaseIngredient.ts";
-const filter = createFilterOptions<BaseIngredient>();
+const filter = createFilterOptions<unknown>();
 
 const CustomAutocomplete = styled(Autocomplete)(() => ({
     width: '300px',
@@ -24,9 +24,10 @@ type addProps= {
     setRecipe: React.Dispatch<React.SetStateAction<Recipe[]>>
     ingredient :BaseIngredient[]
     newIngredient:BaseIngredient
-    onAddIngredient:(ingredient:BaseIngredient)=>void
+    onAddIngredient:(name:string)=>void
 }
 export default function AddRecipe(props:addProps) {
+
     const [newRecipe, setNewRecipe] = useState<Recipe>({
         id: "",
         name: "",
@@ -61,51 +62,48 @@ if(newRecipe){
         newIngredient[index]={
             ...newIngredient[index],quantity:parseFloat(event.target.value)
         }
-    }else if(field==='name'){
-        const selectedIngredientName=event.target.value
-        const selectedIngredient=props.ingredient.find(
-            (ingredient) => ingredient.name === selectedIngredientName
-        );
-        console.log(selectedIngredient)
-       newIngredient[index]={
-            ...newIngredient[index],ingredient:{id: selectedIngredient?.id??"",
-                                               name:selectedIngredientName
-            }
-       }
     }
     setNewRecipe((prev)=>({...prev,ingredients:newIngredient}))
 
 }
 
     };
-    const handleIngredientNameChange = (index: number, value:unknown, field: string) => {
-        if(newRecipe){
-            const newIngredient=[...newRecipe.ingredients]
-             if(field==='name'){
-                 const selectedIngredient = props.ingredient.find((ingredient) => ingredient.name === value);
-                 newIngredient[index] = {
-                     ...newIngredient[index],
-                     ingredient: {
-                         id: selectedIngredient?.id || "",
-                         name: value as string,
-                     },
-                 };
-            }
-            setNewRecipe((prev)=>({...prev,ingredients:newIngredient}))
+    const handleIngredientNameChange = async (index: number, value: unknown) => {
+        if (!value) return;
 
+        const newIngredients = [...newRecipe.ingredients];
+
+        if (typeof value === "string") {
+            // User entered a new ingredient name
+            const addedIngredient = await props.onAddIngredient(value);
+            if (addedIngredient) {
+                newIngredients[index].ingredient = addedIngredient; // Use the added ingredient with its id
+            }
+        } else {
+            // User selected an existing ingredient
+            const selectedIngredient = props.ingredient.find((ing) => ing.name === value);
+            if (selectedIngredient) {
+                newIngredients[index].ingredient = selectedIngredient;
+            }
         }
 
+        setNewRecipe((prev) => ({ ...prev, ingredients: newIngredients }));
     };
 
 
     const addIngredient = () => {
-
         setNewRecipe((prevRecipe) => ({
-            ...prevRecipe!,
-            ingredients: [...prevRecipe!.ingredients, {quantity:0,ingredient:{id:"",name:props.newIngredient.name}}],
+            ...prevRecipe,
+            ingredients: [
+                ...prevRecipe.ingredients,
+                { quantity: 0, ingredient: { id: "", name: "" } },
+            ],
         }));
     };
 
+    useEffect(() => {
+        console.log("Updated newRecipe:", newRecipe);
+    }, [newRecipe]);
 
     const removeIngredient = (index: number) => {
         const updatedIngredients = newRecipe.ingredients.filter((_, i) => i !== index);
@@ -121,7 +119,8 @@ if(newRecipe){
 
             axios.post(`/api/cookMe/add`, newRecipe).then(response=>{
                 setNewRecipe(response.data)
-                setMessage("Recipe added successfully!");
+                setMessage("Recipe added success" +
+                    "fully!");
                 props.setRecipe(prevState => [...prevState,response.data])
             }).catch (error=> { console.log("recipe not added",error)})
         }
@@ -194,42 +193,30 @@ if(newRecipe){
                         <div className="ingredients-field">
                             <CustomAutocomplete
                                 value={ingredient.ingredient.name || ""}
-                                onChange={(_event: SyntheticEvent<Element, Event>, newValue: BaseIngredient | string | null) => {
-                                    if (typeof newValue === "string") {
-                                        // Free text input
-                                        handleIngredientNameChange(index, newValue, "name");
-                                    } else if (newValue && "name" in newValue) {
-                                        // Existing option selected
-                                        handleIngredientNameChange(index, newValue.name, "name");
-                                    }
+                                onChange={async (_event, newValue) => {
+                                    await handleIngredientNameChange(index, newValue);
                                 }}
                                 freeSolo
-                                filterOptions={(options: BaseIngredient[], params) => {
-                                    const filtered = filter(options, params); // Cast options to BaseIngredient[]
-
+                                filterOptions={(options, params) => {
+                                    const filtered = filter(options, params);
                                     const { inputValue } = params;
-                                    // Suggest adding a new option
-                                    const isExisting = options.some((option) => option.name === inputValue);
+
+                                    const isExisting = options.some(
+                                        (option) => option.name.toLowerCase() === inputValue.toLowerCase()
+                                    );
+
                                     if (inputValue !== "" && !isExisting) {
-                                        filtered.push({ id: "", name: inputValue });
+                                        filtered.push({ id: "", name: inputValue }); // Add a temporary ingredient
                                     }
+
                                     return filtered;
                                 }}
-                                selectOnFocus
-                                clearOnBlur
-                                handleHomeEndKeys
-                                options={props.ingredient} // Already typed as BaseIngredient[]
-                                getOptionLabel={(option) => {
-                                    if (typeof option === "string") return option; // Free text
-                                    return option.name; // BaseIngredient option
-                                }}
+                                options={props.ingredient}
+                                getOptionLabel={(option) => (typeof option === "string" ? option : option.name)}
                                 renderOption={(props, option) => (
-                                    <li {...props}>
-                                        {option.name}
-                                    </li>
+                                    <li {...props}>{typeof option === "string" ? option : option.name}</li>
                                 )}
                                 renderInput={(params) => <TextField {...params} label="Ingredient Name" />}
-                                sx={{ width: 300 }}
                             />
 
                             <input

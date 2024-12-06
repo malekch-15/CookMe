@@ -57,13 +57,24 @@ function App() {
          )
     }
 
-const handelAddIngredient=(newIngredient:BaseIngredient)=>{
-        axios.post(`/api/ingredient`, newIngredient)
-            .then((response)=>{
-                setNewIngredient(response.data)
-                setIngredient(prev=>[...prev,response.data])
-            }).catch((error)=>console.log("no ingredient saved"+error))
-}
+    const handelAddIngredient = async (name: string): Promise<BaseIngredient> => {
+        try {
+            const response = await axios.post(`/api/ingredient`, { id: "", name });
+            const addedIngredient = response.data;
+
+            // Update global ingredients and new ingredient
+            setIngredient((prev) => [...prev, addedIngredient]);
+            setNewIngredient(addedIngredient);
+
+            console.log("Ingredient added:", addedIngredient);
+            return addedIngredient; // Return the newly added ingredient
+        } catch (error) {
+            console.error("Error adding ingredient:", error);
+            alert("Failed to add the ingredient. Please try again.");
+            return  Promise.reject(error);
+        }
+    };
+
     const fetchIngredient=()=>{
         axios.get("/api/ingredient")
             .then((response)=>{
@@ -81,7 +92,7 @@ const handelAddIngredient=(newIngredient:BaseIngredient)=>{
                     <Route path={"/WishList"} element={<WishList recipe={recipes} onToggleWishlist={handelToggelWishList} onDelete={handelDelete}/>}/>
                     <Route path={"/New_Recipe"} element={<AddRecipe setRecipe={setRecipe} ingredient={ingredient} newIngredient={newingredient}
                                                                     onAddIngredient={handelAddIngredient}/>}/>
-                    <Route path={"/Ingredient"} element={<Ingredient ingredient={ingredient}/>}/>
+                    <Route path={"/Ingredient"} element={<Ingredient ingredient={ingredient} onAddIngredient={handelAddIngredient} setIngredient={setIngredient}/>}/>
 
                 </Routes>
                 <Footer/>
