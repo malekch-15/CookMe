@@ -2,9 +2,11 @@ import React, {ChangeEvent, SyntheticEvent, useState} from "react";
 import {Recipe} from "./Model/Recipe";
 import axios from "axios";
 import "./AddRecipe.css"
-import {Autocomplete, Stack, TextField} from "@mui/material";
+import {Autocomplete, createFilterOptions, TextField} from "@mui/material";
 import { styled } from "@mui/material/styles";
 import {BaseIngredient} from "./Model/BaseIngredient.ts";
+const filter = createFilterOptions<BaseIngredient>();
+
 const CustomAutocomplete = styled(Autocomplete)(() => ({
     width: '300px',
     backgroundColor: '#f9f9f9',
@@ -190,19 +192,47 @@ if(newRecipe){
                 {newRecipe.ingredients.map((ingredient, index) => (
                     <div key={index}>
                         <div className="ingredients-field">
-
-                        <Stack spacing={2} sx={{width: 500}}>
                             <CustomAutocomplete
-                                id="ingtedient-name"
-                                freeSolo
                                 value={ingredient.ingredient.name || ""}
-                                onChange={(_event: SyntheticEvent<Element,Event>, value: unknown)=> handleIngredientNameChange(index,value,'name')}
-                                options={props.ingredient.map((i) => i.name)}
-                                renderInput={(params) => <TextField {...params} label="ingredient name"/>}
-                            />
-                        </Stack>
+                                onChange={(_event: SyntheticEvent<Element, Event>, newValue: BaseIngredient | string | null) => {
+                                    if (typeof newValue === "string") {
+                                        // Free text input
+                                        handleIngredientNameChange(index, newValue, "name");
+                                    } else if (newValue && "name" in newValue) {
+                                        // Existing option selected
+                                        handleIngredientNameChange(index, newValue.name, "name");
+                                    }
+                                }}
+                                freeSolo
+                                filterOptions={(options: BaseIngredient[], params) => {
+                                    const filtered = filter(options, params); // Cast options to BaseIngredient[]
 
-                        <input
+                                    const { inputValue } = params;
+                                    // Suggest adding a new option
+                                    const isExisting = options.some((option) => option.name === inputValue);
+                                    if (inputValue !== "" && !isExisting) {
+                                        filtered.push({ id: "", name: inputValue });
+                                    }
+                                    return filtered;
+                                }}
+                                selectOnFocus
+                                clearOnBlur
+                                handleHomeEndKeys
+                                options={props.ingredient} // Already typed as BaseIngredient[]
+                                getOptionLabel={(option) => {
+                                    if (typeof option === "string") return option; // Free text
+                                    return option.name; // BaseIngredient option
+                                }}
+                                renderOption={(props, option) => (
+                                    <li {...props}>
+                                        {option.name}
+                                    </li>
+                                )}
+                                renderInput={(params) => <TextField {...params} label="Ingredient Name" />}
+                                sx={{ width: 300 }}
+                            />
+
+                            <input
                             type="number"
                             placeholder={`Ingredient ${index + 1}`}
                             value={ingredient.quantity}
