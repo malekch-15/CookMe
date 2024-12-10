@@ -19,7 +19,7 @@ import Ingredient from "./Ingredient.tsx";
 function App() {
     const [recipes, setRecipe] = useState<Recipe[]>([]);
     const[ingredient,setIngredient]=useState<BaseIngredient[]>([])
-    const[newingredient,setNewIngredient]=useState<BaseIngredient>({
+    const[newIngredient,setNewIngredient]=useState<BaseIngredient>({
         id:"",
         name:""
         }
@@ -71,7 +71,7 @@ function App() {
         } catch (error) {
             console.error("Error adding ingredient:", error);
             alert("Failed to add the ingredient. Please try again.");
-            return  Promise.reject(error);
+            return  Promise.reject(new Error("no Ingredient saved"));
         }
     };
 
@@ -90,7 +90,7 @@ function App() {
                     <Route path={"/"} element={ <Home recipe={recipes} onDelete={handelDelete} onToggleWishlist={handelToggelWishList}/>}/>
                     <Route path={"/details/:id/*"} element={<DetailsPage setRecipes={setRecipe} ingredient={ingredient}/>}/>
                     <Route path={"/WishList"} element={<WishList recipe={recipes} onToggleWishlist={handelToggelWishList} onDelete={handelDelete}/>}/>
-                    <Route path={"/New_Recipe"} element={<AddRecipe setRecipe={setRecipe} ingredient={ingredient} newIngredient={newingredient}
+                    <Route path={"/New_Recipe"} element={<AddRecipe setRecipe={setRecipe} ingredient={ingredient} newIngredient={newIngredient}
                                                                     onAddIngredient={handelAddIngredient}/>}/>
                     <Route path={"/Ingredient"} element={<Ingredient ingredient={ingredient} onAddIngredient={handelAddIngredient} setIngredient={setIngredient}/>}/>
 

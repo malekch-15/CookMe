@@ -40,9 +40,8 @@ console.log(recipe)
 
                     <div className="details-preparation">
                         <h3>Preparation:</h3>
-                        {recipe.preparation.split('\n').map((line, index) => (
-                            <p key={index}>{line}</p>
-                        ))}
+                            <p>{recipe.preparation}</p>
+
                     </div>
 
                     <button className="show-more-button" onClick={() => handleEdit(recipe?.id)}>Edit
