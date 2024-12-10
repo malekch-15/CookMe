@@ -13,6 +13,7 @@ export default function Details({recipe}: Readonly<DetailsProps>) {
     const handleEdit = (id: string) => {
         navigate(`/details/${id}/edit`);
     }
+    const preparationSteps = recipe.preparation.split(/[.]\s/);
     return (
         <div className="details">
             {recipe.imageUrl ? (
@@ -31,8 +32,8 @@ export default function Details({recipe}: Readonly<DetailsProps>) {
                 <p className="details-description">{recipe.description}</p>
                 <div className="details-ingredients">
                     <h3>Ingredients:</h3>
-                    <ul>{recipe.ingredients.map((ingredient, index) => (
-                        <li key={index}>
+                    <ul>{recipe.ingredients.map((ingredient) => (
+                        <li key={ingredient.ingredient.id}>
                             {ingredient.quantity} {ingredient.ingredient.name}
                         </li>
                     ))}
@@ -41,14 +42,20 @@ export default function Details({recipe}: Readonly<DetailsProps>) {
 
                     <div className="details-preparation">
                         <h3>Preparation:</h3>
-                        <p>{recipe.preparation}</p>
+                        <ol>
+                            {preparationSteps.map((step, index) => (
+                                <li key={index}>{step}</li>  // Use index here if no unique id available
+                            ))}
+                        </ol>
 
-                    </div>
 
-                    <button className="show-more-button" onClick={() => handleEdit(recipe?.id)}>Edit
-                    </button>
                 </div>
+
+                <button className="show-more-button" onClick={() => handleEdit(recipe?.id)}>Edit
+                </button>
             </div>
         </div>
-    );
+</div>
+)
+    ;
 }
