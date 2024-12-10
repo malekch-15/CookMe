@@ -43,7 +43,7 @@ class RecipeServiceTest {
     void getRecipeById_returnRecipeWithId2_whenRecipeWithId2Saved() {
         when(mockrecipesRepo.findById("2")).thenReturn(Optional.of(recipe2));
 
-        Recipe actual = recipesService.findRecipesById("2");
+        Recipe actual = recipesService.findRecipeById("2");
         //ASSERT
         assertEquals(recipe2, actual);
 
@@ -65,7 +65,7 @@ class RecipeServiceTest {
 
         verify(mockrecipesRepo, times(1)).deleteById(id);
         when(mockrecipesRepo.findById(id)).thenReturn(Optional.empty());
-        assertThrows(NoSuchElementException.class, () -> recipesService.findRecipesById(id));
+        assertThrows(NoSuchElementException.class, () -> recipesService.findRecipeById(id));
     }
 
     @Test

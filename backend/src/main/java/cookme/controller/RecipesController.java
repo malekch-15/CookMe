@@ -22,7 +22,7 @@ public class RecipesController {
     @GetMapping("/{id}")
     public Recipe getRecipeWithId(@PathVariable String id) {
 
-        return recipesService.findRecipesById(id);
+        return recipesService.findRecipeById(id);
     }
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/add")
@@ -36,7 +36,7 @@ public class RecipesController {
     }
     @DeleteMapping("/{id}")
     public void deleteRecipeWithId(@PathVariable String id) {
-    recipesService.findRecipesById(id);
+    recipesService.findRecipeById(id);
     recipesService.deleteRecipe(id);
     }
 }

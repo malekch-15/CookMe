@@ -18,7 +18,7 @@ public class RecipesService {
         return recipesRepo.findAll();
     }
 
-    public Recipe findRecipesById(String id) {
+    public Recipe findRecipeById(String id) {
         //recipe ingredient every ingred base ing laden um the name to saved Dto
         return recipesRepo.findById(id).orElseThrow(() -> new NoSuchElementException("No Recipes found with this " + id));
     }
@@ -35,7 +35,7 @@ public class RecipesService {
         return recipesRepo.save(newRecipe);
     }
     public Recipe updateRecipe(String id, RecipeDto recipe) {
-        Recipe updatedRecipe = findRecipesById(id);
+        Recipe updatedRecipe = findRecipeById(id);
         if (updatedRecipe != null) {
             Recipe newRecipe = new Recipe( id,recipe.name(),
                     recipe.description(),
