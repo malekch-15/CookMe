@@ -5,7 +5,7 @@ export default function Header() {
         <div>
             <nav className="navbar">
                 <Link to="/" className="logo">
-                    <img src="/src/assets/logo.png" alt="Company Logo"/>
+                    <img src="/Logo.png" alt="Company Logo"/>
                 </Link>
                 <div className="navbar-links">
                     <Link to={"/"}>Home</Link>
