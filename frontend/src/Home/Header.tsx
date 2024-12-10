@@ -10,7 +10,7 @@ export default function Header() {
                 <div className="navbar-links">
                     <Link to={"/"}>Home</Link>
                     <a>Meal Plan</a>
-                    <Link to={"/Ingredient"}>Ingredient</Link>
+                    <Link to={"/Ingredient"}>Ingredients</Link>
                     <Link to={"/WishList"}>Favorite</Link>
                     <Link to={"/New_Recipe"}>Add Recipe</Link>
                 </div>
