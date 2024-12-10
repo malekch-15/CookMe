@@ -2,7 +2,7 @@ package cookme.controller;
 
 import cookme.recipesmodel.BaseIngredient;
 import cookme.recipesmodel.RecipeIngredient;
-import cookme.recipesmodel.Recipes;
+import cookme.recipesmodel.Recipe;
 import cookme.recipesmodel.Status;
 import cookme.repository.IngredientsRepo;
 import cookme.repository.RecipesRepo;
@@ -23,7 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class RecipesControllerTest {
+class RecipeControllerTest {
     @Autowired
     private MockMvc mvc;
     @Autowired
@@ -43,7 +43,7 @@ class RecipesControllerTest {
         RecipeIngredient ingredients2 = new RecipeIngredient(2, ingredient2);
         List<RecipeIngredient> ingredientsList = List.of(ingredients, ingredients2);
 
-        Recipes recipe1 = new Recipes("1", "a", "a", 12, "a", "a", Status.FAVORITE, ingredientsList);
+        Recipe recipe1 = new Recipe("1", "a", "a", 12, "a", "a", Status.FAVORITE, ingredientsList);
         recipesRepo.save(recipe1);
     }
 
