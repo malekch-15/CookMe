@@ -12,12 +12,14 @@ import java.util.*;
 @RequiredArgsConstructor
 public class RecipesService {
     private final RecipesRepo recipesRepo;
+    // ingServ
 
     public List<Recipes> findAllRecipes() {
         return recipesRepo.findAll();
     }
 
     public Recipes findRecipesById(String id) {
+        //recipe ingredient every ingred base ing laden um the name to saved Dto
         return recipesRepo.findById(id).orElseThrow(() -> new NoSuchElementException("No Recipes found with this " + id));
     }
 

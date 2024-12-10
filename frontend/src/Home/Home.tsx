@@ -8,12 +8,12 @@ type HomeProps={
     onDelete:(id:string)=>void
     onToggleWishlist: (id: string) => void
 }
-export default function Home(props:HomeProps){
+export default function Home(props:Readonly<HomeProps>){
     const [searchQuery, setSearchQuery] = useState("");
     const filteredRecipes = props.recipe.filter((recipe) =>
         recipe.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         recipe.ingredients.some((ingredient) =>
-            ingredient.toLowerCase().includes(searchQuery.toLowerCase())
+            ingredient.ingredient.name.toLowerCase().includes(searchQuery.toLowerCase())
         )
     );
 

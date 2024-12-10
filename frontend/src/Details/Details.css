@@ -7,7 +7,7 @@
 
 .details-image {
     position: relative;
-    width: 80%;
+
     height: 70vh;
     overflow: hidden;
     display: block;
@@ -67,8 +67,36 @@
 .details-button:hover {
     background-color: #0056b3;
 }
+
 .details{
-    display: grid;
-    justify-items: center;
-    margin: 5px 30px 30px 30px;
- }
+display: flex
+;
+gap: 10px;
+align-items: center;
+flex-direction: row;
+}
+.ingredient-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center; /* Aligns items vertically centered */
+    gap: 10px; /* Adds space between the inputs */
+}
+
+.ingredient-row input {
+    flex: 1; /* Ensures inputs take equal width */
+    padding: 5px;
+}
+
+input[type="number"] {
+    width: 80px; /* Optional: Set the width of the quantity input */
+}
+input[type="text"] {
+    width: 80px; /* Optional: Set the width of the quantity input */
+}
+.ingredients_button{
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: row-reverse;
+    align-items: center; /* Aligns items vertically centered */
+    gap: 10px; /* Adds space between the inputs */
+}

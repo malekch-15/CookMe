@@ -171,3 +171,11 @@
     color:#000000;
     align-self: baseline;
 }
+.clickable {
+    cursor: pointer;
+    transition: transform 0.2s ease; /* Optional: Adds a smooth hover effect */
+}
+
+.clickable:hover {
+    transform: scale(1.05); /* Slight zoom effect on hover */
+}

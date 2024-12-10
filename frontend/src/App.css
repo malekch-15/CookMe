@@ -19,9 +19,13 @@ body {
   flex-wrap: wrap;
 }
 
+.TextField{
+  width: 200px;
+}
 
-
-
+.New-ingredient{
+  width: 90000px;
+}
 
 
 /* Responsive Design */

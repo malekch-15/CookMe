@@ -10,10 +10,20 @@ import AddRecipe from "./AddRecipe.tsx";
 import DetailsPage from "./Details/DetailsPage.tsx";
 import WishList from "./WishList.tsx";
 import {Status} from "./Model/Status.ts";
+import {BaseIngredient} from "./Model/BaseIngredient.ts";
+import Ingredient from "./Ingredient.tsx";
+
+
 
 
 function App() {
     const [recipes, setRecipe] = useState<Recipe[]>([]);
+    const[ingredient,setIngredient]=useState<BaseIngredient[]>([])
+    const[newIngredient,setNewIngredient]=useState<BaseIngredient>({
+        id:"",
+        name:""
+        }
+    )
 
 
     const fetchRecipe = () => {
@@ -47,15 +57,43 @@ function App() {
          )
     }
 
+    const handelAddIngredient = async (name: string): Promise<BaseIngredient> => {
+        try {
+            const response = await axios.post(`/api/ingredient`, { id: "", name });
+            const addedIngredient = response.data;
+
+            // Update global ingredients and new ingredient
+            setIngredient((prev) => [...prev, addedIngredient]);
+            setNewIngredient(addedIngredient);
+
+            console.log("Ingredient added:", addedIngredient);
+            return addedIngredient; // Return the newly added ingredient
+        } catch (error) {
+            console.error("Error adding ingredient:", error);
+            alert("Failed to add the ingredient. Please try again.");
+            return  Promise.reject(new Error("no Ingredient saved"));
+        }
+    };
+
+    const fetchIngredient=()=>{
+        axios.get("/api/ingredient")
+            .then((response)=>{
+                setIngredient(response.data)
+            }).catch((error)=>console.log("no ingredient"+error))
+    }
+    useEffect(fetchIngredient, [])
     return (
         <>
             <div>
                 <Header/>
                 <Routes>
                     <Route path={"/"} element={ <Home recipe={recipes} onDelete={handelDelete} onToggleWishlist={handelToggelWishList}/>}/>
-                    <Route path={"/details/:id/*"} element={<DetailsPage setRecipes={setRecipe}/>}/>
+                    <Route path={"/details/:id/*"} element={<DetailsPage setRecipes={setRecipe} ingredient={ingredient}/>}/>
                     <Route path={"/WishList"} element={<WishList recipe={recipes} onToggleWishlist={handelToggelWishList} onDelete={handelDelete}/>}/>
-                    <Route path={"/New_Recipe"} element={<AddRecipe setRecipe={setRecipe}/>}/>
+                    <Route path={"/New_Recipe"} element={<AddRecipe setRecipe={setRecipe} ingredient={ingredient} newIngredient={newIngredient}
+                                                                    onAddIngredient={handelAddIngredient}/>}/>
+                    <Route path={"/Ingredient"} element={<Ingredient ingredient={ingredient} onAddIngredient={handelAddIngredient} setIngredient={setIngredient}/>}/>
+
                 </Routes>
                 <Footer/>
             </div>

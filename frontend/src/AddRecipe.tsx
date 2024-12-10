@@ -1,12 +1,21 @@
-import React, {ChangeEvent, useState} from "react";
+import React, {ChangeEvent, useEffect, useState} from "react";
 import {Recipe} from "./Model/Recipe";
 import axios from "axios";
 import "./AddRecipe.css"
+import {Autocomplete, createFilterOptions, TextField} from "@mui/material";
+
+import {BaseIngredient} from "./Model/BaseIngredient.ts";
+const filter = createFilterOptions<BaseIngredient>();
+
 type addProps= {
     setRecipe: React.Dispatch<React.SetStateAction<Recipe[]>>
+    ingredient :BaseIngredient[]
+    newIngredient:BaseIngredient
+    onAddIngredient:(name:string)=>Promise<BaseIngredient>
 }
-export default function AddRecipe(props:addProps) {
-    const [recipe, setRecipe] = useState<Recipe>({
+export default function AddRecipe(props:Readonly<addProps>) {
+
+    const [newRecipe, setNewRecipe] = useState<Recipe>({
         id: "",
         name: "",
         description: "",
@@ -14,7 +23,7 @@ export default function AddRecipe(props:addProps) {
         time: 0,
         imageUrl: "",
         status: "NOT_FAVORITE",
-        ingredients: [""],
+        ingredients: [],
     });
     const [message, setMessage] = useState<string>("");
     const [preparationRows, setPreparationRows] = useState<number>(4);
@@ -23,7 +32,7 @@ export default function AddRecipe(props:addProps) {
 
     const handleInputChange = (event: ChangeEvent<HTMLInputElement|HTMLTextAreaElement|HTMLSelectElement>) => {
         const {name, value} = event.target;
-        setRecipe((prevRecipe) => ({
+        setNewRecipe((prevRecipe) => ({
             ...prevRecipe,
             [name]: value,
         }));
@@ -33,28 +42,52 @@ export default function AddRecipe(props:addProps) {
         }
     };
 
+    const handleIngredientChange = (index: number, event:React.ChangeEvent<HTMLInputElement> , field: string) => {
+if(newRecipe){
+    const newIngredient=[...newRecipe.ingredients]
+    if(field==='quantity'){
+        newIngredient[index]={
+            ...newIngredient[index],quantity:parseFloat(event.target.value)
+        }
+    }
+    setNewRecipe((prev)=>({...prev,ingredients:newIngredient}))
 
-    const handleIngredientChange = (index: number, value: string) => {
-        const updatedIngredients = [...recipe.ingredients];
-        updatedIngredients[index] = value;
-        setRecipe((prevRecipe) => ({
-            ...prevRecipe,
-            ingredients: updatedIngredients,
-        }));
+}
+
+    };
+    const handleIngredientNameChange = async (index: number, value: BaseIngredient | string |null
+    ) => {
+        const newIngredients = [...newRecipe.ingredients];
+        const ingredientExist=props.ingredient.some((i)=>i.name.toLowerCase()===value)
+        if (!ingredientExist) {
+            // Create a new ingredient
+            const newIngredient = await props.onAddIngredient((value as BaseIngredient).name);
+            newIngredients[index].ingredient = newIngredient; // Assign generated ingredient
+        } else  {
+            // User selected an existing ingredient
+            newIngredients[index].ingredient = value as BaseIngredient;
+        }
+        setNewRecipe((prev) => ({ ...prev, ingredients: newIngredients }));
     };
 
 
     const addIngredient = () => {
-        setRecipe((prevRecipe) => ({
+        setNewRecipe((prevRecipe) => ({
             ...prevRecipe,
-            ingredients: [...prevRecipe.ingredients, ""],
+            ingredients: [
+                ...prevRecipe.ingredients,
+                { quantity: 0, ingredient: { id: "", name: "" } },
+            ],
         }));
     };
 
+    useEffect(() => {
+        console.log("Updated newRecipe:", newRecipe);
+    }, [newRecipe]);
 
     const removeIngredient = (index: number) => {
-        const updatedIngredients = recipe.ingredients.filter((_, i) => i !== index);
-        setRecipe((prevRecipe) => ({
+        const updatedIngredients = newRecipe.ingredients.filter((_, i) => i !== index);
+        setNewRecipe((prevRecipe) => ({
             ...prevRecipe,
             ingredients: updatedIngredients,
         }));
@@ -64,9 +97,10 @@ export default function AddRecipe(props:addProps) {
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
 
-            axios.post(`/api/cookMe/add`, recipe).then(response=>{
-                setRecipe(response.data)
-                setMessage("Recipe added successfully!");
+            axios.post(`/api/cookMe/add`, newRecipe).then(response=>{
+                setNewRecipe(response.data)
+                setMessage("Recipe added success" +
+                    "fully!");
                 props.setRecipe(prevState => [...prevState,response.data])
             }).catch (error=> { console.log("recipe not added",error)})
         }
@@ -82,7 +116,7 @@ export default function AddRecipe(props:addProps) {
                     type="text"
                     name="name"
                     placeholder="Recipe Name"
-                    value={recipe.name}
+                    value={newRecipe.name}
                     onChange={handleInputChange}
                     required
                 />
@@ -90,7 +124,7 @@ export default function AddRecipe(props:addProps) {
                     className="description-input"
                     name="description"
                     placeholder="Description"
-                    value={recipe.description}
+                    value={newRecipe.description}
                     onChange={handleInputChange}
                     rows={2}
                     required
@@ -99,7 +133,7 @@ export default function AddRecipe(props:addProps) {
                     className="textarea"
                     name="preparation"
                     placeholder="Preparation"
-                    value={recipe.preparation}
+                    value={newRecipe.preparation}
                     onChange={handleInputChange}
                     required
                     rows={preparationRows}
@@ -116,12 +150,12 @@ export default function AddRecipe(props:addProps) {
                     type="text"
                     name="imageUrl"
                     placeholder="Image URL"
-                    value={recipe.imageUrl}
+                    value={newRecipe.imageUrl}
                     onChange={handleInputChange}
                 />
                 <select
                     name="status"
-                    value={recipe.status}
+                    value={newRecipe.status}
                     onChange={handleInputChange}
                     required
                 >
@@ -129,22 +163,55 @@ export default function AddRecipe(props:addProps) {
                     <option value="FAVORITE">Favorite</option>
                 </select>
                 <label>Ingredients:</label>
-                {recipe.ingredients.map((ingredient, index) => (
+                <div>
+                <button type="button" onClick={addIngredient}>
+                    Add Ingredient
+                </button>
+                </div>
+                {newRecipe.ingredients.map((ingredient, index) => (
                     <div key={index}>
-                        <input
-                            type="text"
+                        <div className="ingredients-field">
+
+                            <Autocomplete
+                                value={newRecipe.ingredients[index]?.ingredient}
+                                onChange={(_event, newValue) => handleIngredientNameChange(index, newValue)}
+                                filterOptions={(options, params) => {
+                                    const filtered = filter(options, params);
+                                    const { inputValue } = params;
+                                    const isExisting = options.some((option) => inputValue === option.name);
+
+                                    if (inputValue !== '' && !isExisting) {
+                                        filtered.push({ id: '', name: inputValue});
+                                    }
+                                    return filtered;
+                                }}
+                                selectOnFocus
+                                clearOnBlur
+                                handleHomeEndKeys
+                                options={props.ingredient}
+                                getOptionLabel={(option) => (typeof option === 'string' ? option : option.name)}
+                                renderOption={(props, option) => (
+                                    <li {...props}>{option.name}</li>
+                                )}
+                                freeSolo
+                                renderInput={(params) => (
+                                    <TextField {...params} label="Ingredient Name" />
+                                )}
+                            />
+
+                            <input
+                            type="number"
                             placeholder={`Ingredient ${index + 1}`}
-                            value={ingredient}
-                            onChange={(e) => handleIngredientChange(index, e.target.value)}
+                            value={ingredient.quantity}
+                            onChange={(e) => handleIngredientChange(index, e,'quantity')}
                             required
                         />
+                        </div>
                         <div className="ingredients-button">
                             <button type="button" onClick={() => removeIngredient(index)}>
                                 Remove
                             </button>
-                            <button type="button" onClick={addIngredient}>
-                                Add Ingredient
-                            </button>
+
                         </div>
                     </div>
                 ))}

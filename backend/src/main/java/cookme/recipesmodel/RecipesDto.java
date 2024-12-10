@@ -8,5 +8,5 @@ public record RecipesDto(String name,
                          String imageUrl,
                          String preparation,
                          Status status,
-                         List<String> ingredients) {
+                         List<RecipeIngredient> ingredients) {
 }

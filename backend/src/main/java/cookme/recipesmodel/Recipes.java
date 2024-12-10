@@ -11,5 +11,5 @@ public record Recipes(@With String id,
                       String imageUrl,
                       String preparation,
                       Status status,
-                      List<String> ingredients) {
+                      List<RecipeIngredient> ingredients) {
 }

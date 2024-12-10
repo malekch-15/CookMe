@@ -1,16 +1,18 @@
 import {Recipe} from "../Model/Recipe.ts";
 import React, {ChangeEvent, useState} from "react";
-import axios from "axios";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
+import {BaseIngredient} from "../Model/BaseIngredient.ts";
 type EditProps={
     recipe:Recipe
-    setRecipes: React.Dispatch<React.SetStateAction<Recipe[]>>
+    updateRecipe:(newRecipe:Recipe,id:string)=>void
+    ingredient:BaseIngredient[]
 }
-export default function Edit(props:EditProps){
+export default function Edit(props:Readonly<EditProps>){
     const { id } = useParams<{ id: string }>();
     const [newRecipe, setNewRecipe] = useState<Recipe >(props.recipe);
     const [message, setMessage] = useState<string>("");
     const [preparationRows, setPreparationRows] = useState<number>(4);
+    const navigate = useNavigate();
 
     const HandelInputRecipe = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         const { name, value } = event.target;
@@ -26,11 +28,38 @@ export default function Edit(props:EditProps){
             setPreparationRows(Math.max(4, lines));
         }
     };
+    const handleIngredientSelection = (index: number, event: React.ChangeEvent<HTMLInputElement|HTMLSelectElement>) => {
+        const selectedIngredientName = event.target.value;
+        const selectedIngredient = props.ingredient.find(
+            (ingredient) => ingredient.name === selectedIngredientName
+        );
+        console.log(selectedIngredient)
 
-    const handleIngredientChange = (index: number, value: string) => {
+            const updatedIngredients = [...newRecipe.ingredients];
+            updatedIngredients[index] = {
+                ...updatedIngredients[index],
+                ingredient: {
+                    id: selectedIngredient?.id??"",
+                    name: selectedIngredientName,
+                },
+            };
+            setNewRecipe((prevRecipe) => ({
+                ...prevRecipe!,
+                ingredients: updatedIngredients,
+            }));
+
+    };
+
+    const handleIngredientChange = (index: number, event: React.ChangeEvent<HTMLInputElement>, field: string) => {
         if (newRecipe) {
             const updatedIngredients = [...newRecipe.ingredients];
-            updatedIngredients[index] = value;
+
+            if (field === 'quantity') {
+                updatedIngredients[index] = {
+                    ...updatedIngredients[index],
+                    quantity:parseFloat( event.target.value),
+                };
+            }
             setNewRecipe((prevRecipe) => ({
                 ...prevRecipe!,
                 ingredients: updatedIngredients,
@@ -39,12 +68,16 @@ export default function Edit(props:EditProps){
     };
 
     const addIngredient = () => {
-        if (newRecipe) {
+
+            const newIngredient: BaseIngredient={
+                id:"",
+                name:""
+            }
             setNewRecipe((prevRecipe) => ({
                 ...prevRecipe!,
-                ingredients: [...prevRecipe!.ingredients, ""],
+                ingredients: [...prevRecipe!.ingredients, {quantity:0,ingredient:{id:"",name:newIngredient.name}}],
             }));
-        }
+
     };
 
     const removeIngredient = (index: number) => {
@@ -59,19 +92,15 @@ export default function Edit(props:EditProps){
 
     const handleSubmit = (e: React.FormEvent) => {
        e.preventDefault();
-
         if (id && newRecipe) {
-            axios
-                .put(`/api/cookMe/update/${id}`, newRecipe)
-                .then((response) => {
-                    props.setRecipes((prev)=> prev. map((p)=>p.id==id ? response.data: p
-                    ))
-                    setMessage("Recipe updated successfully!");
-                })
-                .catch((error) => {
-                    console.log("Error updating recipe:", error);
-                });
+            props.updateRecipe(newRecipe,id)
+            setMessage("Recipe updated successfully!");
+            setTimeout(() => {
+                navigate(`/details/${id}`);
+            }, 1000); // Adjust the delay (in milliseconds) as needed
+
         }
+
     };
 
     return (
@@ -131,30 +160,45 @@ export default function Edit(props:EditProps){
                             <option value="FAVORITE">Favorite</option>
                         </select>
                         <label>Ingredients:</label>
+                        <div className="ingredients_button">
+                            <button type="button" onClick={addIngredient}>
+                                Add Ingredient
+                            </button>
+                        </div>
                         {newRecipe.ingredients.map((ingredient, index) => (
                             <div key={index}>
-                                <input
-                                    type="text"
-                                    placeholder={`Ingredient ${index + 1}`}
-                                    value={ingredient}
-                                    onChange={(e) => handleIngredientChange(index, e.target.value)}
-                                    required
-                                />
-                                <div className="ingredients-button">
-                                    <button type="button" onClick={() => removeIngredient(index)}>
-                                        Remove
-                                    </button>
-                                    <button type="button" onClick={addIngredient}>
-                                        Add Ingredient
-                                    </button>
+                                <div className="ingredient-row">
+                                    <select
+                                        value={ingredient.ingredient.name} // Select the current ingredient name
+                                        onChange={(e) =>
+                                            handleIngredientSelection(index, e)}
+                                        required
+                                    >
+                                        <option value="">Select an ingredient</option>
+                                        {props.ingredient.map((ing) => (
+                                            <option key={ing.id} value={ing.name}>
+                                                {ing.name}
+                                            </option>
+                                        ))}
+                                    </select>
+                                    <input
+                                        type="number"
+                                        placeholder="Quantity"
+                                        value={ingredient.quantity}
+                                        onChange={(e) => handleIngredientChange(index, e, 'quantity')}
+                                        required
+                                    />
                                 </div>
+                                <button type="button" onClick={() => removeIngredient(index)}>
+                                    Remove
+                                </button>
                             </div>
                         ))}
+                        <div>
+                        </div>
+                        <button type="submit">Update Recipe</button>
+                        {message && <p>{message}</p>} {/* Feedback for user */}
                     </div>
-                    <div>
-                    </div>
-                    <button type="submit">Update Recipe</button>
-                    {message && <p>{message}</p>} {/* Feedback for user */}
                 </form>
             )}
         </div>

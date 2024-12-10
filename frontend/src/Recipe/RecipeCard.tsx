@@ -10,7 +10,7 @@ type RecipeCardProps = {
     onDetails?:(id:string)=>void
     onToggleWishlist: (id: string) => void
 }
-export default function RecipeCard(props: RecipeCardProps) {
+export default function RecipeCard(props: Readonly<RecipeCardProps>) {
     const [showPopup, setShowPopup] = useState(false);
     const navigate= useNavigate()
     const handleViewDetails = (id: string) => {
@@ -39,7 +39,17 @@ export default function RecipeCard(props: RecipeCardProps) {
             >♥
             </button>
             <div className="recipe-header">
-                <img className="recipe-image" src={props.Recipe.imageUrl} alt={"image recipe"}/>
+                <button
+                    className="recipe-image-button"
+                    onClick={() => handleViewDetails(props.Recipe.id)}
+                    aria-label={`View details of ${props.Recipe.name}`}
+                >
+                    <img
+                        className="recipe-image"
+                        src={props.Recipe.imageUrl}
+                        alt={`Image of recipe ${props.Recipe.name}`}
+                    />
+                </button>
             </div>
             <h2 className="recipe-name">{props.Recipe.name}</h2>
             <p className="recipe-description">{props.Recipe.description}</p>
@@ -47,8 +57,6 @@ export default function RecipeCard(props: RecipeCardProps) {
             <div className="recipe-actions">
                 {props.showDeleteButton && (<button className="delete-button" onClick={handleDeleteClick}
                                                     disabled={!props.onDelete}>Delete</button>)}
-                <button className="show-more-button" onClick={() => handleViewDetails(props.Recipe.id)}>Show More
-                </button>
             </div>
             {showPopup && (
                 <div className="popup-overlay">
