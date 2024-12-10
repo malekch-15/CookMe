@@ -52,7 +52,6 @@ export default function Edit(props:EditProps){
 
     const handleIngredientChange = (index: number, event: React.ChangeEvent<HTMLInputElement>, field: string) => {
         if (newRecipe) {
-
             const updatedIngredients = [...newRecipe.ingredients];
 
             if (field === 'quantity') {
