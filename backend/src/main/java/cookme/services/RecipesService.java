@@ -1,9 +1,9 @@
 package cookme.services;
 
-import cookme.recipesmodel.RecipesDto;
+import cookme.recipesmodel.RecipeDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import cookme.recipesmodel.Recipes;
+import cookme.recipesmodel.Recipe;
 import cookme.repository.RecipesRepo;
 
 import java.util.*;
@@ -12,20 +12,20 @@ import java.util.*;
 @RequiredArgsConstructor
 public class RecipesService {
     private final RecipesRepo recipesRepo;
-    // ingServ
 
-    public List<Recipes> findAllRecipes() {
+
+    public List<Recipe> findAllRecipes() {
         return recipesRepo.findAll();
     }
 
-    public Recipes findRecipesById(String id) {
-        //recipe ingredient every ingred base ing laden um the name to saved Dto
+    public Recipe findRecipeById(String id) {
+
         return recipesRepo.findById(id).orElseThrow(() -> new NoSuchElementException("No Recipes found with this " + id));
     }
 
-    public Recipes saveRecipes(RecipesDto recipe) {
+    public Recipe saveRecipes(RecipeDto recipe) {
         String id = UUID.randomUUID().toString();
-        Recipes newRecipe = new Recipes(id, recipe.name(),
+        Recipe newRecipe = new Recipe(id, recipe.name(),
                 recipe.description(),
                 recipe.time(),
                 recipe.imageUrl(),
@@ -34,10 +34,10 @@ public class RecipesService {
                 recipe.ingredients());
         return recipesRepo.save(newRecipe);
     }
-    public Recipes updateRecipe(String id, RecipesDto recipe) {
-        Recipes updatedRecipe = findRecipesById(id);
+    public Recipe updateRecipe(String id, RecipeDto recipe) {
+        Recipe updatedRecipe = findRecipeById(id);
         if (updatedRecipe != null) {
-            Recipes newRecipe = new Recipes( id,recipe.name(),
+            Recipe newRecipe = new Recipe( id,recipe.name(),
                     recipe.description(),
                     recipe.time(),
                     recipe.imageUrl(),

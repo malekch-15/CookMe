@@ -1,7 +1,7 @@
 package cookme.controller;
 
-import cookme.recipesmodel.Recipes;
-import cookme.recipesmodel.RecipesDto;
+import cookme.recipesmodel.Recipe;
+import cookme.recipesmodel.RecipeDto;
 import cookme.services.RecipesService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -15,28 +15,28 @@ public class RecipesController {
     private final RecipesService recipesService;
 
     @GetMapping()
-    public List<Recipes> getAll() {
+    public List<Recipe> getAll() {
         return recipesService.findAllRecipes();
     }
 
     @GetMapping("/{id}")
-    public Recipes getRecipeWithId(@PathVariable String id) {
+    public Recipe getRecipeWithId(@PathVariable String id) {
 
-        return recipesService.findRecipesById(id);
+        return recipesService.findRecipeById(id);
     }
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/add")
-    public Recipes postRecipe(@RequestBody RecipesDto recipe) {
+    public Recipe postRecipe(@RequestBody RecipeDto recipe) {
         return recipesService.saveRecipes(recipe);
     }
 
     @PutMapping("/update/{id}")
-    public Recipes putRecipe(@RequestBody RecipesDto recipe, @PathVariable String id) {
+    public Recipe putRecipe(@RequestBody RecipeDto recipe, @PathVariable String id) {
         return recipesService.updateRecipe(id,recipe);
     }
     @DeleteMapping("/{id}")
     public void deleteRecipeWithId(@PathVariable String id) {
-    recipesService.findRecipesById(id);
+    recipesService.findRecipeById(id);
     recipesService.deleteRecipe(id);
     }
 }
