@@ -3,6 +3,7 @@ import RecipeCard from "../Recipe/RecipeCard.tsx";
 import {useState} from "react";
 import Searchbar from "./Searchbar.tsx";
 
+
 type HomeProps={
     recipe:Recipe[]
     onDelete:(id:string)=>void
@@ -20,11 +21,14 @@ export default function Home(props:Readonly<HomeProps>){
     const handleSearch = (query: string) => {
         setSearchQuery(query);
     };
+
     return(
 
         <div>
+
             <div>
                 <Searchbar onSearch={handleSearch}/>
+
                 <h1>Recipes</h1>
                 <p> CookMe is your source for thousands of delicious, easy and quick recipes, healthy meals,
                     dinner ideas, recipes for kids, holiday menus, and more</p>
@@ -46,6 +50,7 @@ export default function Home(props:Readonly<HomeProps>){
                     ))
                 )}
             </div>
+
         </div>
     )
 }

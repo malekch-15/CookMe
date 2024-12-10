@@ -1,6 +1,9 @@
 import "./Header.css"
 import {Link} from "react-router-dom";
 export default function Header() {
+    // const [userName,setUserName]=useState<string>("")
+
+
     return (
         <div>
             <nav className="navbar">
@@ -13,6 +16,7 @@ export default function Header() {
                     <Link to={"/Ingredient"}>Ingredients</Link>
                     <Link to={"/WishList"}>Favorite</Link>
                     <Link to={"/New_Recipe"}>Add Recipe</Link>
+
                 </div>
             </nav>
         </div>
