@@ -44,7 +44,7 @@ export default function Details({recipe}: Readonly<DetailsProps>) {
                         <h3>Preparation:</h3>
                         <ol>
                             {preparationSteps.map((step, index) => (
-                                <li key={index}>{step}</li>  // Use index here if no unique id available
+                                <li key={index}>{step}</li>
                             ))}
                         </ol>
 
