@@ -2,34 +2,32 @@ import {BaseIngredient} from "./Model/BaseIngredient.ts";
 import React, {ChangeEvent, useState} from "react";
 
 
-type IngredientProps={
-    ingredient:BaseIngredient[]
-    onAddIngredient:(name:string)=> Promise<BaseIngredient>
+type IngredientProps = {
+    ingredient: BaseIngredient[]
+    onAddIngredient: (name: string) => Promise<BaseIngredient>
     setIngredient: React.Dispatch<React.SetStateAction<BaseIngredient[]>>
 }
-export default function Ingredient(props:IngredientProps) {
+export default function Ingredient(props: Readonly<IngredientProps>) {
     const [newIngredient, setNewIngredient] = useState<string>("")
 
     const HandelInputIngredient = (event: ChangeEvent<HTMLInputElement>) => {
         const name = event.target.value;
-            setNewIngredient(name);
+        setNewIngredient(name);
 
     }
-  const handleAddIngredient=()=>{
-        if(!newIngredient.trim()){
+    const handleAddIngredient = () => {
+        if (!newIngredient.trim()) {
             alert("the name of the ingredient can not be empty")
-            return
         }
-        const ingredientExist=props.ingredient.some((i)=>i.name.toLowerCase()===newIngredient.toLowerCase())
-        if(ingredientExist){
-                alert("ingredient exsit")
-            return;
-            }else {
+        const ingredientExist = props.ingredient.some((i) => i.name.toLowerCase() === newIngredient.toLowerCase())
+        if (ingredientExist) {
+            alert("ingredient exsit")
+        } else {
             props.onAddIngredient(newIngredient)
             setNewIngredient("")
             alert("ingredient added")
         }
-  }
+    }
     const removeIngredient = (index: number) => {
         const updatedIngredients = props.ingredient.filter((_, i) => i !== index);
         props.setIngredient(updatedIngredients);

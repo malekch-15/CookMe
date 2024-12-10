@@ -8,9 +8,9 @@ import {BaseIngredient} from "../Model/BaseIngredient.ts";
 
 type DetailsPagesProps = {
     setRecipes: React.Dispatch<React.SetStateAction<Recipe[]>>
-    ingredient:BaseIngredient[]
+    ingredient: BaseIngredient[]
 }
-export default function DetailsPage({setRecipes,ingredient}: DetailsPagesProps) {
+export default function DetailsPage({setRecipes, ingredient}: Readonly<DetailsPagesProps>) {
     const para = useParams<{ id: string }>()
     const [recipe, setRecipe] = useState<Recipe | null>(null);
     const fetchDetails = () => {
@@ -20,11 +20,11 @@ export default function DetailsPage({setRecipes,ingredient}: DetailsPagesProps) 
             })).catch((error) => console.log("no Recipe with this id", error));
 
     }
-    const updateRecipe =( newRecipe:Recipe, id:string)=>{
+    const updateRecipe = (newRecipe: Recipe, id: string) => {
         axios
             .put(`/api/cookMe/update/${id}`, newRecipe)
             .then((response) => {
-               setRecipes((prev)=> prev. map((p)=>p.id==id ? response.data: p
+                setRecipes((prev) => prev.map((p) => p.id == id ? response.data : p
                 ))
                 setRecipe(response.data)
             })

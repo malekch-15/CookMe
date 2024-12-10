@@ -7,7 +7,7 @@ type EditProps={
     updateRecipe:(newRecipe:Recipe,id:string)=>void
     ingredient:BaseIngredient[]
 }
-export default function Edit(props:EditProps){
+export default function Edit(props:Readonly<EditProps>){
     const { id } = useParams<{ id: string }>();
     const [newRecipe, setNewRecipe] = useState<Recipe >(props.recipe);
     const [message, setMessage] = useState<string>("");

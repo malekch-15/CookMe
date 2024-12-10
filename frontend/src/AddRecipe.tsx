@@ -13,7 +13,7 @@ type addProps= {
     newIngredient:BaseIngredient
     onAddIngredient:(name:string)=>Promise<BaseIngredient>
 }
-export default function AddRecipe(props:addProps) {
+export default function AddRecipe(props:Readonly<addProps>) {
 
     const [newRecipe, setNewRecipe] = useState<Recipe>({
         id: "",

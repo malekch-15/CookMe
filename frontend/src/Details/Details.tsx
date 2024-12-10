@@ -1,13 +1,14 @@
 import {Recipe} from "../Model/Recipe.ts";
 import {useNavigate} from "react-router-dom";
 import "./Details.css"
-type DetailsProps={
-    recipe:Recipe
+
+type DetailsProps = {
+    recipe: Recipe
 }
 
-export default function Details({recipe}:DetailsProps) {
-console.log(recipe)
-    const navigate= useNavigate()
+export default function Details({recipe}: Readonly<DetailsProps>) {
+    console.log(recipe)
+    const navigate = useNavigate()
 
     const handleEdit = (id: string) => {
         navigate(`/details/${id}/edit`);
@@ -25,9 +26,9 @@ console.log(recipe)
             )}
 
             <div className="details-text">
-            <h1 className="details-title">{recipe.name}</h1>
-            <p className="details-info">Cooking Time: {recipe.time} minutes</p>
-            <p className="details-description">{recipe.description}</p>
+                <h1 className="details-title">{recipe.name}</h1>
+                <p className="details-info">Cooking Time: {recipe.time} minutes</p>
+                <p className="details-description">{recipe.description}</p>
                 <div className="details-ingredients">
                     <h3>Ingredients:</h3>
                     <ul>{recipe.ingredients.map((ingredient, index) => (
@@ -40,7 +41,7 @@ console.log(recipe)
 
                     <div className="details-preparation">
                         <h3>Preparation:</h3>
-                            <p>{recipe.preparation}</p>
+                        <p>{recipe.preparation}</p>
 
                     </div>
 
@@ -49,5 +50,5 @@ console.log(recipe)
                 </div>
             </div>
         </div>
-            );
-            }
+    );
+}
