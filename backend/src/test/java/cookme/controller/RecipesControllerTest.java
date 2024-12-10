@@ -33,10 +33,11 @@ class RecipesControllerTest {
 
     @BeforeEach
     void setup() {
+        recipesRepo.deleteAll();
         BaseIngredient ingredient1 = new BaseIngredient("1", "Eggs");
         BaseIngredient ingredient2 = new BaseIngredient("2", "Potatoes");
         ingredientsRepo.save(ingredient1);
-       ingredientsRepo.save(ingredient2);
+        ingredientsRepo.save(ingredient2);
 
         RecipeIngredient ingredients = new RecipeIngredient(2, ingredient1);
         RecipeIngredient ingredients2 = new RecipeIngredient(2, ingredient2);
