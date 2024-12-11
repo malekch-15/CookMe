@@ -24,7 +24,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
 
                 .authorizeHttpRequests(a -> a
-                        .requestMatchers("/api/users/me").authenticated()
+                        .requestMatchers("/api/users/me").permitAll()
                         .requestMatchers(HttpMethod.GET,"api/cookMe").permitAll()
                         .requestMatchers(HttpMethod.DELETE,"/api/cookMe/{id}").authenticated()
                         .requestMatchers(HttpMethod.POST,"/api/cookMe").authenticated()
