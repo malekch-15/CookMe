@@ -68,10 +68,25 @@ function App() {
     };
 
     useEffect(fetchIngredients, []);
+    const [user,setUser]=useState<string|null>( null)
 
+
+        const loadCurrentUser = () => {
+            axios.get("/api/users/me")
+                .then((response) => {
+                        console.log(response.data)
+                        setUser(response.data)
+                    }
+                )
+        }
+
+        useEffect(() => {
+            loadCurrentUser()
+
+    }, []);
     return (
         <div>
-            <Header />
+            <Header user={user}/>
 
             <Routes>
                 <Route path="/" element={
@@ -80,20 +95,20 @@ function App() {
                         onDelete={handleDelete}
                         onToggleWishlist={handleToggleWishList}
                     />
-                } />
+                }/>
                 <Route path="/details/:id/*" element={
                     <DetailsPage
                         setRecipes={setRecipes}
                         ingredient={ingredients}
                     />
-                } />
+                }/>
                 <Route path="/WishList" element={
                     <WishList
                         recipe={recipes}
                         onToggleWishlist={handleToggleWishList}
                         onDelete={handleDelete}
                     />
-                } />
+                }/>
                 <Route path="/New_Recipe" element={
                     <AddRecipe
                         setRecipe={setRecipes}
@@ -101,16 +116,16 @@ function App() {
                         newIngredient={newIngredient}
                         onAddIngredient={handleAddIngredient}
                     />
-                } />
+                }/>
                 <Route path="/Ingredient" element={
                     <Ingredient
                         ingredient={ingredients}
                         onAddIngredient={handleAddIngredient}
                         setIngredient={setIngredients}
                     />
-                } />
+                }/>
             </Routes>
-            <Footer />
+            <Footer/>
         </div>
     );
 }
