@@ -36,6 +36,7 @@
     transform: scale(1);
     color: #555;
 }
+
 /* Header Section */
 .recipe-header {
     display: flex;
@@ -44,12 +45,28 @@
     margin-bottom: 5px;
 }
 
-.recipe-card-image{
-    width: 280px;
-    height: 200px;
+.recipe-card-image {
+    width: 380px;
+    height: 250px;
     object-fit: cover;
 }
-.card-gallery{
+
+.recipe_card_image_button {
+    padding: inherit;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+
+}
+
+.recipe-card-text {
+    display: flex;
+    align-content: stretch;
+    align-items: stretch;
+
+}
+
+.card-gallery {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -60,8 +77,9 @@
 .recipe-name {
     font-size: 20px;
     font-weight: bold;
-    margin: 0;
+
     color: #333;
+    margin: 0px 0 0px 0px
 }
 
 
@@ -69,13 +87,12 @@
 .recipe-description {
     font-size: 14px;
     color: #666;
-    margin: 10px 0 5px;
+    margin: 0 0 0 0;
 }
-
 .recipe-time {
     font-size: 14px;
     color: #999;
-    margin: 5px 0 15px;
+    margin: 0px 0 0px 0px
 }
 
 /* Action Buttons */
@@ -85,7 +102,7 @@
     flex-direction: row
 }
 
-.delete-button, .show-more-button {
+.delete-button {
     padding: 8px 12px;
     border: none;
     border-radius: 5px;
@@ -102,14 +119,6 @@
     background-color: #d32f2f;
 }
 
-.show-more-button {
-    background-color: #b3e8a3;
-    color: #150000;
-}
-
-.show-more-button:hover {
-    background-color: #1976d2;
-}
 
 /* Popup Overlay */
 .popup-overlay {
@@ -167,14 +176,17 @@
 .popup-cancel:hover {
     background-color: #c1c1c1;
 }
-.red{
+
+.red {
     color: #e82020;
     align-self: baseline;
 }
-.black{
-    color:#000000;
+
+.black {
+    color: #000000;
     align-self: baseline;
 }
+
 .clickable {
     cursor: pointer;
     transition: transform 0.2s ease; /* Optional: Adds a smooth hover effect */

@@ -45,6 +45,7 @@ export default function RecipeCard(props: Readonly<RecipeCardProps>) {
                 <button
                     onClick={() => handleViewDetails(props.Recipe.id)}
                     aria-label={`View details of ${props.Recipe.name}`}
+                    className="recipe_card_image_button"
                 >
                     <img
                         src={props.Recipe.imageUrl}
@@ -54,7 +55,7 @@ export default function RecipeCard(props: Readonly<RecipeCardProps>) {
                 </button>
             </div>
 
-            <div className="recipie-card-text">
+            <div className="recipe-card-text">
                 <h2 className="recipe-name">{props.Recipe.name}</h2>
                 <p className="recipe-description">{props.Recipe.description}</p>
                 <p className="recipe-time">{props.Recipe.time}min</p>
