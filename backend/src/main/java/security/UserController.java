@@ -7,10 +7,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("http://localhost:8080/api/users/me")
 public class UserController {
 
-    @GetMapping("/me")
+    @GetMapping()
     public String getCurrentUser(@AuthenticationPrincipal OAuth2User user) {
         System.out.println(user);
         return user.getAttribute("login").toString();

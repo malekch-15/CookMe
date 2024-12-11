@@ -17,33 +17,6 @@ function App() {
     const [recipes, setRecipes] = useState<Recipe[]>([]);
     const [ingredients, setIngredients] = useState<BaseIngredient[]>([]);
     const [newIngredient, setNewIngredient] = useState<BaseIngredient>({ id: "", name: "" });
-    const [user, setUser] = useState<string | null>(null);
-    const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8080";
-    const login = () => {
-        const host = window.location.host === 'localhost:5173' ? 'http://localhost:8080' : window.location.origin;
-        window.open(`${host}/oauth2/authorization/github`, '_self');
-    };
-
-    const logout = () => {
-        const host = window.location.host === 'localhost:5173' ? 'http://localhost:8080' : window.location.origin;
-        window.open(`${host}/logout`, '_self');
-    };
-
-    const fetchUser = () => {
-        axios.get(`${API_BASE_URL}/api/users/me`)
-            .then(response => {
-                console.log("Logged-in user:", response.data);
-                setUser(response.data);
-            })
-            .catch(error => {
-                console.error("Error fetching user:", error);
-                alert("Failed to fetch user. Please log in.");
-                setUser(null);
-            });
-    };
-    useEffect(() => {
-        fetchUser()
-    }, []);
 
     const fetchRecipes = () => {
         axios.get("/api/cookMe")
@@ -99,16 +72,7 @@ function App() {
     return (
         <div>
             <Header />
-            <div className="auth-buttons">
-                {!user ? (
-                    <button onClick={login}>Login</button>
-                ) : (
-                    <>
-                        <p>Welcome, {user}</p>
-                        <button onClick={logout}>Logout</button>
-                    </>
-                )}
-            </div>
+
             <Routes>
                 <Route path="/" element={
                     <Home
