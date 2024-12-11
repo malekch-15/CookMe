@@ -33,28 +33,34 @@ export default function RecipeCard(props: Readonly<RecipeCardProps>) {
 
     return (
         <div className="recipe-card">
-            <button className="add-button">+</button>
-            <button id="" onClick={() => props.onToggleWishlist(props.Recipe.id)}
-                    className={props.Recipe.status === "FAVORITE" ? "red" : "black"}
-            >♥
-            </button>
-            <div className="recipe-header">
+            <div className="recipe-card-buttons">
+                    <button className="add-button">+</button>
+                            <button id="" onClick={() => props.onToggleWishlist(props.Recipe.id)}
+                                    className={props.Recipe.status === "FAVORITE" ? "red" : "black"}
+                            >♥
+                            </button>
+            </div>
+
+            <div >
                 <button
-                    className="recipe-image-button"
                     onClick={() => handleViewDetails(props.Recipe.id)}
                     aria-label={`View details of ${props.Recipe.name}`}
                 >
                     <img
-                        className="recipe-image"
                         src={props.Recipe.imageUrl}
                         className="recipe-card-image"
                         alt={`Image of recipe ${props.Recipe.name}`}
                     />
                 </button>
             </div>
-            <h2 className="recipe-name">{props.Recipe.name}</h2>
-            <p className="recipe-description">{props.Recipe.description}</p>
-            <p className="recipe-time">{props.Recipe.time}min</p>
+
+            <div className="recipie-card-text">
+                <h2 className="recipe-name">{props.Recipe.name}</h2>
+                <p className="recipe-description">{props.Recipe.description}</p>
+                <p className="recipe-time">{props.Recipe.time}min</p>
+            </div>
+
+
             <div className="recipe-actions">
                 {props.showDeleteButton && (<button onClick={handleDeleteClick}
                                                     disabled={!props.onDelete}>Delete</button>)}

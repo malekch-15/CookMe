@@ -85,7 +85,8 @@ function App() {
 
     }, []);
     return (
-        <div>
+        <>
+
             <Header user={user}/>
 
             <Routes>
@@ -126,7 +127,7 @@ function App() {
                 }/>
             </Routes>
             <Footer/>
-        </div>
+        </>
     );
 }
 
