@@ -5,14 +5,7 @@ body {
   background-color: #f8f8f8;
 }
 
-/* Gallery Container */
-.gallery-container {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr); /* Creates 4 equal columns */
-  gap: 20px; /* Gap between cards */
-  padding: 20px;
 
-}
 .wishlist-card{
   display: flex;
   flex-direction: row;
@@ -28,22 +21,4 @@ body {
 }
 
 
-/* Responsive Design */
-@media (max-width: 1200px) {
-  .gallery-container {
-    grid-template-columns: repeat(3, 1fr); /* 3 cards per row on medium screens */
-  }
-}
-
-@media (max-width: 900px) {
-  .gallery-container {
-    grid-template-columns: repeat(2, 1fr); /* 2 cards per row on smaller screens */
-  }
-}
-
-@media (max-width: 600px) {
-  .gallery-container {
-    grid-template-columns: 1fr; /* 1 card per row on small screens */
-  }
-}
 

@@ -6,7 +6,6 @@ import cookme.recipesmodel.Recipe;
 import cookme.recipesmodel.Status;
 import cookme.repository.IngredientsRepo;
 import cookme.repository.RecipesRepo;
-import cookme.user.AppUser;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

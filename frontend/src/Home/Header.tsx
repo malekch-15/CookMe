@@ -14,13 +14,12 @@ export default function Header({user}:PropsHeader) {
         window.open(`${host}/logout`, '_self');
     }
     return (
-        <div>
+        <>
             <nav className="navbar">
 
                 <Link to="/" className="logo">
                     <img src="/Logo.png" alt="Company Logo"/>
                 </Link>
-                <div className="navbar-links">
                     <Link to={"/"}>Home</Link>
                     <a>Meal Plan</a>
                     <Link to={"/Ingredient"}>Ingredients</Link>
@@ -38,8 +37,7 @@ export default function Header({user}:PropsHeader) {
                             </button>
                         </>
                     )}
-                </div>
             </nav>
-        </div>
+        </>
     );
 }

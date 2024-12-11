@@ -47,6 +47,7 @@ export default function RecipeCard(props: Readonly<RecipeCardProps>) {
                     <img
                         className="recipe-image"
                         src={props.Recipe.imageUrl}
+                        className="recipe-card-image"
                         alt={`Image of recipe ${props.Recipe.name}`}
                     />
                 </button>
@@ -55,7 +56,7 @@ export default function RecipeCard(props: Readonly<RecipeCardProps>) {
             <p className="recipe-description">{props.Recipe.description}</p>
             <p className="recipe-time">{props.Recipe.time}min</p>
             <div className="recipe-actions">
-                {props.showDeleteButton && (<button className="delete-button" onClick={handleDeleteClick}
+                {props.showDeleteButton && (<button onClick={handleDeleteClick}
                                                     disabled={!props.onDelete}>Delete</button>)}
             </div>
             {showPopup && (

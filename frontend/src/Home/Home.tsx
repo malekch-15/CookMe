@@ -23,8 +23,7 @@ export default function Home(props:Readonly<HomeProps>){
     };
 
     return(
-
-        <div>
+        <>
 
             <div>
                 <Searchbar onSearch={handleSearch}/>
@@ -34,7 +33,7 @@ export default function Home(props:Readonly<HomeProps>){
                     dinner ideas, recipes for kids, holiday menus, and more</p>
             </div>
 
-            <div className="gallery-container">
+            <div className="card-gallery">
 
                 {filteredRecipes.length === 0 ? (
                     <p>No recipes found for your search.</p>
@@ -51,6 +50,6 @@ export default function Home(props:Readonly<HomeProps>){
                 )}
             </div>
 
-        </div>
+        </>
     )
 }
