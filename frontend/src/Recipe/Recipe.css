@@ -4,7 +4,6 @@
     width: 100%;
     max-width: 280px;
     margin: 0;
-    padding: 15px;
     background-color: #fff;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
@@ -12,12 +11,17 @@
     text-align: center;
 }
 
+.recipe-card-buttons{
 
+    width: 280px;
+    position: absolute;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    align-items: baseline;
+}
 /* Add Button */
 .add-button {
-    position: absolute;
-    top: 10px;
-    right: 10px;
+
     font-size: 24px;
     font-weight: bold;
     color: #e82020;
@@ -77,9 +81,8 @@
 .recipe-name {
     font-size: 20px;
     font-weight: bold;
-
     color: #333;
-    margin: 0px 0 0px 0px
+    margin: 0 0 0 0
 }
 
 

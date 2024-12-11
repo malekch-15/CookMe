@@ -33,15 +33,9 @@ export default function RecipeCard(props: Readonly<RecipeCardProps>) {
 
     return (
         <div className="recipe-card">
-            <div className="recipe-card-buttons">
-                    <button className="add-button">+</button>
-                            <button id="" onClick={() => props.onToggleWishlist(props.Recipe.id)}
-                                    className={props.Recipe.status === "FAVORITE" ? "red" : "black"}
-                            >♥
-                            </button>
-            </div>
 
-            <div >
+
+            <div className="recipe-image-container">
                 <button
                     onClick={() => handleViewDetails(props.Recipe.id)}
                     aria-label={`View details of ${props.Recipe.name}`}
@@ -53,6 +47,13 @@ export default function RecipeCard(props: Readonly<RecipeCardProps>) {
                         alt={`Image of recipe ${props.Recipe.name}`}
                     />
                 </button>
+                <div className="recipe-card-buttons">
+                    <button className="add-button">+</button>
+                    <button id="" onClick={() => props.onToggleWishlist(props.Recipe.id)}
+                            className={props.Recipe.status === "FAVORITE" ? "red" : "black"}
+                    >♥
+                    </button>
+                </div>
             </div>
 
             <div className="recipe-card-text">
