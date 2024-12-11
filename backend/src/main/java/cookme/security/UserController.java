@@ -14,7 +14,10 @@ public class UserController {
 
     @GetMapping()
     public String getCurrentUser(@AuthenticationPrincipal OAuth2User user) {
+        if (user == null) {
+         return "anonymousUser";
+        }else {
         System.out.println(user);
-        return Objects.requireNonNull(user.getAttribute("login")).toString();
+        return Objects.requireNonNull(user.getAttribute("login")).toString();}
     }
 }
