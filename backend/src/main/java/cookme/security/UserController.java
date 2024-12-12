@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Map;
 import java.util.Objects;
 
 @RestController
@@ -19,5 +20,12 @@ public class UserController {
         }else {
         System.out.println(user);
         return Objects.requireNonNull(user.getAttribute("login")).toString();}
+    }
+    @GetMapping("/me/details")
+    public Map<String, Object> getUserDetails(@AuthenticationPrincipal OAuth2User user) {
+        if (user == null) {
+            return Map.of("message", "User not authenticated");
+        }
+        return user.getAttributes();
     }
 }

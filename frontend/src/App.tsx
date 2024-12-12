@@ -17,6 +17,7 @@ function App() {
     const [recipes, setRecipes] = useState<Recipe[]>([]);
     const [ingredients, setIngredients] = useState<BaseIngredient[]>([]);
     const [newIngredient, setNewIngredient] = useState<BaseIngredient>({ id: "", name: "" });
+    const [user,setUser]=useState<string|null>(null);
 
     const fetchRecipes = () => {
         axios.get("/api/cookMe")
@@ -68,7 +69,6 @@ function App() {
     };
 
     useEffect(fetchIngredients, []);
-    const [user,setUser]=useState<string|null>( null)
 
 
         const loadCurrentUser = () => {
@@ -80,8 +80,8 @@ function App() {
                 )
         }
 
-        useEffect(() => {
-            loadCurrentUser()
+    useEffect(() => {
+        loadCurrentUser()
 
     }, []);
     return (
@@ -103,29 +103,12 @@ function App() {
                         ingredient={ingredients}
                     />
                 }/>
-                <Route path="/WishList" element={
-                    <WishList
-                        recipe={recipes}
-                        onToggleWishlist={handleToggleWishList}
-                        onDelete={handleDelete}
-                    />
-                }/>
-                <Route path="/New_Recipe" element={
-                    <AddRecipe
-                        setRecipe={setRecipes}
-                        ingredient={ingredients}
-                        newIngredient={newIngredient}
-                        onAddIngredient={handleAddIngredient}
-                    />
-                }/>
-                <Route path="/Ingredient" element={
-                    <Ingredient
-                        ingredient={ingredients}
-                        onAddIngredient={handleAddIngredient}
-                        setIngredient={setIngredients}
-                    />
-                }/>
-            </Routes>
+                <Route>
+                    <Route path="/WishList" element={<WishList  recipe={recipes} onToggleWishlist={handleToggleWishList} onDelete={handleDelete}/>}/>
+                    <Route path="/New_Recipe" element={<AddRecipe setRecipe={setRecipes} ingredient={ingredients} newIngredient={newIngredient} onAddIngredient={handleAddIngredient}/>}/>
+                    <Route path="/Ingredient" element={<Ingredient ingredient={ingredients} onAddIngredient={handleAddIngredient} setIngredient={setIngredients}/>}/>
+                </Route>
+                </Routes>
             <Footer/>
         </>
     );
