@@ -8,7 +8,6 @@ import cookme.recipesmodel.RecipeIngredient;
 import cookme.repository.AppUserRepo;
 import cookme.user.AppUser;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 
@@ -39,11 +38,11 @@ import java.util.List;
             }
         }
 
-        public void removeRecipeFromFavorites(String userId, String recipeId) {
+        public void removeRecipeFromFavorites(String userId, Recipe recipe ){
             AppUser user = getUserById(userId);
 
-            if (user.favorites().contains(recipeId)) {
-                user.favorites().remove(recipeId);
+            if (user.favorites().contains(recipe)) {
+                user.favorites().remove(recipe);
                 appUserRepo.save(user);
             }
         }

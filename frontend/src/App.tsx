@@ -62,6 +62,7 @@ import ProtectedRoute from "./Home/ProtectedRoute.tsx";
                     .catch(error => console.error("Error adding to favorites:", error));
             }
         };
+
         const handleAddIngredient = async (name: string): Promise<BaseIngredient> => {
             try {
                 const response = await axios.post(`/api/ingredient`, { id: "", name });
@@ -91,16 +92,6 @@ import ProtectedRoute from "./Home/ProtectedRoute.tsx";
             axios.get("/api/users/me")
                 .then((response) => {
                     setUser(response.data);
-                    if (response.data && response.data.id) {
-                        axios.get(`/api/cookMe/user/${response.data.id}/favorites`)
-                            .then(favoritesResponse => {
-                                setUser(prevUser => prevUser ? {
-                                    ...prevUser,
-                                    favorites: favoritesResponse.data // Update favorites
-                                } : prevUser);
-                            })
-                            .catch(error => console.error("Error fetching favorites:", error));
-                    }
                 })
                 .catch((error) => {
                     console.error(error);

@@ -43,10 +43,6 @@ public class RecipesController {
     recipesService.deleteRecipe(id);
     }
     // User Favorites Endpoints
-    @GetMapping("/user/{userId}/favorites")
-    public List<Recipe> getUserFavorites(@PathVariable String userId) {
-        return appUserService.getUserFavorites(userId);
-    }
 
     @PostMapping("/user/{userId}/favorites/{recipeId}")
     public void addRecipeToFavorites(@PathVariable String userId, @PathVariable String recipeId) {
@@ -54,9 +50,9 @@ public class RecipesController {
         appUserService.addRecipeToFavorites(userId, recipe);
     }
 
-    @DeleteMapping("/user/{userId}/favorites/{recipeId}")
-    public void removeRecipeFromFavorites(@PathVariable String userId, @PathVariable String recipeId) {
-        appUserService.removeRecipeFromFavorites(userId, recipeId);
+    @DeleteMapping("/user/{userId}/favorites/{recipe}")
+    public void removeRecipeFromFavorites(@PathVariable String userId, @PathVariable Recipe recipe) {
+        appUserService.removeRecipeFromFavorites(userId, recipe);
     }
 
     // User Ingredient Endpoints
