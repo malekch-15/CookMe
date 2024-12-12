@@ -16,7 +16,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.List;
-import java.util.Map;
+
 
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.oidcLogin;
@@ -46,11 +46,6 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
         when(appUserService.getUserFavorites("user")).thenReturn(appUser.favorites());
         when(appUserService.getUserIngredient("user")).thenReturn(appUser.ingredient());
 
-        Map<String, Object> userInfoMap = Map.of(
-                "name", "user",
-                "login", "johndoe123",
-                "avatar_url", "https://example.com/avatar.jpg"
-        );
 
         // Act & Assert
         mvc.perform(MockMvcRequestBuilders.get("/api/users/me")
