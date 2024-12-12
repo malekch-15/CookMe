@@ -1,12 +1,14 @@
 package cookme.user;
 
-import cookme.recipesmodel.BaseIngredient;
+
+import cookme.recipesmodel.Recipe;
+import cookme.recipesmodel.RecipeIngredient;
 
 import java.util.List;
 
 public record AppUser(String id,
                       String username,
                       String avatarUrl,
-                      List<BaseIngredient> ingredient,
-                      List<String> favorites) {
+                      List<RecipeIngredient> ingredient,
+                      List<Recipe> favorites) {
 }

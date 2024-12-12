@@ -33,7 +33,6 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 
         mvc.perform(MockMvcRequestBuilders.get("/api/users/me")
                 .with(oidcLogin().userInfoToken(token -> {
-                    // Add claims to the token
                     token.claim("login", userInfo.getClaims().get("login"));
                     token.claim("name", userInfo.getClaims().get("name"));
                     token.claim("avatar_url", userInfo.getClaims().get("avatar_url"));
