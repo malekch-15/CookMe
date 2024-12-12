@@ -12,12 +12,13 @@ import WishList from "./WishList.tsx";
 import { Status } from "./Model/Status.ts";
 import { BaseIngredient } from "./Model/BaseIngredient.ts";
 import Ingredient from "./Ingredient.tsx";
+import {AppUser} from "./Model/AppUser.ts";
 
 function App() {
     const [recipes, setRecipes] = useState<Recipe[]>([]);
     const [ingredients, setIngredients] = useState<BaseIngredient[]>([]);
     const [newIngredient, setNewIngredient] = useState<BaseIngredient>({ id: "", name: "" });
-    const [user,setUser]=useState<string|null>(null);
+    const [user,setUser]=useState<AppUser>();
 
     const fetchRecipes = () => {
         axios.get("/api/cookMe")
@@ -75,7 +76,11 @@ function App() {
             axios.get("/api/users/me")
                 .then((response) => {
                         console.log(response.data)
-                        setUser(response.data)
+                    if (response.data) {
+                        setUser(response.data); // Assuming response.data matches the AppUser type
+                    } else {
+                        setUser(undefined); // Fallback if no user data is returned
+                    }
                     }
                 )
         }
