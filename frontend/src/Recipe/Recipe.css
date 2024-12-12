@@ -4,7 +4,6 @@
     width: 100%;
     max-width: 280px;
     margin: 0;
-    padding: 15px;
     background-color: #fff;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
@@ -12,12 +11,17 @@
     text-align: center;
 }
 
+.recipe-card-buttons{
 
+    width: 280px;
+    position: absolute;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    align-items: baseline;
+}
 /* Add Button */
 .add-button {
-    position: absolute;
-    top: 10px;
-    right: 10px;
+
     font-size: 24px;
     font-weight: bold;
     color: #e82020;
@@ -36,6 +40,7 @@
     transform: scale(1);
     color: #555;
 }
+
 /* Header Section */
 .recipe-header {
     display: flex;
@@ -44,20 +49,40 @@
     margin-bottom: 5px;
 }
 
-.recipe-image {
-    width: 100%;
-    height: auto;
-    max-width: 300px;
-    border-radius: 10px;
+.recipe-card-image {
+    width: 380px;
+    height: 250px;
     object-fit: cover;
 }
 
+.recipe_card_image_button {
+    padding: inherit;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+
+}
+
+.recipe-card-text {
+    display: flex;
+    align-content: stretch;
+    align-items: stretch;
+
+}
+
+.card-gallery {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: space-around;
+}
 
 .recipe-name {
     font-size: 20px;
     font-weight: bold;
-    margin: 0;
     color: #333;
+    margin: 0 0 0 0
 }
 
 
@@ -65,13 +90,12 @@
 .recipe-description {
     font-size: 14px;
     color: #666;
-    margin: 10px 0 5px;
+    margin: 0 0 0 0;
 }
-
 .recipe-time {
     font-size: 14px;
     color: #999;
-    margin: 5px 0 15px;
+    margin: 0px 0 0px 0px
 }
 
 /* Action Buttons */
@@ -81,7 +105,7 @@
     flex-direction: row
 }
 
-.delete-button, .show-more-button {
+.delete-button {
     padding: 8px 12px;
     border: none;
     border-radius: 5px;
@@ -98,14 +122,6 @@
     background-color: #d32f2f;
 }
 
-.show-more-button {
-    background-color: #b3e8a3;
-    color: #150000;
-}
-
-.show-more-button:hover {
-    background-color: #1976d2;
-}
 
 /* Popup Overlay */
 .popup-overlay {
@@ -163,14 +179,17 @@
 .popup-cancel:hover {
     background-color: #c1c1c1;
 }
-.red{
+
+.red {
     color: #e82020;
     align-self: baseline;
 }
-.black{
-    color:#000000;
+
+.black {
+    color: #000000;
     align-self: baseline;
 }
+
 .clickable {
     cursor: pointer;
     transition: transform 0.2s ease; /* Optional: Adds a smooth hover effect */

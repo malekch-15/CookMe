@@ -9,7 +9,7 @@
     position: sticky; /* Make it stick to the top */
     top: 0;
     z-index: 1000; /* Ensure it stays above other elements */
-    width: 1400px;
+    width: 90%;
     height: 50px;
 }
 
@@ -28,31 +28,8 @@
     transition: color 0.3s ease; /* Smooth hover effect */
 }
 
-.navbar a:hover {
-    color: #b3e8a3; /* Blue color on hover */
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); /* Add a slight shadow */
-}
+
 
 .navbar a:active {
     color: #b3e8a3; /* Darker blue when clicked */
-}
-.logo {
-    display: inline-block;
-    width: 100px;
-    height: auto;
-    margin: 10px;
-    cursor: pointer; /* Indicates it's clickable */
-    text-decoration: none; /* Removes any underline on the link */
-}
-
-.logo img {
-    max-width: 70%; /* Ensures the image scales properly within the container */
-    height: auto; /* Maintains the image's aspect ratio */
-    border-radius: 80px; /* Optional: Adds rounded corners */
-    transition: transform 0.3s ease; /* Smooth hover effect */
-    background-color: #C7EEAD;
-}
-
-.logo img:hover {
-    transform: scale(1.1); /* Slightly enlarges the logo on hover */
 }
