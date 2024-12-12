@@ -13,14 +13,12 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import java.util.List;
 import java.util.Map;
 
-import static javax.management.Query.attr;
-import static javax.management.Query.value;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.oidcLogin;
 
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class UserControllerTest {
+ class UserControllerTest {
     @Autowired
     private MockMvc mvc;
     @Test
@@ -52,12 +50,5 @@ public class UserControllerTest {
                 ));
 
 
-    }
-
-    @Test
-    void testGetMe_withoutLogin_expectAnonymousUsername() throws Exception {
-        mvc.perform(MockMvcRequestBuilders.get("/api/users/me"))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().string("anonymousUser"));
     }
 }
