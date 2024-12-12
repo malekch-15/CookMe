@@ -11,11 +11,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.List;
+import java.util.Map;
 
 
 import static org.mockito.Mockito.when;
@@ -31,14 +33,13 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
     AppUserService appUserService;
 
     @Test
-
     void testGetUser_withLoggedInUser_getUserDetails() throws Exception {
         // Arrange
         AppUser appUser = new AppUser(
                 "user",
                 "johndoe123",
                 "https://example.com/avatar.jpg",
-                List.of(new RecipeIngredient(2,new BaseIngredient("1","2"))),
+                List.of(new RecipeIngredient(2, new BaseIngredient("1", "2"))),
                 List.of(new Recipe("1", "a", "a", 12, "a", "a", Status.FAVORITE, List.of()))
         );
 
@@ -65,5 +66,18 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
                      "ingredients":[]}]}
             """));
     }
+@Test
+@WithMockUser(username = "anonymousUser")
+void testGetUser_withNoUsername_returnsAnonymousUser() throws Exception {
+    when(appUserService.getUserById("anonymousUser")).thenReturn(null);
 
+    mvc.perform(MockMvcRequestBuilders.get("/api/users/me")
+                    .with(oidcLogin().userInfoToken(token -> {
+                        token.claim("name", "anonymousUser");
+                        token.claim("login", "johndoe123");
+                        token.claim("avatar_url", "https://example.com/avatar.jpg");
+                    })))
+            .andExpect(MockMvcResultMatchers.status().isNotFound())
+            .andExpect(MockMvcResultMatchers.content().string("User with ID nonexistentUser not found."));
+}
 }
