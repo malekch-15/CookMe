@@ -25,7 +25,7 @@ public class UserController {
 //    }
    @GetMapping()
    public AppUser getCurrentUserDetails(@AuthenticationPrincipal OAuth2User user) {
-       String name = user.getName();
+       String name = user.getName()!= null ? user.getName() : "anonymousUser";
        String login = user.getAttribute("login");
        String avatarUrl = user.getAttribute("avatar_url");
        System.out.println(user.getAttributes());

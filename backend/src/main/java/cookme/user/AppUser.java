@@ -9,6 +9,4 @@ public record AppUser(String id,
                       String avatarUrl,
                       List<BaseIngredient> ingredient,
                       List<String> favorites) {
-
-
 }
