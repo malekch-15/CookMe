@@ -46,7 +46,7 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
                 .exceptionHandling(ex -> ex.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
                 .oauth2Login( oauth->oauth.defaultSuccessUrl(appUrl))
-                .logout(logout -> logout.logoutUrl(appUrl));
+                .logout(logout -> logout.logoutSuccessUrl(appUrl));
         return http.build();
     }
     @Bean

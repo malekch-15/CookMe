@@ -12,7 +12,7 @@ export default function Header({user}:PropsHeader) {
     };
 
     const handleLogout = () => {
-        const host = window.location.host === 'localhost:5173' ? 'http://localhost:8080/api/' : window.location.origin;
+        const host = window.location.host === 'localhost:5173' ? 'http://localhost:8080' : window.location.origin;
         window.open(`${host}/logout`, '_self');
     }
 
