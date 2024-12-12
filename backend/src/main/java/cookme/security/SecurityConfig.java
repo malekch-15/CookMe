@@ -33,8 +33,8 @@ public class SecurityConfig {
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
                 .exceptionHandling(ex -> ex.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
-                .oauth2Login( oauth->oauth.defaultSuccessUrl("http://localhost:5173"))
-                .logout(logout -> logout.logoutSuccessUrl(appUrl));
+                .oauth2Login( oauth->oauth.defaultSuccessUrl(appUrl))
+                .logout(logout -> logout.logoutUrl(appUrl));
         return http.build();
     }
 
