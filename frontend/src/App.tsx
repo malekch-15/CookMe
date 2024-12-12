@@ -13,6 +13,7 @@ import { BaseIngredient } from "./Model/BaseIngredient.ts";
 import Ingredient from "./Ingredient.tsx";
 import {AppUser} from "./Model/AppUser.ts";
 import ProtectedRoute from "./Home/ProtectedRoute.tsx";
+import UserIngredient from "./Ingredient/UserIngredient.tsx";
 
     function App() {
         const [recipes, setRecipes] = useState<Recipe[]>([]);
@@ -125,6 +126,7 @@ import ProtectedRoute from "./Home/ProtectedRoute.tsx";
 
                         <Route path="/New_Recipe" element={<AddRecipe setRecipe={setRecipes} ingredient={ingredients} newIngredient={newIngredient} onAddIngredient={handleAddIngredient} />} />
                         <Route path="/Ingredient" element={<Ingredient ingredient={ingredients} onAddIngredient={handleAddIngredient} setIngredient={setIngredients} />} />
+                        <Route path="/UserIngredient" element={<UserIngredient  user={user} ingredient={ingredients} setUser={setUser}  onAddIngredient={handleAddIngredient}/>} />
                     </Route>
                 </Routes>
                 <Footer />

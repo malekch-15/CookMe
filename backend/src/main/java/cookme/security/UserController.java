@@ -1,6 +1,7 @@
 package cookme.security;
 
 import cookme.recipesmodel.Recipe;
+import cookme.recipesmodel.RecipeIngredient;
 import cookme.services.AppUserService;
 import cookme.user.AppUser;
 import lombok.RequiredArgsConstructor;
@@ -24,12 +25,13 @@ public final AppUserService appUserService;
        String avatarUrl = user.getAttribute("avatar_url");
        AppUser currentUser = appUserService.getUserById(name);
        List<Recipe> favorites = appUserService.getUserFavorites(currentUser.id());
+       List<RecipeIngredient> ingredient = appUserService.getUserIngredient(currentUser.id());
        System.out.println(user.getAttributes());
        return new AppUser(
                name,
                login,
                avatarUrl,
-               currentUser.ingredient(),
+               ingredient,
                favorites
        );
    }

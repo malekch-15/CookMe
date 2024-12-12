@@ -26,6 +26,7 @@ export default function Header({user}:PropsHeader) {
                     <Link to={"/"}>Home</Link>
                     <a>Meal Plan</a>
                     <Link to={"/Ingredient"}>Ingredients</Link>
+                    <Link to={"/UserIngredient"}>Ingredients</Link>
                     <Link to={"/WishList"}>Favorite</Link>
                     <Link to={"/New_Recipe"}>Add Recipe</Link>
                     {user=== undefined? (
