@@ -15,14 +15,6 @@ import java.util.Objects;
 @RequestMapping("/api/users/me")
 public class UserController {
 
-//    @GetMapping()
-//    public String getCurrentUser(@AuthenticationPrincipal OAuth2User user) {
-//        if (user == null) {
-//         return "anonymousUser";
-//        }else {
-//        System.out.println(user);
-//        return Objects.requireNonNull(user.getAttribute("login")).toString();}
-//    }
    @GetMapping()
    public AppUser getCurrentUserDetails(@AuthenticationPrincipal OAuth2User user) {
        String name = user.getName()!= null ? user.getName() : "anonymousUser";
