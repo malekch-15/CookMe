@@ -124,7 +124,7 @@ import MealPlan from "./MealPlan.tsx";
                     } />
                     <Route path="/WishList" element={<WishList recipe={recipes} onToggleWishlist={handleToggleWishList} onDelete={handleDelete} user={user} />} />
                     <Route element={<ProtectedRoute user={user} />}>
-                        <Route path="/mealPlan" element={<MealPlan user={user} />} />
+                        <Route path="/mealPlan" element={<MealPlan onToggleWishlist={handleToggleWishList} onDelete={handleDelete} user={user} />} />
                         <Route path="/New_Recipe" element={<AddRecipe setRecipe={setRecipes} ingredient={ingredients} newIngredient={newIngredient} onAddIngredient={handleAddIngredient} />} />
                         <Route path="/Ingredient" element={<Ingredient ingredient={ingredients} onAddIngredient={handleAddIngredient} setIngredient={setIngredients} />} />
                         <Route path="/UserIngredient" element={<UserIngredient  user={user} ingredient={ingredients} setUser={setUser}  onAddIngredient={handleAddIngredient}/>} />
