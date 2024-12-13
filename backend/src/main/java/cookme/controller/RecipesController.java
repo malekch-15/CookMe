@@ -1,7 +1,10 @@
 package cookme.controller;
 
+import cookme.recipesmodel.BaseIngredient;
 import cookme.recipesmodel.Recipe;
 import cookme.recipesmodel.RecipeDto;
+import cookme.recipesmodel.RecipeIngredient;
+import cookme.services.AppUserService;
 import cookme.services.RecipesService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -13,7 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class RecipesController {
     private final RecipesService recipesService;
-
+   private final AppUserService appUserService;
     @GetMapping()
     public List<Recipe> getAll() {
         return recipesService.findAllRecipes();
@@ -38,5 +41,33 @@ public class RecipesController {
     public void deleteRecipeWithId(@PathVariable String id) {
     recipesService.findRecipeById(id);
     recipesService.deleteRecipe(id);
+    }
+    // User Favorites Endpoints
+
+    @PostMapping("/user/{userId}/favorites/{recipeId}")
+    public void addRecipeToFavorites(@PathVariable String userId, @PathVariable String recipeId) {
+        Recipe recipe = recipesService.findRecipeById(recipeId);
+        appUserService.addRecipeToFavorites(userId, recipe);
+    }
+
+    @DeleteMapping("/user/{userId}/favorites/{recipe}")
+    public void removeRecipeFromFavorites(@PathVariable String userId, @PathVariable Recipe recipe) {
+        appUserService.removeRecipeFromFavorites(userId, recipe);
+    }
+
+    // User Ingredient Endpoints
+    @GetMapping("/user/{userId}/ingredients")
+    public List<RecipeIngredient> getUserIngredients(@PathVariable String userId) {
+        return appUserService.getUserIngredient(userId);
+    }
+
+    @PostMapping("/user/{userId}/ingredients")
+    public void addIngredientToUser(@PathVariable String userId, @RequestBody BaseIngredient ingredient, @RequestParam double quantity) {
+        appUserService.addIngredientToUser(userId, ingredient, quantity);
+    }
+
+    @DeleteMapping("/user/{userId}/ingredients")
+    public void removeIngredientFromUser(@PathVariable String userId, @RequestBody BaseIngredient ingredient) {
+        appUserService.removeIngredientFromUser(userId, ingredient);
     }
 }
