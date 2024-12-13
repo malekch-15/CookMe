@@ -1,6 +1,6 @@
 import {ChangeEvent} from "react";
 
-import "./Searchbar.css"
+import "../css/Searchbar.css"
 type SearchProps={
     onSearch: (query: string) => void;
 }

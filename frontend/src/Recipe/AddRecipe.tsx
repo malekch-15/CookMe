@@ -1,10 +1,10 @@
 import React, {ChangeEvent, useEffect, useState} from "react";
-import {Recipe} from "./Model/Recipe";
+import {Recipe} from "../Model/Recipe.ts";
 import axios from "axios";
-import "./AddRecipe.css"
+import "../css/AddRecipe.css"
 import {Autocomplete, createFilterOptions, TextField} from "@mui/material";
 
-import {BaseIngredient} from "./Model/BaseIngredient.ts";
+import {BaseIngredient} from "../Model/BaseIngredient.ts";
 const filter = createFilterOptions<BaseIngredient>();
 
 type addProps= {

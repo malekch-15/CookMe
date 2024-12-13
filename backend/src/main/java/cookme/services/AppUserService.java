@@ -24,6 +24,7 @@ import java.util.List;
             return appUserRepo.findById(userId)
                     .orElseThrow(() -> new UserNotFoundException("User not found"));
         }
+        //favorite
 
         public List<Recipe> getUserFavorites(String userId) {
             AppUser user = getUserById(userId);
@@ -47,6 +48,7 @@ import java.util.List;
                 appUserRepo.save(user);
             }
         }
+        //Ingredient
         public List<RecipeIngredient> getUserIngredient(String userId) {
             AppUser user = getUserById(userId);
             return user.ingredient();

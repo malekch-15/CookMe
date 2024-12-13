@@ -6,11 +6,15 @@ import cookme.recipesmodel.RecipeDto;
 import cookme.recipesmodel.RecipeIngredient;
 import cookme.services.AppUserService;
 import cookme.services.RecipesService;
+import cookme.user.AppUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.stream.Collectors;
+
 @RestController
 @RequestMapping("/api/cookMe")
 @RequiredArgsConstructor
@@ -69,5 +73,21 @@ public class RecipesController {
     @DeleteMapping("/user/{userId}/ingredients")
     public void removeIngredientFromUser(@PathVariable String userId, @RequestBody BaseIngredient ingredient) {
         appUserService.removeIngredientFromUser(userId, ingredient);
+    }
+    //MealPlan
+    @GetMapping("/user/{userId}/mealPlan")
+    public List<Recipe> getMealPlan(@PathVariable String userId) {
+        List<RecipeIngredient>  userIngredient= appUserService.getUserIngredient(userId);
+        List<Recipe> recipes= recipesService.findAllRecipes();
+        return recipes.stream()
+                .filter(recipe ->  !recipe.ingredients().isEmpty() && recipe.ingredients().stream()
+                        .allMatch(recipeIngredient ->
+                                userIngredient.stream()
+                                        .anyMatch(user ->
+                                                user.ingredient().name().equals(recipeIngredient.ingredient().name())
+                                        )
+                        )
+                )
+                .toList();
     }
 }

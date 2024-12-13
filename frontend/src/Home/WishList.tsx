@@ -1,7 +1,7 @@
-import {Recipe} from "./Model/Recipe.ts";
-import RecipeCard from "./Recipe/RecipeCard.tsx";
-import "./App.css"
-import {AppUser} from "./Model/AppUser.ts";
+import {Recipe} from "../Model/Recipe.ts";
+import RecipeCard from "../Recipe/RecipeCard.tsx";
+import "../App.css"
+import {AppUser} from "../Model/AppUser.ts";
 
 type WishListProps={
     recipe:Recipe[]

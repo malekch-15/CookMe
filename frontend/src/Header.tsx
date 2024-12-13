@@ -1,6 +1,6 @@
-import "./Header.css"
+import "./css/Header.css"
 import {Link} from "react-router-dom";
-import {AppUser} from "../Model/AppUser.ts";
+import {AppUser} from "./Model/AppUser.ts";
 
 type PropsHeader={
     user:AppUser|undefined
@@ -24,7 +24,7 @@ export default function Header({user}:PropsHeader) {
                     <img src="/Logo.png" alt="Company Logo"/>
                 </Link>
                     <Link to={"/"}>Home</Link>
-                    <a>Meal Plan</a>
+                <Link to={"/mealPlan"}>Meal Plan</Link>
                     <Link to={"/Ingredient"}>Ingredients</Link>
                     <Link to={"/UserIngredient"}>Ingredients</Link>
                     <Link to={"/WishList"}>Favorite</Link>
