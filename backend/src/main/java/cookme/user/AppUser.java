@@ -6,7 +6,7 @@ import java.util.List;
 
 public record AppUser(String id,
                       String username,
-                      String email,
+                      String avatarUrl,
                       List<BaseIngredient> ingredient,
                       List<String> favorites) {
 }
