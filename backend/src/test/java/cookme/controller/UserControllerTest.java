@@ -67,17 +67,15 @@ class UserControllerTest {
             """));
     }
     @Test
-    @WithMockUser(username = "anonymousUser")
     void testGetUser_withNoUsername_returnsAnonymousUser() throws Exception {
         when(appUserService.getUserById("anonymousUser")).thenReturn(null);
 
-        mvc.perform(MockMvcRequestBuilders.get("/api/users/me")
-                        .with(oidcLogin().userInfoToken(token -> {
-                            token.claim("name", "anonymousUser");
-                            token.claim("login", "johndoe123");
-                            token.claim("avatar_url", "https://example.com/avatar.jpg");
-                        })))
+        mvc.perform(MockMvcRequestBuilders.get("/api/users/me"))
                 .andExpect(MockMvcResultMatchers.status().isNotFound())
-                .andExpect(MockMvcResultMatchers.content().string("User with ID nonexistentUser not found."));
+                .andExpect(MockMvcResultMatchers.content().json("""
+{
+"message": "User with ID nonexistentUser not found"
+}
+"""));
     }
 }
