@@ -14,4 +14,9 @@ public class GlobalExceptionHandler{
     public ErrorMessage handleNoSuchElementException(NoSuchElementException exception) {
         return new ErrorMessage(exception.getMessage());
     }
+    @ExceptionHandler(UserNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ErrorMessage handleNotFoundException(UserNotFoundException exception) {
+        return new ErrorMessage(exception.getMessage());
+    }
 }
