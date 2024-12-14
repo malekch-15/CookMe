@@ -1,5 +1,8 @@
 package cookme.controller;
 
+import cookme.api.ApiService;
+import cookme.api.dto.MealBasic;
+import cookme.api.dto.MealBasicResponse;
 import cookme.recipesmodel.BaseIngredient;
 import cookme.recipesmodel.Recipe;
 import cookme.recipesmodel.RecipeDto;
@@ -12,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @RestController
@@ -20,6 +24,7 @@ import java.util.List;
 public class RecipesController {
     private final RecipesService recipesService;
    private final AppUserService appUserService;
+   private final ApiService apiService;
     @GetMapping()
     public List<Recipe> getAll() {
         return recipesService.findAllRecipes();
@@ -75,18 +80,20 @@ public class RecipesController {
     }
     //MealPlan
     @GetMapping("/user/{userId}/mealPlan")
-    public List<Recipe> getMealPlan(@PathVariable String userId) {
+    public  List<MealBasic> getMealPlan(@PathVariable String userId) {
         List<RecipeIngredient>  userIngredient= appUserService.getUserIngredient(userId);
-        List<Recipe> recipes= recipesService.findAllRecipes();
-        return recipes.stream()
-                .filter(recipe ->  !recipe.ingredients().isEmpty() && recipe.ingredients().stream()
-                        .allMatch(recipeIngredient ->
-                                userIngredient.stream()
-                                        .anyMatch(user ->
-                                                user.ingredient().name().equals(recipeIngredient.ingredient().name())
-                                        )
-                        )
-                )
+        List<String> ingredientNames = userIngredient.stream()
+                .map(ingredient -> ingredient.ingredient().name())
                 .toList();
+       return  ingredientNames.stream()
+                .flatMap(ingredient -> {
+                    // Step 3: For each ingredient, call the API and return a stream of MealBasicResponse
+                    List<MealBasic> mealsForIngredient = apiService.getMealByIngredient(ingredient);
+                    return mealsForIngredient.stream(); // Convert the list to a stream to use flatMap
+                })
+                .distinct()  // Optional: if you want to avoid duplicate recipes
+                .collect(Collectors.toList());
+
+
     }
 }
