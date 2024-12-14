@@ -1,8 +1,7 @@
 package cookme.controller;
 
 import cookme.api.ApiService;
-import cookme.api.dto.MealBasic;
-import cookme.api.dto.MealBasicResponse;
+import cookme.api.dto.*;
 import cookme.recipesmodel.BaseIngredient;
 import cookme.recipesmodel.Recipe;
 import cookme.recipesmodel.RecipeDto;
@@ -95,5 +94,15 @@ public class RecipesController {
                 .collect(Collectors.toList());
 
 
+    }
+    @GetMapping("/meal/{mealName}")
+    public Recipe getRecipe(@PathVariable String mealName) {
+
+//        return apiService.getMealByName(mealName);
+        // Fetch the MealResponse from the API by meal name
+        Meal meal= apiService.getMealByName(mealName);
+
+        // Convert the MealResponse into your Recipe domain model
+        return apiService.convertMealToRecipe(meal);
     }
 }

@@ -19,4 +19,9 @@ public class GlobalExceptionHandler{
     public ErrorMessage handleNotFoundException(UserNotFoundException exception) {
         return new ErrorMessage(exception.getMessage());
     }
+    @ExceptionHandler(MealNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ErrorMessage handleMealNotFoundException(MealNotFoundException exception) {
+        return new ErrorMessage(exception.getMessage());
+    }
 }
