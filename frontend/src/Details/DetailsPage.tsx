@@ -11,13 +11,26 @@ type DetailsPagesProps = {
     ingredient: BaseIngredient[]
 }
 export default function DetailsPage({setRecipes, ingredient}: Readonly<DetailsPagesProps>) {
-    const para = useParams<{ id: string }>()
+    const { id, name } = useParams<{ id: string; name: string }>();
     const [recipe, setRecipe] = useState<Recipe | null>(null);
-    const fetchDetails = () => {
-        axios.get(`/api/cookMe/${para.id}`)
-            .then((response => {
-                setRecipe(response.data)
-            })).catch((error) => console.log("no Recipe with this id", error));
+    const [error, setError] = useState<string>("");
+
+    const fetchDetails = async () => {
+        try {
+            const response = id
+                ? await axios.get(`/api/cookMe/${id}`)
+                : name
+                    ? await axios.get(`/api/cookMe/meal/${name}`)
+                    : null;
+
+            if (response) {
+                setRecipe(response.data);
+            } else {
+                setError("Invalid parameters. Cannot fetch recipe.");
+            }
+        } catch (err) {
+            setError("Error fetching recipe: " + err+ error);
+        }
 
     }
     const updateRecipe = (newRecipe: Recipe, id: string) => {
@@ -34,7 +47,8 @@ export default function DetailsPage({setRecipes, ingredient}: Readonly<DetailsPa
     }
     useEffect(() => {
         fetchDetails();
-    }, [para.id]);
+
+    }, [id,name]);
     if (!recipe) {
         return <div className="loading">loading....</div>
     }

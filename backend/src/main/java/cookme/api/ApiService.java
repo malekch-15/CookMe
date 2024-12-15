@@ -2,7 +2,7 @@ package cookme.api;
 
 
 import cookme.api.dto.*;
-import cookme.exception.MealNotFoundException;
+
 import cookme.recipesmodel.BaseIngredient;
 import cookme.recipesmodel.Recipe;
 import cookme.recipesmodel.RecipeIngredient;
@@ -11,16 +11,16 @@ import cookme.services.IngredientsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
-import org.springframework.web.reactive.function.client.WebClientRequestException;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
 @Service
-
+@RequiredArgsConstructor
 public class ApiService {
 
+    private final IngredientsService ingredientsService;
     private final WebClient webClient = WebClient.builder()
             .baseUrl("https://www.themealdb.com/api/json/v1/1")
             .build();
@@ -66,49 +66,50 @@ public class ApiService {
     }
 
     public Recipe convertMealToRecipe(Meal meal) {
-        // Extract meal details from the provided MealDetails object
-        String description = meal.getStrTags() != null ? meal.getStrTags() : "No tags available"; // Placeholder
-        double time = 30.0; // Placeholder for preparation time (you could add logic to parse this from meal data)
+            List<RecipeIngredient> ingredients = new ArrayList<>();
 
-        // Create the list of RecipeIngredient objects from the ingredients and measures
-        List<RecipeIngredient> ingredients = new ArrayList<>();
+            for (int i = 1; i <= 20; i++) {
+                String ingredientName = getIngredientByIndex(meal, i);
+                String measure = getMeasureByIndex(meal, i);
 
-        // Loop through the ingredients and measures
-        for (int i = 1; i <= 20; i++) {
-            String ingredient = getIngredientByIndex(meal, i);
-            String measure = getMeasureByIndex(meal, i);
+                if (ingredientName != null && !ingredientName.isEmpty() && measure != null && !measure.isEmpty()) {
+                    // Use existing or create a new BaseIngredient
+                    List<BaseIngredient> baseIngredients = ingredientsService.findByName(ingredientName);
 
-            // Ensure ingredient and measure are not null or empty
-            if (ingredient != null && !ingredient.isEmpty() && measure != null && !measure.isEmpty()) {
-                // Create BaseIngredient from the ingredient name
-                BaseIngredient baseIngredient = new BaseIngredient(String.valueOf(i), ingredient);
+                    BaseIngredient baseIngredient;
+                    if (!baseIngredients.isEmpty()) {
+                        // Use the first match
+                        baseIngredient = baseIngredients.get(0);
+                    } else {
+                        // Save a new ingredient and use it
+                        baseIngredient = ingredientsService.save(new BaseIngredient("", ingredientName));
+                    }
 
-                // Try parsing the measure as a numeric value. If it fails, default to 1.0
-                double measureValue;
-                try {
-                    measureValue = Double.parseDouble(measure);
-                } catch (NumberFormatException e) {
-                    measureValue = 1.0; // Default to 1.0 if parsing fails
+                    // Parse the measure and add the RecipeIngredient
+                    double quantity = parseMeasure(measure);
+                    ingredients.add(new RecipeIngredient(quantity, baseIngredient));
                 }
-
-                // Add the ingredient with its quantity to the list
-                ingredients.add(new RecipeIngredient(measureValue, baseIngredient));
             }
+
+            return new Recipe(
+                    meal.getIdMeal(),
+                    meal.getStrMeal(),
+                    meal.getStrTags() != null ? meal.getStrTags() : "No tags",
+                    30.0,
+                    meal.getStrMealThumb(),
+                    meal.getStrInstructions(),
+                    Status.NOT_FAVORITE,
+                    ingredients
+            );
         }
 
-        // Create and return a Recipe object
-        return new Recipe(
-                meal.getIdMeal(),
-                meal.getStrMeal(),
-                description,
-                time,
-                meal.getStrMealThumb(), // Thumbnail image for the meal
-                meal.getStrInstructions(), // Instructions for preparing the meal
-                Status.NOT_FAVORITE, // Status (you can modify this as needed)
-                ingredients
-        );
+    private double parseMeasure(String measure) {
+        try {
+            return Double.parseDouble(measure);
+        } catch (NumberFormatException e) {
+            return 1.0; // Default to 1.0 if parsing fails
+        }
     }
-
     // Helper methods to get ingredient and measure by index
     private String getIngredientByIndex(Meal meal, int index) {
         try {
