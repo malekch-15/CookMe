@@ -98,11 +98,15 @@ public class RecipesController {
     @GetMapping("/meal/{mealName}")
     public Recipe getRecipe(@PathVariable String mealName) {
 
-//        return apiService.getMealByName(mealName);
         // Fetch the MealResponse from the API by meal name
         Meal meal= apiService.getMealByName(mealName);
-
         // Convert the MealResponse into your Recipe domain model
-        return apiService.convertMealToRecipe(meal);
+       Recipe newRecipe= apiService.convertMealToRecipe(meal);
+       // add the MealResponse into dateBase
+       RecipeDto recipeToSave=new RecipeDto(newRecipe.name(),newRecipe.description(),newRecipe.time(),newRecipe.imageUrl(),
+               newRecipe.preparation(),newRecipe.status(),newRecipe.ingredients());
+       recipesService.saveRecipes(recipeToSave);
+
+        return newRecipe;
     }
 }
