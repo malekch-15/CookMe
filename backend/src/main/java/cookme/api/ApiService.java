@@ -86,7 +86,7 @@ public class ApiService {
                     }
 
                     // Parse the measure and add the RecipeIngredient
-                    double quantity = parseMeasure(measure);
+                   String quantity = parseMeasure(measure);
                     ingredients.add(new RecipeIngredient(quantity, baseIngredient));
                 }
             }
@@ -103,11 +103,11 @@ public class ApiService {
             );
         }
 
-    private double parseMeasure(String measure) {
+    private String parseMeasure(String measure) {
         try {
-            return Double.parseDouble(measure);
+            return measure;
         } catch (NumberFormatException e) {
-            return 1.0; // Default to 1.0 if parsing fails
+            return null; // Default to 1.0 if parsing fails
         }
     }
     // Helper methods to get ingredient and measure by index

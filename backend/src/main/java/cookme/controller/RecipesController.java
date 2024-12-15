@@ -69,7 +69,7 @@ public class RecipesController {
     }
 
     @PostMapping("/user/{userId}/ingredients")
-    public void addIngredientToUser(@PathVariable String userId, @RequestBody BaseIngredient ingredient, @RequestParam double quantity) {
+    public void addIngredientToUser(@PathVariable String userId, @RequestBody BaseIngredient ingredient, @RequestParam String quantity) {
         appUserService.addIngredientToUser(userId, ingredient, quantity);
     }
 
@@ -105,6 +105,7 @@ public class RecipesController {
        // add the MealResponse into dateBase
        RecipeDto recipeToSave=new RecipeDto(newRecipe.name(),newRecipe.description(),newRecipe.time(),newRecipe.imageUrl(),
                newRecipe.preparation(),newRecipe.status(),newRecipe.ingredients());
+
        recipesService.saveRecipes(recipeToSave);
 
         return newRecipe;
