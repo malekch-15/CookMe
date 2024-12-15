@@ -1,6 +1,6 @@
 import {BaseIngredient} from "./BaseIngredient.ts";
 
 export type RecipeIngredient ={
-    quantity:number,
+    quantity:string,
     ingredient:BaseIngredient
 }

@@ -37,8 +37,8 @@ export default function MealPlan ({user}:PropsMealPlan) {
                 <div className="meal-plan-list">
                     {mealPlan.length > 0 ? (
                         <div>
-                    {mealPlan.map((recipe) => (
-                        <MealPlanCard mealPlan={recipe}/>
+                    {mealPlan.map((mealPlan) => (
+                        <MealPlanCard key={mealPlan.idMeal} mealPlan={mealPlan}/>
                     ))}
                         </div>
             ) : (

@@ -9,8 +9,8 @@ type MealPlanProps = {
 }
 export default function MealPlanCard(props: Readonly<MealPlanProps>) {
     const navigate= useNavigate()
-    const handleViewDetails = (name: string) => {
-        navigate(`/details/${name}`);
+    const handleViewDetails = (mealName: string) => {
+        navigate(`/meal/${encodeURIComponent(mealName)}`)
     }
     return (
         <div className="recipe-card">

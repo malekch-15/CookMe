@@ -59,7 +59,6 @@ export default function RecipeCard(props: Readonly<RecipeCardProps>) {
             <div className="recipe-card-text">
                 <h2 className="recipe-name">{props.Recipe.name}</h2>
                 <p className="recipe-description">{props.Recipe.description}</p>
-                <p className="recipe-time">{props.Recipe.time}min</p>
             </div>
 
 

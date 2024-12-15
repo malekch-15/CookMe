@@ -28,7 +28,6 @@ export default function Details({recipe}: Readonly<DetailsProps>) {
 
             <div className="details-text">
                 <h1 className="details-title">{recipe.name}</h1>
-                <p className="details-info">Cooking Time: {recipe.time} minutes</p>
                 <p className="details-description">{recipe.description}</p>
                 <div className="details-ingredients">
                     <h3>Ingredients:</h3>

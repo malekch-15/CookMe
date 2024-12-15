@@ -11,28 +11,31 @@ type DetailsPagesProps = {
     ingredient: BaseIngredient[]
 }
 export default function DetailsPage({setRecipes, ingredient}: Readonly<DetailsPagesProps>) {
-    const { id, name } = useParams<{ id: string; name: string }>();
+    const { id, mealName } = useParams<{ id: string; mealName: string }>();
     const [recipe, setRecipe] = useState<Recipe | null>(null);
     const [error, setError] = useState<string>("");
 
-    const fetchDetails = async () => {
-        try {
-            const response = id
-                ? await axios.get(`/api/cookMe/${id}`)
-                : name
-                    ? await axios.get(`/api/cookMe/meal/${name}`)
-                    : null;
-
-            if (response) {
-                setRecipe(response.data);
-            } else {
-                setError("Invalid parameters. Cannot fetch recipe.");
-            }
-        } catch (err) {
-            setError("Error fetching recipe: " + err+ error);
+    const fetchDetails = () => {
+        if (id) {
+            axios.get(`/api/cookMe/${id}`)
+                .then((response) => setRecipe(response.data))
+                .catch((error) => {
+                    setError("Error fetching recipe: " + error.message);
+                    console.error("Error fetching recipe by ID:", error);
+                });
+        } else if (mealName) {
+            axios.get(`/api/cookMe/meal/${encodeURIComponent(mealName)}`)
+                .then((response) => setRecipe(response.data))
+                .catch((error) => {
+                    setError("Error fetching recipe: " + error.message);
+                    console.error("Error fetching recipe by name:", error);
+                });
+        } else {
+            setError("Error: Either 'id' or 'name' must be provided.");
+            console.log(error)
         }
+    };
 
-    }
     const updateRecipe = (newRecipe: Recipe, id: string) => {
         axios
             .put(`/api/cookMe/update/${id}`, newRecipe)
@@ -48,7 +51,7 @@ export default function DetailsPage({setRecipes, ingredient}: Readonly<DetailsPa
     useEffect(() => {
         fetchDetails();
 
-    }, [id,name]);
+    }, [id,mealName]);
     if (!recipe) {
         return <div className="loading">loading....</div>
     }
