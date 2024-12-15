@@ -14,6 +14,9 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 
 @Service
@@ -66,41 +69,39 @@ public class ApiService {
     }
 
     public Recipe convertMealToRecipe(Meal meal) {
-            List<RecipeIngredient> ingredients = new ArrayList<>();
+        List<RecipeIngredient> ingredients = IntStream.range(1, 21)  // Creates a stream of integers from 1 to 20
+                .mapToObj(i -> {
+                    String ingredientName = getIngredientByIndex(meal, i);
+                    String measure = getMeasureByIndex(meal, i);
 
-            for (int i = 1; i <= 20; i++) {
-                String ingredientName = getIngredientByIndex(meal, i);
-                String measure = getMeasureByIndex(meal, i);
+                    // Check if both ingredient name and measure are not null or empty
+                    if (ingredientName != null && !ingredientName.isEmpty() && measure != null && !measure.isEmpty()) {
+                        // Find or save the ingredient
+                        List<BaseIngredient> baseIngredients = ingredientsService.findByName(ingredientName);
+                        BaseIngredient baseIngredient = baseIngredients.stream()
+                                .findFirst()
+                                .orElseGet(() -> ingredientsService.save(new BaseIngredient("", ingredientName)));  // Save if not found
 
-                if (ingredientName != null && !ingredientName.isEmpty() && measure != null && !measure.isEmpty()) {
-                    // Use existing or create a new BaseIngredient
-                    List<BaseIngredient> baseIngredients = ingredientsService.findByName(ingredientName);
-
-                    BaseIngredient baseIngredient;
-                    if (!baseIngredients.isEmpty()) {
-                        // Use the first match
-                        baseIngredient = baseIngredients.get(0);
+                        // Return the RecipeIngredient
+                        String quantity = parseMeasure(measure);
+                        return new RecipeIngredient(quantity, baseIngredient);
                     } else {
-                        // Save a new ingredient and use it
-                        baseIngredient = ingredientsService.save(new BaseIngredient("", ingredientName));
+                        return null;  // Skip invalid ingredients
                     }
+                })
+                .filter(Objects::nonNull)  // Remove null values (invalid ingredients)
+                .collect(Collectors.toList());  // Collect to a list
 
-                    // Parse the measure and add the RecipeIngredient
-                   String quantity = parseMeasure(measure);
-                    ingredients.add(new RecipeIngredient(quantity, baseIngredient));
-                }
-            }
-
-            return new Recipe(
-                    meal.getIdMeal(),
-                    meal.getStrMeal(),
-                    meal.getStrTags() != null ? meal.getStrTags() : "No tags",
-                    30.0,
-                    meal.getStrMealThumb(),
-                    meal.getStrInstructions(),
-                    Status.NOT_FAVORITE,
-                    ingredients
-            );
+        return new Recipe(
+                meal.getIdMeal(),
+                meal.getStrMeal(),
+                meal.getStrTags() != null ? meal.getStrTags() : "No tags",
+                30.0,
+                meal.getStrMealThumb(),
+                meal.getStrInstructions(),
+                Status.NOT_FAVORITE,
+                ingredients
+        );
         }
 
     private String parseMeasure(String measure) {
