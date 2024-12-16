@@ -1,8 +1,5 @@
 package cookme.api;
-
-
 import cookme.api.dto.*;
-
 import cookme.recipesmodel.BaseIngredient;
 import cookme.recipesmodel.Recipe;
 import cookme.recipesmodel.RecipeIngredient;
@@ -11,8 +8,6 @@ import cookme.services.IngredientsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -29,7 +24,7 @@ public class ApiService {
             .build();
 
     public List<MealBasic> getMealByIngredient(String ingredient) {
-        // Dynamically construct the URI with the ingredient
+
         MealBasicResponse response = webClient.get()
                 .uri(uriBuilder -> uriBuilder
                         .path("/filter.php")
@@ -37,14 +32,14 @@ public class ApiService {
                         .build())
                 .retrieve()
                 .bodyToMono(MealBasicResponse.class)
-                .block(); // Use .block() to get the result synchronously for now
+                .block();
 
-        // Ensure that response.getMeals() is not null
+
         List<MealBasic> mealsForIngredient = (response != null && response.meals() != null)
                 ? response.meals()
-                : List.of(); // Return an empty list if null
+                : List.of();
 
-        // Now it's safe to use the stream() method
+
         mealsForIngredient.forEach(System.out::println);
 
         return mealsForIngredient;
@@ -58,13 +53,12 @@ public class ApiService {
                         .build())
                 .retrieve()
                 .bodyToMono(MealResponse.class)
-                .block(); // Make sure to use Mono if the call is synchronous.
+                .block();
 
         if (mealResponse == null || mealResponse.meals() == null ) {
             throw new RuntimeException("Meal not found");
         }
 
-        // Return the first meal from the list.
         return mealResponse.meals().get(0);
     }
 

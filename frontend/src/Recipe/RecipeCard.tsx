@@ -9,11 +9,11 @@ type RecipeCardProps = {
     showDeleteButton?: boolean
     onDetails?: (id: string) => void
     onToggleWishlist: (id: string) => void
+    isFavorite: boolean|undefined;
 }
 export default function RecipeCard(props: Readonly<RecipeCardProps>) {
     const [showPopup, setShowPopup] = useState(false);
     const navigate = useNavigate()
-    const [isFavorite, setIsFavorite] = useState(props.Recipe.status === "FAVORITE");
     const handleViewDetails = (id: string) => {
         navigate(`/details/${id}`);
     }
@@ -31,12 +31,10 @@ export default function RecipeCard(props: Readonly<RecipeCardProps>) {
         setShowPopup(false);
 
     };
-    const handleToggleWishlist = () => {
-        setIsFavorite((prev) => !prev); // Toggle favorite status
-        props.onToggleWishlist(props.Recipe.id); // Notify parent about the change
-    };
+
     const heartButtonStyle = {
-        color: isFavorite ? "#e82020" : "#5e5e5e",
+
+        color: props.isFavorite ?"red" : "black" ,
     };
     return (
         <div className="recipe-card">
@@ -60,7 +58,7 @@ export default function RecipeCard(props: Readonly<RecipeCardProps>) {
 
                     <button
                         id=""
-                        onClick={() => handleToggleWishlist()}
+                        onClick={() => {props.onToggleWishlist(props.Recipe.id)}}
                         style={heartButtonStyle}
                         className="heart-button"
                     >

@@ -9,6 +9,7 @@ import cookme.recipesmodel.RecipeIngredient;
 import cookme.services.AppUserService;
 import cookme.services.RecipesService;
 
+import cookme.user.AppUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -55,14 +56,15 @@ public class RecipesController {
     }
     // User Favorites Endpoints
 
-    @PostMapping("/user/{userId}/favorites/{recipeId}")
-    public void addRecipeToFavorites(@PathVariable String userId, @PathVariable String recipeId) {
-        Recipe recipe = recipesService.findRecipeById(recipeId);
+    @PostMapping("/user/favorites/{recipeId}")
+    public void addRecipeToFavorites(@RequestBody String userId, @PathVariable String recipeId) {
+       Recipe recipe=recipesService.findRecipeById(recipeId);
         appUserService.addRecipeToFavorites(userId, recipe);
     }
 
-    @DeleteMapping("/user/{userId}/favorites/{recipe}")
-    public void removeRecipeFromFavorites(@PathVariable String userId, @PathVariable Recipe recipe) {
+    @DeleteMapping("/users/{recipeId}/favorite")
+    public void removeRecipeFromFavorites(@RequestBody String userId, @PathVariable String recipeId) {
+        Recipe recipe=recipesService.findRecipeById(recipeId);
         appUserService.removeRecipeFromFavorites(userId, recipe);
     }
 
@@ -96,6 +98,7 @@ public class RecipesController {
                     return mealsForIngredient.stream(); // Convert the list to a stream to use flatMap
                 })
                 .distinct()
+                .limit(6)
                 .collect(Collectors.toList());
 
 

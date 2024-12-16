@@ -2,12 +2,14 @@ import {Recipe} from "../Model/Recipe.ts";
 import RecipeCard from "../Recipe/RecipeCard.tsx";
 import {useState} from "react";
 import Searchbar from "./Searchbar.tsx";
+import {AppUser} from "../Model/AppUser.ts";
 
 
 type HomeProps={
     recipe:Recipe[]
     onDelete:(id:string)=>void
     onToggleWishlist: (id: string) => void
+    user:AppUser|undefined
 }
 export default function Home(props:Readonly<HomeProps>){
     const [searchQuery, setSearchQuery] = useState("");
@@ -45,6 +47,7 @@ export default function Home(props:Readonly<HomeProps>){
                             onDelete={props.onDelete}
                             showDeleteButton={true}
                             onToggleWishlist={props.onToggleWishlist}
+                            isFavorite={props.user?.favorites.some(fav => fav.id === recipe.id)}
                         />
                     ))
                 )}

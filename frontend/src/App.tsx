@@ -39,12 +39,14 @@ import MealPlan from "./MealPlan.tsx";
         const handleToggleWishList = (id: string) => {
             if (!user) return ;
 
+
             const recipe = recipes.find(r => r.id === id);
             if (!recipe) return;
 
             if (user.favorites.some(fav => fav.id === id)) {
                 // Remove from favorites
-                axios.delete(`/api/cookMe/user/${user.id}/favorites/${id}`)
+                axios.delete(`/api/cookMe/users/${recipe.id}/favorite`,{data
+                :user.id,headers:{"Content-Type":"text/plain"}})
                     .then(() => {
                         setUser(prevUser => prevUser?{
                             ...prevUser,
@@ -54,7 +56,7 @@ import MealPlan from "./MealPlan.tsx";
                     .catch(error => console.error("Error removing from favorites:", error));
             } else {
                 // Add to favorites
-                axios.post(`/api/cookMe/user/${user.id}/favorites/${recipe.id}`)
+                axios.post(`/api/cookMe/user/favorites/${recipe.id}`,user.id,{headers:{"Content-Type":"text/plain"}})
                     .then(() => {
                         setUser(prevUser => prevUser?{
                             ...prevUser,
@@ -115,6 +117,7 @@ import MealPlan from "./MealPlan.tsx";
                             recipe={recipes}
                             onDelete={handleDelete}
                             onToggleWishlist={handleToggleWishList}
+                            user={user}
                         />
                     } />
                     <Route path="/details/:id/*" element={
