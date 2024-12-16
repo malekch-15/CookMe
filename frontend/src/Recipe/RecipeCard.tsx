@@ -7,12 +7,13 @@ type RecipeCardProps = {
     Recipe: Recipe
     onDelete: (id: string) => void
     showDeleteButton?: boolean
-    onDetails?:(id:string)=>void
+    onDetails?: (id: string) => void
     onToggleWishlist: (id: string) => void
 }
 export default function RecipeCard(props: Readonly<RecipeCardProps>) {
     const [showPopup, setShowPopup] = useState(false);
-    const navigate= useNavigate()
+    const navigate = useNavigate()
+    const [isFavorite, setIsFavorite] = useState(props.Recipe.status === "FAVORITE");
     const handleViewDetails = (id: string) => {
         navigate(`/details/${id}`);
     }
@@ -30,7 +31,13 @@ export default function RecipeCard(props: Readonly<RecipeCardProps>) {
         setShowPopup(false);
 
     };
-
+    const handleToggleWishlist = () => {
+        setIsFavorite((prev) => !prev); // Toggle favorite status
+        props.onToggleWishlist(props.Recipe.id); // Notify parent about the change
+    };
+    const heartButtonStyle = {
+        color: isFavorite ? "#e82020" : "#5e5e5e",
+    };
     return (
         <div className="recipe-card">
 
@@ -47,14 +54,22 @@ export default function RecipeCard(props: Readonly<RecipeCardProps>) {
                         alt={`Image of recipe ${props.Recipe.name}`}
                     />
                 </button>
+
                 <div className="recipe-card-buttons">
                     <button className="add-button">+</button>
-                    <button id="" onClick={() => props.onToggleWishlist(props.Recipe.id)}
-                            className={props.Recipe.status === "FAVORITE" ? "red" : "black"}
-                    >♥
+
+                    <button
+                        id=""
+                        onClick={() => handleToggleWishlist()}
+                        style={heartButtonStyle}
+                        className="heart-button"
+                    >
+                        ♥
                     </button>
+
                 </div>
             </div>
+
 
             <div className="recipe-card-text">
                 <h2 className="recipe-name">{props.Recipe.name}</h2>
