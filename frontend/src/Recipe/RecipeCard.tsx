@@ -9,7 +9,7 @@ type RecipeCardProps = {
     showDeleteButton?: boolean
     onDetails?: (id: string) => void
     onToggleWishlist: (id: string) => void
-    isFavorite: boolean|undefined;
+    isFavorite?: boolean|undefined;
 }
 export default function RecipeCard(props: Readonly<RecipeCardProps>) {
     const [showPopup, setShowPopup] = useState(false);

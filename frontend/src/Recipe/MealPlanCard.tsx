@@ -36,6 +36,5 @@ export default function MealPlanCard(props: Readonly<MealPlanProps>) {
             </div>
 
         </div>
-
     )
 }

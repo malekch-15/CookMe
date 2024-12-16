@@ -14,10 +14,13 @@ body {
 }
 
 
-.wishlist-card{
+.wishList-title{
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  padding: 40px 20px;
+  margin: 20px;
+  align-items: center;
+  row-gap: inherit;
+  color: #00000099;
 }
 
 .TextField{
