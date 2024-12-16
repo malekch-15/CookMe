@@ -57,7 +57,7 @@ export default function Edit(props:Readonly<EditProps>){
             if (field === 'quantity') {
                 updatedIngredients[index] = {
                     ...updatedIngredients[index],
-                    quantity:parseFloat( event.target.value),
+                    quantity: event.target.value,
                 };
             }
             setNewRecipe((prevRecipe) => ({
@@ -75,7 +75,7 @@ export default function Edit(props:Readonly<EditProps>){
             }
             setNewRecipe((prevRecipe) => ({
                 ...prevRecipe!,
-                ingredients: [...prevRecipe!.ingredients, {quantity:0,ingredient:{id:"",name:newIngredient.name}}],
+                ingredients: [...prevRecipe!.ingredients, {quantity:"",ingredient:{id:"",name:newIngredient.name}}],
             }));
 
     };
