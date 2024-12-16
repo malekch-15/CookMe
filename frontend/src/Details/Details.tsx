@@ -1,6 +1,6 @@
 import {Recipe} from "../Model/Recipe.ts";
 import {useNavigate} from "react-router-dom";
-import "./Details.css"
+import "../css/Details.css"
 
 type DetailsProps = {
     recipe: Recipe

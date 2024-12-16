@@ -4,15 +4,17 @@ import axios from "axios";
 import { Recipe } from "./Model/Recipe.ts";
 import Home from "./Home/Home.tsx";
 import { Route, Routes } from "react-router-dom";
-import Header from "./Home/Header.tsx";
-import Footer from "./Home/Footer.tsx";
-import AddRecipe from "./AddRecipe.tsx";
+import Header from "./Header.tsx";
+import Footer from "./Footer.tsx";
+import AddRecipe from "./Recipe/AddRecipe.tsx";
 import DetailsPage from "./Details/DetailsPage.tsx";
-import WishList from "./WishList.tsx";
+import WishList from "./Home/WishList.tsx";
 import { BaseIngredient } from "./Model/BaseIngredient.ts";
-import Ingredient from "./Ingredient.tsx";
+import Ingredient from "./Ingredient/Ingredient.tsx";
 import {AppUser} from "./Model/AppUser.ts";
-import ProtectedRoute from "./Home/ProtectedRoute.tsx";
+import ProtectedRoute from "./ProtectedRoute.tsx";
+import UserIngredient from "./Ingredient/UserIngredient.tsx";
+import MealPlan from "./MealPlan.tsx";
 
     function App() {
         const [recipes, setRecipes] = useState<Recipe[]>([]);
@@ -122,9 +124,10 @@ import ProtectedRoute from "./Home/ProtectedRoute.tsx";
                     } />
                     <Route path="/WishList" element={<WishList recipe={recipes} onToggleWishlist={handleToggleWishList} onDelete={handleDelete} user={user} />} />
                     <Route element={<ProtectedRoute user={user} />}>
-
+                        <Route path="/mealPlan" element={<MealPlan user={user} />} />
                         <Route path="/New_Recipe" element={<AddRecipe setRecipe={setRecipes} ingredient={ingredients} newIngredient={newIngredient} onAddIngredient={handleAddIngredient} />} />
                         <Route path="/Ingredient" element={<Ingredient ingredient={ingredients} onAddIngredient={handleAddIngredient} setIngredient={setIngredients} />} />
+                        <Route path="/UserIngredient" element={<UserIngredient  user={user} ingredient={ingredients} setUser={setUser}  onAddIngredient={handleAddIngredient}/>} />
                     </Route>
                 </Routes>
                 <Footer />

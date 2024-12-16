@@ -9,6 +9,7 @@ import cookme.repository.AppUserRepo;
 import cookme.user.AppUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 import java.util.List;
@@ -23,6 +24,7 @@ import java.util.List;
             return appUserRepo.findById(userId)
                     .orElseThrow(() -> new UserNotFoundException("User not found"));
         }
+        //favorite
 
         public List<Recipe> getUserFavorites(String userId) {
             AppUser user = getUserById(userId);
@@ -46,11 +48,12 @@ import java.util.List;
                 appUserRepo.save(user);
             }
         }
+        //Ingredient
         public List<RecipeIngredient> getUserIngredient(String userId) {
             AppUser user = getUserById(userId);
             return user.ingredient();
         }
-
+        @Transactional
         public void addIngredientToUser(String userId, BaseIngredient ingredient, double quantity) {
             AppUser user = getUserById(userId);
 
@@ -77,7 +80,8 @@ import java.util.List;
             AppUser user = getUserById(userId);
             user.ingredient().stream()
                     .filter(recipeIngredient -> recipeIngredient.ingredient().id().equals(ingredient.id()))
-                    .findFirst().ifPresent(existingIngredient -> user.ingredient().remove(existingIngredient));
+                    .findFirst()
+                    .ifPresent(existingIngredient -> user.ingredient().remove(existingIngredient));
             appUserRepo.save(user);
         }
 

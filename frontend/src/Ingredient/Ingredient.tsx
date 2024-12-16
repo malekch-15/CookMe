@@ -1,4 +1,4 @@
-import {BaseIngredient} from "./Model/BaseIngredient.ts";
+import {BaseIngredient} from "../Model/BaseIngredient.ts";
 import React, {ChangeEvent, useState} from "react";
 
 

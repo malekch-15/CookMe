@@ -20,7 +20,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 
 import java.util.Collections;
-import java.util.List;
+
 
 @Configuration
 @EnableWebSecurity

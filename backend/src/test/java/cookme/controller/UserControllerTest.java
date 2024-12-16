@@ -1,5 +1,4 @@
 package cookme.controller;
-
 import cookme.recipesmodel.BaseIngredient;
 import cookme.recipesmodel.Recipe;
 import cookme.recipesmodel.RecipeIngredient;
@@ -11,22 +10,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-
 import java.util.List;
-
-
-
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.oidcLogin;
 
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class UserControllerTest {
+ class UserControllerTest {
     @Autowired
     private MockMvc mvc;
     @MockBean
@@ -66,16 +60,18 @@ class UserControllerTest {
                      "ingredients":[]}]}
             """));
     }
-    @Test
-    void testGetUser_withNoUsername_returnsAnonymousUser() throws Exception {
-        when(appUserService.getUserById("anonymousUser")).thenReturn(null);
 
-        mvc.perform(MockMvcRequestBuilders.get("/api/users/me"))
-                .andExpect(MockMvcResultMatchers.status().isNotFound())
-                .andExpect(MockMvcResultMatchers.content().json("""
+@Test
+void testGetUser_withNoUsername_returnsAnonymousUser() throws Exception {
+    when(appUserService.getUserById("anonymousUser")).thenReturn(null);
+
+    mvc.perform(MockMvcRequestBuilders.get("/api/users/me"))
+            .andExpect(MockMvcResultMatchers.status().isNotFound())
+            .andExpect(MockMvcResultMatchers.content().json("""
 {
 "message": "User with ID nonexistentUser not found"
 }
 """));
-    }
 }
+}
+

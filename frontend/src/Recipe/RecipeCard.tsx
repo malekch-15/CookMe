@@ -1,5 +1,5 @@
 import {Recipe} from "../Model/Recipe.ts";
-import "./Recipe.css"
+import "../css/Recipe.css"
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
 
