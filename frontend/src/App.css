@@ -22,7 +22,13 @@ body {
   row-gap: inherit;
   color: #00000099;
 }
+.home-title{
 
+}
+.home-description{
+  position: relative;
+  text-align: center;
+}
 .TextField{
   width: 200px;
 }

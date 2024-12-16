@@ -27,14 +27,12 @@ export default function Home(props:Readonly<HomeProps>){
     return(
         <>
 
-            <div>
-                <Searchbar onSearch={handleSearch}/>
-
+            <div className="home-title">
                 <h1>Recipes</h1>
-                <p> CookMe is your source for thousands of delicious, easy and quick recipes, healthy meals,
+                <p className="home-description"> CookMe is your source for thousands of delicious,<br/> easy and quick recipes, healthy meals,
                     dinner ideas, recipes for kids, holiday menus, and more</p>
             </div>
-
+            <Searchbar onSearch={handleSearch}/>
             <div className="card-gallery">
 
                 {filteredRecipes.length === 0 ? (
