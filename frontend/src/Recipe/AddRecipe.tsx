@@ -47,7 +47,7 @@ if(newRecipe){
     const newIngredient=[...newRecipe.ingredients]
     if(field==='quantity'){
         newIngredient[index]={
-            ...newIngredient[index],quantity:parseFloat(event.target.value)
+            ...newIngredient[index],quantity:event.target.value
         }
     }
     setNewRecipe((prev)=>({...prev,ingredients:newIngredient}))
@@ -76,7 +76,7 @@ if(newRecipe){
             ...prevRecipe,
             ingredients: [
                 ...prevRecipe.ingredients,
-                { quantity: 0, ingredient: { id: "", name: "" } },
+                { quantity: "0", ingredient: { id: "", name: "" } },
             ],
         }));
     };

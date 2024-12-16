@@ -15,13 +15,13 @@ type PropsIngredient={
 }
 export default function UserIngredient(props:PropsIngredient){
     const [newIngredient, setNewIngredient] = useState<BaseIngredient>({ id: '', name: '' });
-    const [quantity, setQuantity] = useState<number>(0);
+    const [quantity, setQuantity] = useState<string>("");
     const [isCustomInput, setIsCustomInput] = useState<boolean>(false);
 
 
 
     const handleAddIngredient = async () => {
-        if (!newIngredient.name || quantity <= 0) {
+        if (!newIngredient.name || quantity <= "0") {
             alert('Please enter a valid ingredient name and quantity.');
             return;
         }
@@ -167,7 +167,7 @@ export default function UserIngredient(props:PropsIngredient){
                                 type="number"
                                 placeholder="Quantity"
                                 value={quantity}
-                                onChange={(e) => setQuantity(Number(e.target.value))}
+                                onChange={(e) => setQuantity(e.target.value)}
                             />
                             <button onClick={handleAddIngredient}>Add Ingredient</button>
                         </div>
