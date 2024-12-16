@@ -39,7 +39,7 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
                 "user",
                 "johndoe123",
                 "https://example.com/avatar.jpg",
-                List.of(new RecipeIngredient(2, new BaseIngredient("1", "2"))),
+                List.of(new RecipeIngredient("2", new BaseIngredient("1", "2"))),
                 List.of(new Recipe("1", "a", "a", 12, "a", "a", Status.FAVORITE, List.of()))
         );
 
@@ -61,7 +61,7 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
                       "id": "user",
                       "username": "johndoe123",
                       "avatarUrl": "https://example.com/avatar.jpg",
-                     "ingredient":[{"quantity":2.0,"ingredient":{"id":"1","name":"2"}}],
+                     "ingredient":[{"quantity":"2","ingredient":{"id":"1","name":"2"}}],
                      "favorites":[{"id":"1","name":"a","description":"a","time":12.0,"imageUrl":"a","preparation":"a","status":"FAVORITE",
                      "ingredients":[]}]}
             """));
