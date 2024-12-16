@@ -54,7 +54,7 @@ export default function Details({ recipe }: Readonly<DetailsProps>) {
                     ))}
                 </ol>
             </div>
-            <div className="details-footer">
+            <div>
                 <button
                     className="show-more-button"
                     onClick={() => handleEdit(recipe?.id)}
