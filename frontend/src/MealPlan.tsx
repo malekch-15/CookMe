@@ -1,16 +1,16 @@
 
 import { useEffect, useState } from "react";
 import axios from "axios";
-import {Recipe} from "./Model/Recipe.ts";
+
 import {AppUser} from "./Model/AppUser.ts";
-import RecipeCard from "./Recipe/RecipeCard.tsx";
+
+import {MealBasic} from "./Model/MealBasic.ts";
+import MealPlanCard from "./Recipe/MealPlanCard.tsx";
 type PropsMealPlan={
     user:AppUser|undefined
-    onDelete:(id:string)=>void
-    onToggleWishlist: (id: string) => void
 }
-export default function MealPlan ({user,onToggleWishlist,onDelete}:PropsMealPlan) {
-    const [mealPlan, setMealPlan] = useState<Recipe[]>([]);
+export default function MealPlan ({user}:PropsMealPlan) {
+    const [mealPlan, setMealPlan] = useState<MealBasic[]>([]);
     const [error, setError] = useState<string>("");
     const fetchMealPlan = async () => {
 
@@ -33,17 +33,19 @@ export default function MealPlan ({user,onToggleWishlist,onDelete}:PropsMealPlan
     return (
         <div className="meal-plan-page">
             <h1>Meal Plan</h1>
-            {mealPlan.length > 0 ? (
+            {user &&(
                 <div className="meal-plan-list">
-                    {mealPlan.map((recipe) => (
-                        <RecipeCard key={recipe.id} Recipe={recipe}
-                                    onDelete={onDelete}
-                                    onToggleWishlist={onToggleWishlist}/>
+                    {mealPlan.length > 0 ? (
+                        <div>
+                    {mealPlan.map((mealPlan) => (
+                        <MealPlanCard key={mealPlan.idMeal} mealPlan={mealPlan}/>
                     ))}
-                </div>
+                        </div>
             ) : (
                 <p>No meal plan available. Please add ingredients to your pantry!</p>
-            )}
+                    )}</div>
+                   )}
+
         </div>
     );
 };

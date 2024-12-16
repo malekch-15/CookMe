@@ -7,12 +7,13 @@ type RecipeCardProps = {
     Recipe: Recipe
     onDelete: (id: string) => void
     showDeleteButton?: boolean
-    onDetails?:(id:string)=>void
+    onDetails?: (id: string) => void
     onToggleWishlist: (id: string) => void
+    isFavorite: boolean|undefined;
 }
 export default function RecipeCard(props: Readonly<RecipeCardProps>) {
     const [showPopup, setShowPopup] = useState(false);
-    const navigate= useNavigate()
+    const navigate = useNavigate()
     const handleViewDetails = (id: string) => {
         navigate(`/details/${id}`);
     }
@@ -31,6 +32,10 @@ export default function RecipeCard(props: Readonly<RecipeCardProps>) {
 
     };
 
+    const heartButtonStyle = {
+
+        color: props.isFavorite ?"red" : "black" ,
+    };
     return (
         <div className="recipe-card">
 
@@ -47,19 +52,26 @@ export default function RecipeCard(props: Readonly<RecipeCardProps>) {
                         alt={`Image of recipe ${props.Recipe.name}`}
                     />
                 </button>
+
                 <div className="recipe-card-buttons">
                     <button className="add-button">+</button>
-                    <button id="" onClick={() => props.onToggleWishlist(props.Recipe.id)}
-                            className={props.Recipe.status === "FAVORITE" ? "red" : "black"}
-                    >♥
+
+                    <button
+                        id=""
+                        onClick={() => {props.onToggleWishlist(props.Recipe.id)}}
+                        style={heartButtonStyle}
+                        className="heart-button"
+                    >
+                        ♥
                     </button>
+
                 </div>
             </div>
+
 
             <div className="recipe-card-text">
                 <h2 className="recipe-name">{props.Recipe.name}</h2>
                 <p className="recipe-description">{props.Recipe.description}</p>
-                <p className="recipe-time">{props.Recipe.time}min</p>
             </div>
 
 

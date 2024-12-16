@@ -22,7 +22,9 @@ public class RecipesService {
 
         return recipesRepo.findById(id).orElseThrow(() -> new NoSuchElementException("No Recipes found with this " + id));
     }
-
+    public Optional<Recipe> findRecipeByName(String name) {
+        return (recipesRepo.findByName(name)); // Use your repository logic here
+    }
     public Recipe saveRecipes(RecipeDto recipe) {
         String id = UUID.randomUUID().toString();
         Recipe newRecipe = new Recipe(id, recipe.name(),

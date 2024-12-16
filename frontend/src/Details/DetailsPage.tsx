@@ -11,15 +11,31 @@ type DetailsPagesProps = {
     ingredient: BaseIngredient[]
 }
 export default function DetailsPage({setRecipes, ingredient}: Readonly<DetailsPagesProps>) {
-    const para = useParams<{ id: string }>()
+    const { id, mealName } = useParams<{ id: string; mealName: string }>();
     const [recipe, setRecipe] = useState<Recipe | null>(null);
-    const fetchDetails = () => {
-        axios.get(`/api/cookMe/${para.id}`)
-            .then((response => {
-                setRecipe(response.data)
-            })).catch((error) => console.log("no Recipe with this id", error));
+    const [error, setError] = useState<string>("");
 
-    }
+    const fetchDetails = () => {
+        if (id) {
+            axios.get(`/api/cookMe/${id}`)
+                .then((response) => setRecipe(response.data))
+                .catch((error) => {
+                    setError("Error fetching recipe: " + error.message);
+                    console.error("Error fetching recipe by ID:", error);
+                });
+        } else if (mealName) {
+            axios.get(`/api/cookMe/meal/${encodeURIComponent(mealName)}`)
+                .then((response) => setRecipe(response.data))
+                .catch((error) => {
+                    setError("Error fetching recipe: " + error.message);
+                    console.error("Error fetching recipe by name:", error);
+                });
+        } else {
+            setError("Error: Either 'id' or 'name' must be provided.");
+            console.log(error)
+        }
+    };
+
     const updateRecipe = (newRecipe: Recipe, id: string) => {
         axios
             .put(`/api/cookMe/update/${id}`, newRecipe)
@@ -34,7 +50,8 @@ export default function DetailsPage({setRecipes, ingredient}: Readonly<DetailsPa
     }
     useEffect(() => {
         fetchDetails();
-    }, [para.id]);
+
+    }, [id,mealName]);
     if (!recipe) {
         return <div className="loading">loading....</div>
     }

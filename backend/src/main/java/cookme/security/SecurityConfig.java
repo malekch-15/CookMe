@@ -39,7 +39,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/users/me").permitAll()
                         .requestMatchers(HttpMethod.GET,"api/cookMe").permitAll()
                         .requestMatchers(HttpMethod.DELETE,"/api/cookMe/{id}").authenticated()
-                        .requestMatchers(HttpMethod.POST,"/api/cookMe").authenticated()
+//                        .requestMatchers(HttpMethod.POST,"/api/cookMe").authenticated()
                         .requestMatchers(HttpMethod.PUT,"/api/cookMe/{id}").authenticated()
                         .anyRequest().permitAll()
                 )

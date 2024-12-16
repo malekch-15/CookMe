@@ -24,11 +24,14 @@ export default function Header({user}:PropsHeader) {
                     <img src="/Logo.png" alt="Company Logo"/>
                 </Link>
                     <Link to={"/"}>Home</Link>
+                {user && (
+                    <>
                 <Link to={"/mealPlan"}>Meal Plan</Link>
                     <Link to={"/Ingredient"}>Ingredients</Link>
                     <Link to={"/UserIngredient"}>Ingredients</Link>
                     <Link to={"/WishList"}>Favorite</Link>
                     <Link to={"/New_Recipe"}>Add Recipe</Link>
+                    </>)}
                     {user=== undefined? (
                         <button className="auth-button login-button" onClick={handleLogin} aria-label="Login">
                             Login

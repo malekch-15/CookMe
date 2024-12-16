@@ -54,7 +54,7 @@ import java.util.List;
             return user.ingredient();
         }
         @Transactional
-        public void addIngredientToUser(String userId, BaseIngredient ingredient, double quantity) {
+        public void addIngredientToUser(String userId, BaseIngredient ingredient, String quantity) {
             AppUser user = getUserById(userId);
 
             // Check if the ingredient already exists in the user's ingredient list

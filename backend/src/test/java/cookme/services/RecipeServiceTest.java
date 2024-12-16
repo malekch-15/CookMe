@@ -19,7 +19,7 @@ class RecipeServiceTest {
     @InjectMocks
     private RecipesService recipesService = new RecipesService(mockrecipesRepo);
     BaseIngredient ingredient1=new BaseIngredient("1","Eggs");
-    RecipeIngredient recipeIngredient=new RecipeIngredient(2,ingredient1);
+    RecipeIngredient recipeIngredient=new RecipeIngredient("2",ingredient1);
     List<RecipeIngredient> ingredients = List.of(recipeIngredient);
     Recipe recipe1 = new Recipe("1", "a", "a", 12, "a",
             "a", Status.FAVORITE, ingredients);
