@@ -90,8 +90,8 @@ export default function UserIngredient(props:PropsIngredient){
 
             // Call the backend to delete the ingredient
            axios.delete(`/api/cookMe/user/${props.user.id}/ingredients`,{
-                headers: { "Content-Type": "text/plain" },
-                data:id
+                headers: { "Content-Type": "application/json" },
+                data:{id:id}
            });
         } catch (error) {
             console.error("Error deleting ingredient:", error);
