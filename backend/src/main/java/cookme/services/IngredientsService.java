@@ -25,7 +25,9 @@ public class IngredientsService {
     @Autowired
     private MongoTemplate mongoTemplate;
 
-   public List<BaseIngredient> findAll() {
+
+
+    public List<BaseIngredient> findAll() {
        return ingredientsRepo.findAll();
    }
    public BaseIngredient findById(String id) {
@@ -45,28 +47,28 @@ public class IngredientsService {
    }
     // Method to remove duplicate ingredients by name
     public void removeDuplicateIngredients() {
-        // Step 1: Find all the duplicate names using aggregation
+
         List<Document> duplicates = mongoTemplate.aggregate(
                 Aggregation.newAggregation(
-                        Aggregation.group("name") // Group by 'name' field
-                                .count().as("count") // Count the occurrences of each name
-                                .push("_id").as("ids"), // Collect document ids for each name
-                        Aggregation.match(Criteria.where("count").gt(1)) // Filter duplicates (count > 1)
+                        Aggregation.group("name")
+                                .count().as("count")
+                                .push("_id").as("ids"),
+                        Aggregation.match(Criteria.where("count").gt(1))
                 ),
-                BaseIngredient.class,  // The document class for the aggregation
-                Document.class         // Return result as Document (MongoDB generic object)
+                BaseIngredient.class,
+                Document.class
         ).getMappedResults();
 
-        // Step 2: Iterate over each duplicate and delete the excess documents
+        //  Iterate over each duplicate and delete the excess documents
         for (Document duplicate : duplicates) {
             List<Object> ids = (List<Object>) duplicate.get("ids");
-            ids.remove(0); // Keep the first document, remove the others
+            ids.remove(0);
 
-            // Step 3: Delete all but the first duplicate document
+            //  Delete all but the first duplicate document
             if (!ids.isEmpty()) {
                 // Correct way to instantiate a Query object
-                Query query = new Query(Criteria.where("_id").in(ids)); // Instantiate using the constructor
-                mongoTemplate.remove(query, BaseIngredient.class); // Remove duplicates by _id
+                Query query = new Query(Criteria.where("_id").in(ids));
+                mongoTemplate.remove(query, BaseIngredient.class);
             }
         }
     }

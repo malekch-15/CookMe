@@ -3,7 +3,6 @@ package cookme.controller;
 import cookme.recipesmodel.BaseIngredient;
 import cookme.services.IngredientsService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,8 +27,6 @@ public class IngredientController {
     public BaseIngredient addIngredient(@RequestBody BaseIngredient ingredient) {
        return ingredientsService.save(ingredient);
    }
-
-
     @PostMapping("/removeDuplicates")
     public ResponseEntity<String> removeDuplicates() {
         ingredientsService.removeDuplicateIngredients();
