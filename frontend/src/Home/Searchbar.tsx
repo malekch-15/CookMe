@@ -11,12 +11,13 @@ export default function Searchbar(props:Readonly<SearchProps>){
     };
 
  return(
-        <div className="searchbar-container">
+      <>
             <input
+                className="searchbar-container-input"
             type="text"
             placeholder="Search recipe..."
             onChange={handleSearchChange}
             />
-        </div>
+      </>
     )
 }

@@ -31,12 +31,12 @@ export default function MealPlan ({user}:PropsMealPlan) {
     }
 
     return (
-        <div className="meal-plan-page">
+        <div>
             <h1>Meal Plan</h1>
             {user &&(
-                <div className="meal-plan-list">
-                    {mealPlan.length > 0 ? (
-                        <div>
+                <div >
+                {mealPlan.length > 0 ? (
+                        <div className="card-gallery">
                     {mealPlan.map((mealPlan) => (
                         <MealPlanCard key={mealPlan.idMeal} mealPlan={mealPlan}/>
                     ))}

@@ -1,19 +1,14 @@
-/* Search bar container */
-.searchbar-container {
-    display: flex;
-    justify-content: center;
-    margin: 20px 0;
-}
 
 /* Search input */
-.searchbar-container input {
-    width: 300%;
+.searchbar-container-input {
+    width: 500px;
+    position: relative;
     padding: 10px;
     font-size: 16px;
-    border: 2px solid #ccc;
     border-radius: 4px;
     outline: none;
     transition: border-color 0.3s ease;
+    margin-bottom: 30px;
 }
 
 /* Focused input */

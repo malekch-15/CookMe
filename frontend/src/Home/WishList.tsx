@@ -1,8 +1,7 @@
 import {Recipe} from "../Model/Recipe.ts";
 import RecipeCard from "../Recipe/RecipeCard.tsx";
-import "../App.css"
 import {AppUser} from "../Model/AppUser.ts";
-
+import "../css/Recipe.css"
 type WishListProps={
     recipe:Recipe[]
     onDelete:(id:string)=>void
@@ -18,12 +17,18 @@ if(props.user===undefined){
 
     const favoriteRecipes = props.user.favorites
 
-    return(
-            <div className="wishlist-card">
-                {favoriteRecipes.length === 0 ? (
-                    <p>No favorite recipes found.</p>
-                ) : (
-                    favoriteRecipes.map((r) => (
+    return (
+        <>
+        <div className="wishList-title">
+            <h2>Your Top Picks </h2>
+            Among the countless recipes on CookMe, these are the true standouts <br/> the ones you keep coming back to,
+            time after time.
+        </div>
+    <div className="card-gallery">
+        {favoriteRecipes.length === 0 ? (
+            <p>No favorite recipes found.</p>
+        ) : (
+            favoriteRecipes.map((r) => (
                         <RecipeCard
                             key={r.id}
                             Recipe={r}
@@ -33,6 +38,7 @@ if(props.user===undefined){
                     ))
                 )}
             </div>
+        </>
         );
 
 }
