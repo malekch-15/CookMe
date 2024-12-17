@@ -57,6 +57,11 @@ import java.util.List;
         public void addIngredientToUser(String userId, BaseIngredient ingredient, String quantity) {
             AppUser user = getUserById(userId);
 
+            // Validate that the ingredient name is not null
+            if (ingredient.name() == null) {
+                throw new NullPointerException("Ingredient name not found");
+            }
+
             // Check if the ingredient already exists in the user's ingredient list
             RecipeIngredient existingIngredient = user.ingredient().stream()
                     .filter(recipeIngredient -> recipeIngredient.ingredient().id().equals(ingredient.id()))
@@ -64,11 +69,11 @@ import java.util.List;
                     .orElse(null);
 
             if (existingIngredient != null) {
-                // update the quantity by adding the new quantity
+                // Update the quantity by adding the new quantity
                 user.ingredient().remove(existingIngredient);
                 user.ingredient().add(new RecipeIngredient(existingIngredient.quantity() + quantity, ingredient));
             } else {
-                //  add ingredient with the given quantity
+                // Add the ingredient with the given quantity
                 user.ingredient().add(new RecipeIngredient(quantity, ingredient));
             }
 
