@@ -58,7 +58,7 @@ public ApiService(IngredientsService ingredientsService, RestClient.Builder clie
             throw new MealNotFoundException("Meal not found");
         }
 
-        return mealResponse.meals().getFirst();
+        return mealResponse.meals().get(0);
     }
 
     public Recipe convertMealToRecipe(Meal meal) {
