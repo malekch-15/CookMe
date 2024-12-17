@@ -6,12 +6,13 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 
 @SpringBootTest
@@ -42,7 +43,22 @@ class IngredientsServiceTest {
        List<BaseIngredient> actual=ingredientsService.findByName("Tomato");
         assertEquals(List.of(ingredient1), actual);
     }
+    @Test
+    void findByName_WhenIngredientNotFound_ShouldThrowException() {
+        // Arrange
+        String name = "NonExistingIngredient";
 
+        when(mockIngredientsRepo.findByName(name)).thenReturn(null);
+
+        // Act & Assert
+        NoSuchElementException exception = assertThrows(NoSuchElementException.class, () -> {
+            ingredientsService.findByName(name);
+        });
+
+        assertEquals("Ingredient not found", exception.getMessage());
+
+        verify(mockIngredientsRepo, times(1)).findByName(name); // Verify repository call
+    }
     @Test
     void save() {
         BaseIngredient ingredient3 = new BaseIngredient("3", "water");
