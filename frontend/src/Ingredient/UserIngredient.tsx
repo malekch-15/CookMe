@@ -2,6 +2,7 @@ import React, { useState} from 'react';
 import axios from 'axios';
 import {AppUser} from "../Model/AppUser.ts";
 import {BaseIngredient} from "../Model/BaseIngredient.ts";
+import {useNavigate} from "react-router-dom";
 
 
 
@@ -17,7 +18,7 @@ export default function UserIngredient(props:PropsIngredient){
     const [newIngredient, setNewIngredient] = useState<BaseIngredient>({ id: '', name: '' });
     const [quantity, setQuantity] = useState<string>("");
     const [isCustomInput, setIsCustomInput] = useState<boolean>(false);
-
+const navigate=useNavigate();
 
     const handleAddIngredient = async () => {
         if (!newIngredient.name || quantity <= "0") {
@@ -51,7 +52,7 @@ export default function UserIngredient(props:PropsIngredient){
 
         axios.post(`/api/cookMe/user/${props.user?.id}/ingredients`, ingredientToAdd, {
             params: {quantity},
-        }).catch((error) => {
+        }).then(()=>navigate('/mealPlan')).catch((error) => {
             console.error("Error adding ingredient:", error);
 
             // Roll back the optimistic update if the request fails
