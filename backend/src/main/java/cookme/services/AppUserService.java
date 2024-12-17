@@ -13,8 +13,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
-    @Service
+@Service
     @RequiredArgsConstructor
     public class AppUserService {
 
@@ -81,13 +83,14 @@ import java.util.List;
             appUserRepo.save(user);
         }
 
-        public void removeIngredientFromUser(String userId, BaseIngredient ingredient) {
-            AppUser user = getUserById(userId);
-            user.ingredient().stream()
-                    .filter(recipeIngredient -> recipeIngredient.ingredient().id().equals(ingredient.id()))
-                    .findFirst()
-                    .ifPresent(existingIngredient -> user.ingredient().remove(existingIngredient));
-            appUserRepo.save(user);
+        public void removeIngredientFromUser(String userId,String ingredientId) {
+                AppUser user = getUserById(userId);
+                for (RecipeIngredient recipeIngredient : user.ingredient()) {
+                    if (recipeIngredient.ingredient().id().equals(ingredientId)) {
+                        user.ingredient().remove(recipeIngredient);
+                    }else throw new NoSuchElementException("Ingredient not found");
+                }
+
         }
 
 

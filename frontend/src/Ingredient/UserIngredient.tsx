@@ -19,12 +19,12 @@ export default function UserIngredient(props:PropsIngredient){
     const [isCustomInput, setIsCustomInput] = useState<boolean>(false);
 
 
-
     const handleAddIngredient = async () => {
         if (!newIngredient.name || quantity <= "0") {
             alert('Please enter a valid ingredient name and quantity.');
             return;
         }
+
         let ingredientToAdd = newIngredient;
 
         // Check if the ingredient exists
@@ -40,7 +40,7 @@ export default function UserIngredient(props:PropsIngredient){
         const newRecipeIngredient = {quantity, ingredient: ingredientToAdd};
 
         // Optimistically update the user state
-       props.setUser((prevUser) =>
+        props.setUser((prevUser) =>
             prevUser
                 ? {
                     ...prevUser,
@@ -49,14 +49,13 @@ export default function UserIngredient(props:PropsIngredient){
                 : prevUser
         );
 
-
         axios.post(`/api/cookMe/user/${props.user?.id}/ingredients`, ingredientToAdd, {
             params: {quantity},
         }).catch((error) => {
             console.error("Error adding ingredient:", error);
 
-
-           props.setUser((prevUser) =>
+            // Roll back the optimistic update if the request fails
+            props.setUser((prevUser) =>
                 prevUser
                     ? {
                         ...prevUser,
@@ -66,15 +65,15 @@ export default function UserIngredient(props:PropsIngredient){
                     }
                     : prevUser
             );
-
-        })
-    }
+        });
+    };
         // Handle removing an ingredient
     const handleDelete = async (id: string) => {
         if (!props.user) {
             alert("Please log in to manage your ingredients.");
             return;
         }
+
 
         try {
             // Optimistically update the user state
@@ -85,13 +84,15 @@ export default function UserIngredient(props:PropsIngredient){
                     );
                     return { ...prevUser, ingredient: updatedIngredients };
                 }
+               console.log(id)
                 return prevUser;
             });
 
             // Call the backend to delete the ingredient
-            await axios.delete(`/api/cookMe/user/${props.user.id}/ingredients`, {
-                data: { id },
-            });
+           axios.delete(`/api/cookMe/user/${props.user.id}/ingredients`,{
+                headers: { "Content-Type": "text/plain" },
+                data:id
+           });
         } catch (error) {
             console.error("Error deleting ingredient:", error);
 
@@ -130,7 +131,7 @@ export default function UserIngredient(props:PropsIngredient){
                                         const selectedId = e.target.value;
                                         if (selectedId === "custom") {
                                             setIsCustomInput(true);
-                                            setNewIngredient({ id: '', name: '' }); // Clear for custom input
+                                            setNewIngredient({id: '', name: ''}); // Clear for custom input
                                         } else {
                                             setIsCustomInput(false);
                                             const selectedIngredient = props.ingredient.find(
@@ -142,7 +143,7 @@ export default function UserIngredient(props:PropsIngredient){
                                         }
                                     }}
                                 >
-                                    <option value="" disabled selected>
+                                    <option value="" disabled>
                                         Select an ingredient
                                     </option>
                                     {props.ingredient.map((ing) => (
@@ -159,7 +160,7 @@ export default function UserIngredient(props:PropsIngredient){
                                     placeholder="New Ingredient Name"
                                     value={newIngredient.name}
                                     onChange={(e) =>
-                                        setNewIngredient({ id: `${Date.now()}`, name: e.target.value })
+                                        setNewIngredient({id: `${Date.now()}`, name: e.target.value})
                                     }
                                 />
                             )}
