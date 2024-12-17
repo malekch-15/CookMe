@@ -20,6 +20,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 
 import java.util.Collections;
+import java.util.Objects;
 
 
 @Configuration
@@ -60,8 +61,8 @@ public class SecurityConfig {
                     .orElseGet(() -> {
                         AppUser newUser = new AppUser(
                                 githubUser.getName(),
-                                githubUser.getAttribute("login").toString(),
-                                githubUser.getAttribute("avatar_url").toString(),
+                                Objects.requireNonNull(githubUser.getAttribute("login")).toString(),
+                                Objects.requireNonNull(githubUser.getAttribute("avatar_url")).toString(),
                                 Collections.emptyList(),Collections.emptyList());
                         return appUserRepository.save(newUser);
                     });

@@ -3,10 +3,8 @@ package cookme.controller;
 import cookme.recipesmodel.BaseIngredient;
 import cookme.services.IngredientsService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -20,7 +18,7 @@ public class IngredientController {
    }
 
    @GetMapping("/{id}")
-    public BaseIngredient getIngredient(@PathVariable String id) {
+    public BaseIngredient getIngredientById(@PathVariable String id) {
        return ingredientsService.findById(id);
    }
 
@@ -28,8 +26,6 @@ public class IngredientController {
     public BaseIngredient addIngredient(@RequestBody BaseIngredient ingredient) {
        return ingredientsService.save(ingredient);
    }
-
-
     @PostMapping("/removeDuplicates")
     public ResponseEntity<String> removeDuplicates() {
         ingredientsService.removeDuplicateIngredients();

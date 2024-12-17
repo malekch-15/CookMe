@@ -99,9 +99,7 @@ public class RecipesController {
                 })
                 .distinct()
                 .limit(6)
-                .collect(Collectors.toList());
-
-
+                .toList();
     }
 
     @GetMapping("/meal/{mealName}")

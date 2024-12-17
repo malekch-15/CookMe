@@ -1,6 +1,5 @@
 package cookme.api.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -66,8 +65,6 @@ public class Meal {
     private String strImageSource;
     private String strCreativeCommonsConfirmed;
     private String dateModified;
-
-
 }
 
     // You can keep adding @JsonProperty for more fields, or use a loop if you prefer dynamic mapping.
