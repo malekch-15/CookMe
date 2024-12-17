@@ -5,7 +5,6 @@ import cookme.services.IngredientsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -19,7 +18,7 @@ public class IngredientController {
    }
 
    @GetMapping("/{id}")
-    public BaseIngredient getIngredient(@PathVariable String id) {
+    public BaseIngredient getIngredientById(@PathVariable String id) {
        return ingredientsService.findById(id);
    }
 
