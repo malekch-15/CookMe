@@ -41,9 +41,12 @@ public class IngredientsService {
 
    }
    public BaseIngredient save(BaseIngredient ingredient) {
+        if(ingredient.name() == null) {
+            throw new NoSuchElementException("Ingredient name not found");
+        }else{
        String generatedId = idService.generateId();
        BaseIngredient ingredientWithId = ingredient.withId(generatedId);
-       return ingredientsRepo.save(ingredientWithId);
+       return ingredientsRepo.save(ingredientWithId);}
    }
 //    // Method to remove duplicate ingredients by name
     public void removeDuplicateIngredients() {

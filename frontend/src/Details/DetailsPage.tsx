@@ -25,7 +25,10 @@ export default function DetailsPage({setRecipes, ingredient}: Readonly<DetailsPa
                 });
         } else if (mealName) {
             axios.get(`/api/cookMe/meal/${encodeURIComponent(mealName)}`)
-                .then((response) => setRecipe(response.data))
+                .then((response) =>{
+                    setRecipes((p)=>[...p,response.data])
+                    setRecipe(response.data)
+                })
                 .catch((error) => {
                     setError("Error fetching recipe: " + error.message);
                     console.error("Error fetching recipe by name:", error);
