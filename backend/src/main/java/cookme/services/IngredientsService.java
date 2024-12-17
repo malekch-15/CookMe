@@ -45,7 +45,7 @@ public class IngredientsService {
        BaseIngredient ingredientWithId = ingredient.withId(generatedId);
        return ingredientsRepo.save(ingredientWithId);
    }
-    // Method to remove duplicate ingredients by name
+//    // Method to remove duplicate ingredients by name
     public void removeDuplicateIngredients() {
 
         List<Document> duplicates = mongoTemplate.aggregate(
@@ -72,4 +72,5 @@ public class IngredientsService {
             }
         }
     }
+
 }

@@ -65,8 +65,6 @@ public class Meal {
     private String strImageSource;
     private String strCreativeCommonsConfirmed;
     private String dateModified;
-
-
 }
 
     // You can keep adding @JsonProperty for more fields, or use a loop if you prefer dynamic mapping.
