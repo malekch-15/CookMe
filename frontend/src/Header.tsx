@@ -43,7 +43,7 @@ export default function Header({user}:PropsHeader) {
                     <Link to={"/New_Recipe"}>Add Recipe</Link>
                     </>)}
                     {user=== undefined? (
-                        <button className="auth-button-login-button" onClick={handleLogin} aria-label="Login">
+                        <button className="login-button" onClick={handleLogin} aria-label="Login">
                             Login
                         </button>
                     ) : (
