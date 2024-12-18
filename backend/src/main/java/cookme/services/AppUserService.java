@@ -14,7 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.stream.Collectors;
+
 
 @Service
     @RequiredArgsConstructor
@@ -85,11 +86,14 @@ import java.util.Optional;
 
         public void removeIngredientFromUser(String userId,String ingredientId) {
                 AppUser user = getUserById(userId);
-                for (RecipeIngredient recipeIngredient : user.ingredient()) {
-                    if (recipeIngredient.ingredient().id().equals(ingredientId)) {
-                        user.ingredient().remove(recipeIngredient);
-                    }else throw new NoSuchElementException("Ingredient not found");
-                }
+
+                List<RecipeIngredient> ingredients = user.ingredient();
+         List  < RecipeIngredient> recipeIngredient1= ingredients.stream()
+                    .filter(recipeIngredient -> recipeIngredient.ingredient().id().equals(ingredientId)).toList();
+         if(!recipeIngredient1.isEmpty()) {
+             user.ingredient().remove(recipeIngredient1);
+             appUserRepo.save(user);
+         }else throw new NoSuchElementException("Ingredient not found");
 
         }
 

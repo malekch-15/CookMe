@@ -9,7 +9,6 @@ import cookme.recipesmodel.RecipeIngredient;
 import cookme.services.AppUserService;
 import cookme.services.RecipesService;
 
-import cookme.user.AppUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
-import java.util.stream.Collectors;
+
 
 
 @RestController
@@ -83,14 +82,13 @@ public class RecipesController {
 
     @DeleteMapping("/user/{userId}/ingredients")
     public ResponseEntity<String> removeIngredientFromUser(@PathVariable String userId, @RequestBody String ingredient) {
-        System.out.println("User ID: " + userId);
-        System.out.println("Ingredient ID to remove: " + ingredient);
         try {
             appUserService.removeIngredientFromUser(userId, ingredient);
             return ResponseEntity.ok("Ingredient removed successfully");
         } catch (NoSuchElementException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Ingredient not found");
         } catch (Exception e) {
+
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred");
         }
     }
