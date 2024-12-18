@@ -106,7 +106,7 @@ if(newRecipe){
         }
 
     return (
-        <div>
+      <>
             <h1>
                 Let's add some  new Recipe
             </h1>
@@ -155,7 +155,7 @@ if(newRecipe){
                 />
 
                 <div className="add-ingredient">
-                    <label >Ingredients:</label>
+                    <label>Ingredients:</label>
                     <button   type="button" onClick={addIngredient}>
                         Add Ingredient
                     </button>
@@ -203,16 +203,13 @@ if(newRecipe){
                             <button type="button" onClick={() => removeIngredient(index)}>
                                 Remove
                             </button>
-
                         </div>
                     </div>
                 ))}
             </div>
-
-
             <button type="submit"> Add Recipe</button>
             {message && <p>{message}</p>} {/* Feedback for user */}
         </form>
-        </div>
+        </>
     );
 }
