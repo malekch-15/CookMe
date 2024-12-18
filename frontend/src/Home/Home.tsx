@@ -13,10 +13,12 @@ type HomeProps={
 }
 export default function Home(props:Readonly<HomeProps>){
     const [searchQuery, setSearchQuery] = useState("");
+    console.log(props.recipe)
+    console.log(searchQuery)
     const filteredRecipes = props.recipe.filter((recipe) =>
         recipe.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         recipe.ingredients.some((ingredient) =>
-            ingredient.ingredient.name.toLowerCase().includes(searchQuery.toLowerCase())
+            ingredient.ingredient?.name.toLowerCase().includes(searchQuery.toLowerCase())
         )
     );
 

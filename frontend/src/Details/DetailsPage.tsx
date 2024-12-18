@@ -26,7 +26,14 @@ export default function DetailsPage({setRecipes, ingredient}: Readonly<DetailsPa
         } else if (mealName) {
             axios.get(`/api/cookMe/meal/${encodeURIComponent(mealName)}`)
                 .then((response) =>{
-
+                    setRecipes((i)=>{
+                        if(i.some((recipe)=>recipe.id=== response.data.id))
+                        {
+                            return i
+                        }else{
+                            return [...i,response.data]
+                        }
+                    })
                     setRecipe(response.data)
                 })
                 .catch((error) => {
@@ -53,7 +60,7 @@ export default function DetailsPage({setRecipes, ingredient}: Readonly<DetailsPa
     }
     useEffect(() => {
         fetchDetails();
-    }, [id,mealName]);
+    }, []);
 
 
     if (!recipe) {
