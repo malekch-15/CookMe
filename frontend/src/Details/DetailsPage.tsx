@@ -26,7 +26,7 @@ export default function DetailsPage({setRecipes, ingredient}: Readonly<DetailsPa
         } else if (mealName) {
             axios.get(`/api/cookMe/meal/${encodeURIComponent(mealName)}`)
                 .then((response) =>{
-                    setRecipes((p)=>[...p,response.data])
+
                     setRecipe(response.data)
                 })
                 .catch((error) => {
@@ -53,15 +53,16 @@ export default function DetailsPage({setRecipes, ingredient}: Readonly<DetailsPa
     }
     useEffect(() => {
         fetchDetails();
-
     }, [id,mealName]);
+
+
     if (!recipe) {
         return <div className="loading">loading....</div>
     }
     return (
 
         <Routes>
-            <Route index element={<Details recipe={recipe}/>}/>
+            <Route index element={<Details recipe={recipe} />}/>
             <Route path={"edit"} element={<Edit recipe={recipe} updateRecipe={updateRecipe} ingredient={ingredient}/>}/>
         </Routes>
     )

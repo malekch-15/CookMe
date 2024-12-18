@@ -4,10 +4,6 @@ import {AppUser} from "../Model/AppUser.ts";
 import {BaseIngredient} from "../Model/BaseIngredient.ts";
 import {useNavigate} from "react-router-dom";
 
-
-
-
-
 type PropsIngredient={
     user:AppUser|undefined
     ingredient:BaseIngredient[]
@@ -34,7 +30,7 @@ const navigate=useNavigate();
         );
 
         if (!existingIngredient) {
-            // Add the new ingredient via the `onAddIngredient` prop
+            // Add the new ingredient
             ingredientToAdd = await props.onAddIngredient(newIngredient.name);
         }
 

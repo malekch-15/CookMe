@@ -1,15 +1,15 @@
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 
 import {AppUser} from "./Model/AppUser.ts";
 
 import {MealBasic} from "./Model/MealBasic.ts";
 import MealPlanCard from "./Recipe/MealPlanCard.tsx";
-import {Recipe} from "./Model/Recipe.ts";
+
 type PropsMealPlan={
     user:AppUser|undefined
-    setRecipe: React.Dispatch<React.SetStateAction<Recipe[]>>
+
 }
 export default function MealPlan ({user}:PropsMealPlan) {
     const [mealPlan, setMealPlan] = useState<MealBasic[]>([]);
