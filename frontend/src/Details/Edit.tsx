@@ -169,7 +169,7 @@ export default function Edit(props:Readonly<EditProps>){
                             <div key={index}>
                                 <div className="ingredient-row">
                                     <select
-                                        value={ingredient.ingredient.name} // Select the current ingredient name
+                                        value={ingredient.ingredient?.name} // Select the current ingredient name
                                         onChange={(e) =>
                                             handleIngredientSelection(index, e)}
                                         required
@@ -186,7 +186,6 @@ export default function Edit(props:Readonly<EditProps>){
                                         placeholder="Quantity"
                                         value={ingredient.quantity}
                                         onChange={(e) => handleIngredientChange(index, e, 'quantity')}
-                                        required
                                     />
                                 </div>
                                 <button type="button" onClick={() => removeIngredient(index)}>
