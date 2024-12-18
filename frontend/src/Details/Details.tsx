@@ -37,8 +37,8 @@ export default function Details({ recipe }: Readonly<DetailsProps>) {
                     <h3>Ingredients:</h3>
                     <ul>
                         {recipe.ingredients.map((ingredient) => (
-                            <li key={ingredient.ingredient.id}>
-                                {ingredient.quantity} {ingredient.ingredient.name}
+                            <li key={ingredient.ingredient?.id}>
+                                {ingredient.quantity} {ingredient.ingredient?.name}
                             </li>
                         ))}
                     </ul>
