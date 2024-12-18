@@ -70,26 +70,21 @@ const navigate=useNavigate();
             alert("Please log in to manage your ingredients.");
             return;
         }
-
-
         try {
-            // Optimistically update the user state
-           props.setUser((prevUser) => {
-                if (prevUser) {
-                    const updatedIngredients = prevUser.ingredient.filter(
-                        (ingredient) => ingredient.ingredient.id !== id
-                    );
-                    return { ...prevUser, ingredient: updatedIngredients };
-                }
-               console.log(id)
-                return prevUser;
-            });
-
             // Call the backend to delete the ingredient
            axios.delete(`/api/cookMe/user/${props.user.id}/ingredients`,{
-                headers: { "Content-Type": "application/json" },
-                data:{id:id}
-           });
+                headers: { "Content-Type": "text/plain" },
+                data:id
+           }).then(()=>{
+               axios.get("/api/users/me")
+                   .then((response) => {
+                      props.setUser(response.data);
+                   })
+                   .catch((error) => {
+                       console.error(error);
+                      props.setUser(undefined);
+                   });
+           })
         } catch (error) {
             console.error("Error deleting ingredient:", error);
 
