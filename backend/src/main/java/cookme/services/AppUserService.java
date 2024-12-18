@@ -91,7 +91,8 @@ import java.util.stream.Collectors;
          List  < RecipeIngredient> recipeIngredient1= ingredients.stream()
                     .filter(recipeIngredient -> recipeIngredient.ingredient().id().equals(ingredientId)).toList();
          if(!recipeIngredient1.isEmpty()) {
-             user.ingredient().remove(recipeIngredient1);
+
+             user.ingredient().remove(recipeIngredient1.getFirst());
              appUserRepo.save(user);
          }else throw new NoSuchElementException("Ingredient not found");
 
