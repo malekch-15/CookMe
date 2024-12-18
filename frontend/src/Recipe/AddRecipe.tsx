@@ -153,20 +153,12 @@ if(newRecipe){
                     value={newRecipe.imageUrl}
                     onChange={handleInputChange}
                 />
-                <select
-                    name="status"
-                    value={newRecipe.status}
-                    onChange={handleInputChange}
-                    required
-                >
-                    <option value="NOT_FAVORITE">Not Favorite</option>
-                    <option value="FAVORITE">Favorite</option>
-                </select>
-                <label>Ingredients:</label>
-                <div>
-                <button type="button" onClick={addIngredient}>
-                    Add Ingredient
-                </button>
+
+                <div className="add-ingredient">
+                    <label >Ingredients:</label>
+                    <button   type="button" onClick={addIngredient}>
+                        Add Ingredient
+                    </button>
                 </div>
                 {newRecipe.ingredients.map((ingredient, index) => (
                     <div key={index}>
@@ -218,7 +210,7 @@ if(newRecipe){
             </div>
 
 
-            <button type="submit">Submit Recipe</button>
+            <button type="submit"> Add Recipe</button>
             {message && <p>{message}</p>} {/* Feedback for user */}
         </form>
         </div>

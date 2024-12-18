@@ -87,12 +87,7 @@ flex-direction: row;
     padding: 5px;
 }
 
-input[type="number"] {
-    width: 80px; /* Optional: Set the width of the quantity input */
-}
-input[type="text"] {
-    width: 80px; /* Optional: Set the width of the quantity input */
-}
+
 .ingredients_button{
     display: flex;
     justify-content: flex-start;
