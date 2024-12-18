@@ -57,7 +57,7 @@ const navigate=useNavigate();
                     ? {
                         ...prevUser,
                         ingredient: prevUser.ingredient.filter(
-                            (ing) => ing.ingredient.id !== newIngredient.id
+                            (ing) => ing.ingredient?.id !== newIngredient.id
                         ),
                     }
                     : prevUser
@@ -65,7 +65,7 @@ const navigate=useNavigate();
         });
     };
         // Handle removing an ingredient
-    const handleDelete = async (id: string) => {
+    const handleDelete = async (id: string|undefined) => {
         if (!props.user) {
             alert("Please log in to manage your ingredients.");
             return;
@@ -102,11 +102,11 @@ const navigate=useNavigate();
                         <div>
                             <h2>Current Ingredients</h2>
                             {props.user.ingredient.map((ingredient) => (
-                                <div key={ingredient.ingredient.id}>
+                                <div key={ingredient.ingredient?.id}>
                                 <span>
-                                    {ingredient.ingredient.name}
+                                    {ingredient.ingredient?.name}
                                 </span>
-                                    <button onClick={() =>{ console.log('Button clicked');handleDelete(ingredient.ingredient.id)}}>
+                                    <button onClick={() =>{ console.log('Button clicked');handleDelete(ingredient.ingredient?.id)}}>
                                         Remove
                                     </button>
                                 </div>
