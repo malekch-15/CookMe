@@ -112,30 +112,16 @@ public class RecipesController {
     }
 
     @GetMapping("/meal/{mealName}")
-    public Recipe getRecipe(@PathVariable String mealName) {
+    public RecipeDto getRecipe(@PathVariable String mealName) {
 
         Meal meal = apiService.getMealByName(mealName);
 
         // Convert the MealResponse into your Recipe domain model
-        Recipe newRecipe = apiService.convertMealToRecipe(meal);
 
-        // Create RecipeDto from the Recipe
-        RecipeDto recipeToSave = new RecipeDto(
-                newRecipe.name(),
-                newRecipe.description(),
-                newRecipe.time(),
-                newRecipe.imageUrl(),
-                newRecipe.preparation(),
-                newRecipe.status(),
-                newRecipe.ingredients()
-        );
-
-        // Check if the recipe already exists; if not, save it
-        Optional<Recipe> existingRecipe = recipesService.findRecipeByName(newRecipe.name());
-        existingRecipe.orElseGet(() -> {
-            recipesService.saveRecipes(recipeToSave);
-            return null;
-        });
-        return newRecipe;
+        return apiService.convertMealToRecipe(meal);
+    }
+    @PostMapping("/mealApi")
+    public Recipe postRecipeApi(@RequestBody RecipeDto recipeApi) {
+        return recipesService.saveRecipes(recipeApi);
     }
 }
