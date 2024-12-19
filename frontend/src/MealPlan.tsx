@@ -41,8 +41,14 @@ export default function MealPlan ({user,setRecipes}:PropsMealPlan) {
 
 
     return (
-        <div>
+        <>
+            <div className="meal-header">
             <h1>Meal Plan</h1>
+            <p className="recipe-message">
+                Based on the ingredients you have in your fridge, here’s a recipe you can cook today.
+                <br/> <strong>Enjoy your meal!</strong>
+            </p>
+            </div>
             {user && (
                 <div>
                     {mealPlan.length > 0 ? (
@@ -68,7 +74,7 @@ export default function MealPlan ({user,setRecipes}:PropsMealPlan) {
                 </div>
             )}
             {error && <p className="error-text">{error}</p>}
-        </div>
+        </>
     );
 };
 
