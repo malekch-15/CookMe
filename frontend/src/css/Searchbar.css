@@ -1,7 +1,5 @@
-
-/* Search input */
 .searchbar-container-input {
-    width: 500px;
+    width: 500px; /* Default width for larger screens */
     position: relative;
     padding: 10px;
     font-size: 16px;
@@ -9,6 +7,8 @@
     outline: none;
     transition: border-color 0.3s ease;
     margin-bottom: 30px;
+    margin-top: 50px;
+    max-width: 100%; /* Ensure it doesn't overflow on smaller screens */
 }
 
 /* Focused input */
@@ -31,4 +31,38 @@
 
 .searchbar-container button:hover {
     background-color: #0056b3;
+}
+
+/* Mobile-first responsiveness for the search bar */
+@media (max-width: 768px) {
+    .searchbar-container {
+        display: flex;
+        flex-direction: column; /* Stack the input and button vertically */
+        align-items: center; /* Center elements */
+        margin-top: 20px; /* Reduce top margin for smaller screens */
+    }
+
+    .searchbar-container-input {
+        width: 90%; /* Use a percentage for better responsiveness */
+        margin-bottom: 10px; /* Add spacing between input and button */
+        margin-top: 10px;
+    }
+
+    .searchbar-container button {
+        width: 90%; /* Match the width of the input for a cleaner look */
+        margin-left: 0; /* Remove margin on smaller screens */
+        padding: 12px; /* Slightly larger padding for touch devices */
+    }
+}
+
+/* Tablet responsiveness (max-width: 1024px) */
+@media (max-width: 1024px) {
+    .searchbar-container-input {
+        width: 70%; /* Adjust width for medium screens */
+    }
+
+    .searchbar-container button {
+        padding: 10px 16px; /* Adjust padding slightly */
+        font-size: 14px; /* Reduce font size for better alignment */
+    }
 }
