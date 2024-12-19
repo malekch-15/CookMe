@@ -1,0 +1,36 @@
+.user-ingredient-page{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 50px;
+    margin-top: 40px;
+}
+.add-user-ingredient{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.label-user-ingredient {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: auto;
+}
+.select-user-ingredient{
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    resize: vertical;
+    font-family: "Times New Roman", Times, serif;
+    color: #666;
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
+.remove-ingredient{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

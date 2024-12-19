@@ -3,6 +3,7 @@ import axios from 'axios';
 import {AppUser} from "../Model/AppUser.ts";
 import {BaseIngredient} from "../Model/BaseIngredient.ts";
 import {useNavigate} from "react-router-dom";
+import "../css/ingredient.css"
 
 type PropsIngredient={
     user:AppUser|undefined
@@ -95,28 +96,19 @@ const navigate=useNavigate();
 
 
         return (
-            <div>
-                <h1>Manage Your Ingredients</h1>
+            <div className="user-ingredient-page">
+                <h1 className="page-title"> Enter Your Ingredients for Today</h1>
+                <p className="page-description">
+                    Share the ingredients you have in your fridge,<br/> and we’ll provide you with delicious recipes you can
+                    cook today. <br/>Get inspired and enjoy a meal with what you already have!
+                </p>
                 {props.user ? (
                     <>
-                        <div>
-                            <h2>Current Ingredients</h2>
-                            {props.user.ingredient.map((ingredient) => (
-                                <div key={ingredient.ingredient?.id}>
-                                <span>
-                                    {ingredient.ingredient?.name}
-                                </span>
-                                    <button onClick={() =>{ console.log('Button clicked');handleDelete(ingredient.ingredient?.id)}}>
-                                        Remove
-                                    </button>
-                                </div>
-                            ))}
-                        </div>
-                        <div>
-                            <h2>Add a New Ingredient</h2>
-                            <div>
-                                <label htmlFor="ingredientSelect">Choose an Ingredient:</label>
+                        <div className="add-user-ingredient">
+                            <div className="label-user-ingredient">
+                                <label htmlFor="ingredientSelect" >Choose an Ingredient:</label>
                                 <select
+                                    className="select-user-ingredient"
                                     id="ingredientSelect"
                                     value={newIngredient.id}
                                     onChange={(e) => {
@@ -162,12 +154,29 @@ const navigate=useNavigate();
                                 value={quantity}
                                 onChange={(e) => setQuantity(e.target.value)}
                             />
-                            <button onClick={handleAddIngredient}>Add Ingredient</button>
+                            <button type="submit" onClick={handleAddIngredient}>Add Ingredient</button>
+                        </div>
+                        <div>
+                            <h2>your ingredient</h2>
+                            {props.user.ingredient.map((ingredient) => (
+                                <div className="remove-ingredient" key={ingredient.ingredient?.id}>
+                                <span>
+                                    {ingredient.ingredient?.name}
+                                </span>
+                                    <button type="submit" onClick={() => {
+                                        console.log('Button clicked');
+                                        handleDelete(ingredient.ingredient?.id)
+                                    }}>
+                                        Remove
+                                    </button>
+                                </div>
+                            ))}
                         </div>
                     </>
                 ) : (
                     <p>Loading user data...</p>
                 )}
+
             </div>
         );
 
