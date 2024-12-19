@@ -33,12 +33,12 @@ export default function Header({user}:PropsHeader) {
                 <Link to="/" className="logo">
                     <img src="/Logo.png" alt="Company Logo"/>
                 </Link>
-                    <Link to={"/"}>Home</Link>
+                    <Link to={"/"}>Recipes</Link>
                 {user && (
                     <>
                 <Link to={"/mealPlan"}>Meal Plan</Link>
                     <Link to={"/Ingredient"}>Ingredients</Link>
-                    <Link to={"/UserIngredient"}>Ingredients</Link>
+                    <Link to={"/UserIngredient"}>Your Ingredients</Link>
                     <Link to={"/WishList"}>Favorite</Link>
                     <Link to={"/New_Recipe"}>Add Recipe</Link>
                     </>)}
