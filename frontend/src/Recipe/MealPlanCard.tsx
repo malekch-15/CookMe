@@ -26,7 +26,7 @@ type MealPlanProps = {
                 const postResponse=  await axios.post(`/api/cookMe/mealApi`, fetchedMeal, {
                     headers: { "Content-Type": "application/json" },
                 });
-
+                props.setRecipes((i)=>[...i,postResponse.data])
                 return postResponse.data
                  // Return the saved recipe data
             } catch (err) {
