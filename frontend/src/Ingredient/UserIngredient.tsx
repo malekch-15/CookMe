@@ -2,10 +2,8 @@ import React, { useState} from 'react';
 import axios from 'axios';
 import {AppUser} from "../Model/AppUser.ts";
 import {BaseIngredient} from "../Model/BaseIngredient.ts";
-
-
-
-
+import {useNavigate} from "react-router-dom";
+import "../css/ingredient.css"
 
 type PropsIngredient={
     user:AppUser|undefined
@@ -17,14 +15,14 @@ export default function UserIngredient(props:PropsIngredient){
     const [newIngredient, setNewIngredient] = useState<BaseIngredient>({ id: '', name: '' });
     const [quantity, setQuantity] = useState<string>("");
     const [isCustomInput, setIsCustomInput] = useState<boolean>(false);
-
-
+const navigate=useNavigate();
 
     const handleAddIngredient = async () => {
         if (!newIngredient.name || quantity <= "0") {
             alert('Please enter a valid ingredient name and quantity.');
             return;
         }
+
         let ingredientToAdd = newIngredient;
 
         // Check if the ingredient exists
@@ -33,14 +31,14 @@ export default function UserIngredient(props:PropsIngredient){
         );
 
         if (!existingIngredient) {
-            // Add the new ingredient via the `onAddIngredient` prop
+            // Add the new ingredient
             ingredientToAdd = await props.onAddIngredient(newIngredient.name);
         }
 
         const newRecipeIngredient = {quantity, ingredient: ingredientToAdd};
 
         // Optimistically update the user state
-       props.setUser((prevUser) =>
+        props.setUser((prevUser) =>
             prevUser
                 ? {
                     ...prevUser,
@@ -49,49 +47,45 @@ export default function UserIngredient(props:PropsIngredient){
                 : prevUser
         );
 
-
         axios.post(`/api/cookMe/user/${props.user?.id}/ingredients`, ingredientToAdd, {
             params: {quantity},
-        }).catch((error) => {
+        }).then(()=>navigate('/mealPlan')).catch((error) => {
             console.error("Error adding ingredient:", error);
 
-
-           props.setUser((prevUser) =>
+            // Roll back the optimistic update if the request fails
+            props.setUser((prevUser) =>
                 prevUser
                     ? {
                         ...prevUser,
                         ingredient: prevUser.ingredient.filter(
-                            (ing) => ing.ingredient.id !== newIngredient.id
+                            (ing) => ing.ingredient?.id !== newIngredient.id
                         ),
                     }
                     : prevUser
             );
-
-        })
-    }
+        });
+    };
         // Handle removing an ingredient
-    const handleDelete = async (id: string) => {
+    const handleDelete = async (id: string|undefined) => {
         if (!props.user) {
             alert("Please log in to manage your ingredients.");
             return;
         }
-
         try {
-            // Optimistically update the user state
-           props.setUser((prevUser) => {
-                if (prevUser) {
-                    const updatedIngredients = prevUser.ingredient.filter(
-                        (ingredient) => ingredient.ingredient.id !== id
-                    );
-                    return { ...prevUser, ingredient: updatedIngredients };
-                }
-                return prevUser;
-            });
-
             // Call the backend to delete the ingredient
-            await axios.delete(`/api/cookMe/user/${props.user.id}/ingredients`, {
-                data: { id },
-            });
+           axios.delete(`/api/cookMe/user/${props.user.id}/ingredients`,{
+                headers: { "Content-Type": "text/plain" },
+                data:id
+           }).then(()=>{
+               axios.get("/api/users/me")
+                   .then((response) => {
+                      props.setUser(response.data);
+                   })
+                   .catch((error) => {
+                       console.error(error);
+                      props.setUser(undefined);
+                   });
+           })
         } catch (error) {
             console.error("Error deleting ingredient:", error);
 
@@ -102,35 +96,26 @@ export default function UserIngredient(props:PropsIngredient){
 
 
         return (
-            <div>
-                <h1>Manage Your Ingredients</h1>
+            <div className="user-ingredient-page">
+                <h1 className="page-title"> Enter Your Ingredients for Today</h1>
+                <p className="page-description">
+                    Share the ingredients you have in your fridge,<br/> and we’ll provide you with delicious recipes you can
+                    cook today. <br/>Get inspired and enjoy a meal with what you already have!
+                </p>
                 {props.user ? (
                     <>
-                        <div>
-                            <h2>Current Ingredients</h2>
-                            {props.user.ingredient.map((ingredient) => (
-                                <div key={ingredient.ingredient.id}>
-                                <span>
-                                    {ingredient.ingredient.name}
-                                </span>
-                                    <button onClick={() =>{ console.log('Button clicked');handleDelete(ingredient.ingredient.id)}}>
-                                        Remove
-                                    </button>
-                                </div>
-                            ))}
-                        </div>
-                        <div>
-                            <h2>Add a New Ingredient</h2>
-                            <div>
-                                <label htmlFor="ingredientSelect">Choose an Ingredient:</label>
+                        <div className="add-user-ingredient">
+                            <div className="label-user-ingredient">
+                                <label htmlFor="ingredientSelect" >Choose an Ingredient:</label>
                                 <select
+                                    className="select-user-ingredient"
                                     id="ingredientSelect"
                                     value={newIngredient.id}
                                     onChange={(e) => {
                                         const selectedId = e.target.value;
                                         if (selectedId === "custom") {
                                             setIsCustomInput(true);
-                                            setNewIngredient({ id: '', name: '' }); // Clear for custom input
+                                            setNewIngredient({id: '', name: ''}); // Clear for custom input
                                         } else {
                                             setIsCustomInput(false);
                                             const selectedIngredient = props.ingredient.find(
@@ -142,7 +127,7 @@ export default function UserIngredient(props:PropsIngredient){
                                         }
                                     }}
                                 >
-                                    <option value="" disabled selected>
+                                    <option value="" disabled>
                                         Select an ingredient
                                     </option>
                                     {props.ingredient.map((ing) => (
@@ -159,7 +144,7 @@ export default function UserIngredient(props:PropsIngredient){
                                     placeholder="New Ingredient Name"
                                     value={newIngredient.name}
                                     onChange={(e) =>
-                                        setNewIngredient({ id: `${Date.now()}`, name: e.target.value })
+                                        setNewIngredient({id: `${Date.now()}`, name: e.target.value})
                                     }
                                 />
                             )}
@@ -169,12 +154,29 @@ export default function UserIngredient(props:PropsIngredient){
                                 value={quantity}
                                 onChange={(e) => setQuantity(e.target.value)}
                             />
-                            <button onClick={handleAddIngredient}>Add Ingredient</button>
+                            <button type="submit" onClick={handleAddIngredient}>Add Ingredient</button>
+                        </div>
+                        <div>
+                            <h2>your ingredient</h2>
+                            {props.user.ingredient.map((ingredient) => (
+                                <div className="remove-ingredient" key={ingredient.ingredient?.id}>
+                                <span>
+                                    {ingredient.ingredient?.name}
+                                </span>
+                                    <button type="submit" onClick={() => {
+                                        console.log('Button clicked');
+                                        handleDelete(ingredient.ingredient?.id)
+                                    }}>
+                                        Remove
+                                    </button>
+                                </div>
+                            ))}
                         </div>
                     </>
                 ) : (
                     <p>Loading user data...</p>
                 )}
+
             </div>
         );
 

@@ -20,9 +20,10 @@ if(props.user===undefined){
     return (
         <>
         <div className="wishList-title">
-            <h2>Your Top Picks </h2>
-            Among the countless recipes on CookMe, these are the true standouts <br/> the ones you keep coming back to,
-            time after time.
+            <h1>Your Top Picks </h1>
+            <p>Among the countless recipes on CookMe, these are the true standouts
+                <br/> the ones you keep coming back to,
+                time after time.</p>
         </div>
     <div className="card-gallery">
         {favoriteRecipes.length === 0 ? (

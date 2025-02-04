@@ -13,10 +13,12 @@ type HomeProps={
 }
 export default function Home(props:Readonly<HomeProps>){
     const [searchQuery, setSearchQuery] = useState("");
+    console.log(props.recipe)
+    console.log(searchQuery)
     const filteredRecipes = props.recipe.filter((recipe) =>
         recipe.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         recipe.ingredients.some((ingredient) =>
-            ingredient.ingredient.name.toLowerCase().includes(searchQuery.toLowerCase())
+            ingredient.ingredient?.name.toLowerCase().includes(searchQuery.toLowerCase())
         )
     );
 
@@ -26,13 +28,13 @@ export default function Home(props:Readonly<HomeProps>){
 
     return(
         <>
-
+            <Searchbar onSearch={handleSearch}/>
             <div className="home-title">
                 <h1>Recipes</h1>
                 <p className="home-description"> CookMe is your source for thousands of delicious,<br/> easy and quick recipes, healthy meals,
                     dinner ideas, recipes for kids, holiday menus, and more</p>
             </div>
-            <Searchbar onSearch={handleSearch}/>
+
             <div className="card-gallery">
 
                 {filteredRecipes.length === 0 ? (

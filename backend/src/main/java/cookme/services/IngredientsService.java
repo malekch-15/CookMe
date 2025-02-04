@@ -19,33 +19,39 @@ import java.util.NoSuchElementException;
 @RequiredArgsConstructor
 public class IngredientsService {
 
-   private final IngredientsRepo ingredientsRepo;
-   private final IdService idService;
+    private final IngredientsRepo ingredientsRepo;
+    private final IdService idService;
 
     @Autowired
     private MongoTemplate mongoTemplate;
 
-
-
     public List<BaseIngredient> findAll() {
-       return ingredientsRepo.findAll();
-   }
-   public BaseIngredient findById(String id) {
-       return ingredientsRepo.findById(id).orElseThrow(()-> new NoSuchElementException("Ingredient not found"));
-   }
-   public List<BaseIngredient> findByName(String name) {
-       List<BaseIngredient> baseIngredient = ingredientsRepo.findByName(name);
-               if(baseIngredient == null){
-                   throw new NoSuchElementException("Ingredient not found");
-               }else return baseIngredient;
+        return ingredientsRepo.findAll();
+    }
 
-   }
-   public BaseIngredient save(BaseIngredient ingredient) {
-       String generatedId = idService.generateId();
-       BaseIngredient ingredientWithId = ingredient.withId(generatedId);
-       return ingredientsRepo.save(ingredientWithId);
-   }
-//    // Method to remove duplicate ingredients by name
+    public BaseIngredient findById(String id) {
+        return ingredientsRepo.findById(id).orElseThrow(() -> new NoSuchElementException("Ingredient not found"));
+    }
+
+    public List<BaseIngredient> findByName(String name) {
+        List<BaseIngredient> baseIngredient = ingredientsRepo.findByName(name);
+        if (baseIngredient == null) {
+            throw new NoSuchElementException("Ingredient not found");
+        } else return baseIngredient;
+
+    }
+
+    public BaseIngredient save(BaseIngredient ingredient) {
+        if (ingredient.name() == null) {
+            throw new NoSuchElementException("Ingredient name not found");
+        } else {
+            String generatedId = idService.generateId();
+            BaseIngredient ingredientWithId = ingredient.withId(generatedId);
+            return ingredientsRepo.save(ingredientWithId);
+        }
+    }
+
+    //    // Method to remove duplicate ingredients by name
     public void removeDuplicateIngredients() {
 
         List<Document> duplicates = mongoTemplate.aggregate(

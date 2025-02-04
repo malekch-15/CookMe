@@ -14,7 +14,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-    @Service
+
+
+@Service
     @RequiredArgsConstructor
     public class AppUserService {
 
@@ -57,6 +59,11 @@ import java.util.List;
         public void addIngredientToUser(String userId, BaseIngredient ingredient, String quantity) {
             AppUser user = getUserById(userId);
 
+            // Validate that the ingredient name is not null
+            if (ingredient.name() == null) {
+                throw new NullPointerException("Ingredient name not found");
+            }
+
             // Check if the ingredient already exists in the user's ingredient list
             RecipeIngredient existingIngredient = user.ingredient().stream()
                     .filter(recipeIngredient -> recipeIngredient.ingredient().id().equals(ingredient.id()))
@@ -64,11 +71,11 @@ import java.util.List;
                     .orElse(null);
 
             if (existingIngredient != null) {
-                // update the quantity by adding the new quantity
+                // Update the quantity by adding the new quantity
                 user.ingredient().remove(existingIngredient);
                 user.ingredient().add(new RecipeIngredient(existingIngredient.quantity() + quantity, ingredient));
             } else {
-                //  add ingredient with the given quantity
+                // Add the ingredient with the given quantity
                 user.ingredient().add(new RecipeIngredient(quantity, ingredient));
             }
 
@@ -76,13 +83,17 @@ import java.util.List;
             appUserRepo.save(user);
         }
 
-        public void removeIngredientFromUser(String userId, BaseIngredient ingredient) {
-            AppUser user = getUserById(userId);
-            user.ingredient().stream()
-                    .filter(recipeIngredient -> recipeIngredient.ingredient().id().equals(ingredient.id()))
-                    .findFirst()
-                    .ifPresent(existingIngredient -> user.ingredient().remove(existingIngredient));
-            appUserRepo.save(user);
+        public void removeIngredientFromUser(String userId,String ingredientId) {
+                AppUser user = getUserById(userId);
+
+                List<RecipeIngredient> ingredients = user.ingredient();
+         List  < RecipeIngredient> recipeIngredient1= ingredients.stream()
+                    .filter(recipeIngredient -> recipeIngredient.ingredient().id().equals(ingredientId)).toList();
+         if(!recipeIngredient1.isEmpty()) {
+             user.ingredient().remove(recipeIngredient1.getFirst());
+             appUserRepo.save(user);
+         }else {System.out.println("not ingredient found");}
+
         }
 
 

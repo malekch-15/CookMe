@@ -2,20 +2,21 @@ import {Recipe} from "../Model/Recipe.ts";
 import React, {ChangeEvent, useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
 import {BaseIngredient} from "../Model/BaseIngredient.ts";
-type EditProps={
-    recipe:Recipe
-    updateRecipe:(newRecipe:Recipe,id:string)=>void
-    ingredient:BaseIngredient[]
+
+type EditProps = {
+    recipe: Recipe
+    updateRecipe: (newRecipe: Recipe, id: string) => void
+    ingredient: BaseIngredient[]
 }
-export default function Edit(props:Readonly<EditProps>){
-    const { id } = useParams<{ id: string }>();
-    const [newRecipe, setNewRecipe] = useState<Recipe >(props.recipe);
+export default function Edit(props: Readonly<EditProps>) {
+    const {id} = useParams<{ id: string }>();
+    const [newRecipe, setNewRecipe] = useState<Recipe>(props.recipe);
     const [message, setMessage] = useState<string>("");
     const [preparationRows, setPreparationRows] = useState<number>(4);
     const navigate = useNavigate();
 
     const HandelInputRecipe = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-        const { name, value } = event.target;
+        const {name, value} = event.target;
         if (newRecipe) {
             setNewRecipe((prev) => ({
                 ...prev!,
@@ -28,25 +29,25 @@ export default function Edit(props:Readonly<EditProps>){
             setPreparationRows(Math.max(4, lines));
         }
     };
-    const handleIngredientSelection = (index: number, event: React.ChangeEvent<HTMLInputElement|HTMLSelectElement>) => {
+    const handleIngredientSelection = (index: number, event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const selectedIngredientName = event.target.value;
         const selectedIngredient = props.ingredient.find(
             (ingredient) => ingredient.name === selectedIngredientName
         );
         console.log(selectedIngredient)
 
-            const updatedIngredients = [...newRecipe.ingredients];
-            updatedIngredients[index] = {
-                ...updatedIngredients[index],
-                ingredient: {
-                    id: selectedIngredient?.id??"",
-                    name: selectedIngredientName,
-                },
-            };
-            setNewRecipe((prevRecipe) => ({
-                ...prevRecipe!,
-                ingredients: updatedIngredients,
-            }));
+        const updatedIngredients = [...newRecipe.ingredients];
+        updatedIngredients[index] = {
+            ...updatedIngredients[index],
+            ingredient: {
+                id: selectedIngredient?.id ?? "",
+                name: selectedIngredientName,
+            },
+        };
+        setNewRecipe((prevRecipe) => ({
+            ...prevRecipe!,
+            ingredients: updatedIngredients,
+        }));
 
     };
 
@@ -69,14 +70,14 @@ export default function Edit(props:Readonly<EditProps>){
 
     const addIngredient = () => {
 
-            const newIngredient: BaseIngredient={
-                id:"",
-                name:""
-            }
-            setNewRecipe((prevRecipe) => ({
-                ...prevRecipe!,
-                ingredients: [...prevRecipe!.ingredients, {quantity:"",ingredient:{id:"",name:newIngredient.name}}],
-            }));
+        const newIngredient: BaseIngredient = {
+            id: "",
+            name: ""
+        }
+        setNewRecipe((prevRecipe) => ({
+            ...prevRecipe!,
+            ingredients: [...prevRecipe!.ingredients, {quantity: "", ingredient: {id: "", name: newIngredient.name}}],
+        }));
 
     };
 
@@ -91,9 +92,9 @@ export default function Edit(props:Readonly<EditProps>){
     };
 
     const handleSubmit = (e: React.FormEvent) => {
-       e.preventDefault();
+        e.preventDefault();
         if (id && newRecipe) {
-            props.updateRecipe(newRecipe,id)
+            props.updateRecipe(newRecipe, id)
             setMessage("Recipe updated successfully!");
             setTimeout(() => {
                 navigate(`/details/${id}`);
@@ -104,7 +105,7 @@ export default function Edit(props:Readonly<EditProps>){
     };
 
     return (
-        <div>
+        <>
             <h1>Edit Recipe</h1>
             {newRecipe && (
                 <form className="addRecipeForm" onSubmit={handleSubmit}>
@@ -150,26 +151,18 @@ export default function Edit(props:Readonly<EditProps>){
                             value={newRecipe.imageUrl}
                             onChange={HandelInputRecipe}
                         />
-                        <select
-                            name="status"
-                            value={newRecipe.status}
-                            onChange={HandelInputRecipe}
-                            required
-                        >
-                            <option value="NOT_FAVORITE">Not Favorite</option>
-                            <option value="FAVORITE">Favorite</option>
-                        </select>
-                        <label>Ingredients:</label>
-                        <div className="ingredients_button">
+
+                        <div className="add-ingredient">
+                            <label>Ingredients:</label>
                             <button type="button" onClick={addIngredient}>
                                 Add Ingredient
                             </button>
                         </div>
                         {newRecipe.ingredients.map((ingredient, index) => (
                             <div key={index}>
-                                <div className="ingredient-row">
+                                <div className="ingredients-field">
                                     <select
-                                        value={ingredient.ingredient.name} // Select the current ingredient name
+                                        value={ingredient.ingredient?.name} // Select the current ingredient name
                                         onChange={(e) =>
                                             handleIngredientSelection(index, e)}
                                         required
@@ -186,21 +179,21 @@ export default function Edit(props:Readonly<EditProps>){
                                         placeholder="Quantity"
                                         value={ingredient.quantity}
                                         onChange={(e) => handleIngredientChange(index, e, 'quantity')}
-                                        required
                                     />
                                 </div>
-                                <button type="button" onClick={() => removeIngredient(index)}>
-                                    Remove
-                                </button>
+                                <div className="ingredients-button">
+                                    <button type="button" onClick={() => removeIngredient(index)}>
+                                        Remove
+                                    </button>
+                                </div>
                             </div>
                         ))}
-                        <div>
-                        </div>
-                        <button type="submit">Update Recipe</button>
-                        {message && <p>{message}</p>} {/* Feedback for user */}
                     </div>
+                    <button type="submit">Update Recipe</button>
+                    {message && <p>{message}</p>} {/* Feedback for user */}
+
                 </form>
             )}
-        </div>
+        </>
     );
 }

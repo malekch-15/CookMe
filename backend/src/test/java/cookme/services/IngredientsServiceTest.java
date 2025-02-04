@@ -61,6 +61,7 @@ class IngredientsServiceTest {
     }
     @Test
     void save() {
+      when(mockIdService.generateId()) .thenReturn("3");
         BaseIngredient ingredient3 = new BaseIngredient("3", "water");
 
         when(mockIngredientsRepo.save(any(BaseIngredient.class))).thenReturn(ingredient3);
@@ -68,5 +69,22 @@ class IngredientsServiceTest {
         BaseIngredient actual = ingredientsService.save(ingredient3);
 
         assertEquals(ingredient3, actual);
+        verify(mockIdService, times(1)).generateId();
+        verify(mockIngredientsRepo, times(1)).save(ingredient3);
+    }
+    @Test
+    void save_shouldThrowExceptionWhenNameIsNull() {
+        // Arrange
+        BaseIngredient ingredientWithoutName = new BaseIngredient(null, null); // Ingredient with null name
+
+        // Act & Assert
+        NoSuchElementException exception = assertThrows(
+                NoSuchElementException.class,
+                () -> ingredientsService.save(ingredientWithoutName)
+        );
+
+        assertEquals("Ingredient name not found", exception.getMessage());
+        verifyNoInteractions(mockIdService); // Ensure idService is not called
+        verifyNoInteractions(mockIngredientsRepo); // Ensure repository save is not called
     }
 }

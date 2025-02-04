@@ -39,7 +39,6 @@ export default function RecipeCard(props: Readonly<RecipeCardProps>) {
     return (
         <div className="recipe-card">
 
-
             <div className="recipe-image-container">
                 <button
                     onClick={() => handleViewDetails(props.Recipe.id)}
@@ -76,7 +75,7 @@ export default function RecipeCard(props: Readonly<RecipeCardProps>) {
 
 
             <div className="recipe-actions">
-                {props.showDeleteButton && (<button onClick={handleDeleteClick}
+                {props.showDeleteButton && (<button className="button-delete" onClick={handleDeleteClick}
                                                     disabled={!props.onDelete}>Delete</button>)}
             </div>
             {showPopup && (

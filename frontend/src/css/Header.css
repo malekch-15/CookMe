@@ -1,35 +1,76 @@
 /* Add this to your CSS file */
-.navbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background-color: #b3e8a3; /* White background for a clean look */
-    padding: 10px 20px; /* Add spacing around the navbar */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-    position: sticky; /* Make it stick to the top */
-    top: 0;
-    z-index: 1000; /* Ensure it stays above other elements */
-    width: 90%;
-    height: 50px;
+
+
+.login-button{
+    background: none;
+    border: none;
+    font-size: 16px;
+    font-family: serif;
 }
-
-
-
 .navbar-links {
     display: flex;
     gap: 20px; /* Even spacing between links */
 }
 
 .navbar a {
-    text-decoration: none; /* Remove underline */
-    color: #333; /* Neutral text color */
-    font-size: 16px; /* Slightly larger text */
-    font-weight: 600; /* Bold text for emphasis */
-    transition: color 0.3s ease; /* Smooth hover effect */
+    text-decoration: none;
+    font-family: serif;
+    color: #333;
+    font-size: 16px;
+    font-weight: 550;
+    transition: color 0.3s ease;
+    padding: 10px;
+    text-align: center;
 }
 
 
 
 .navbar a:active {
     color: #b3e8a3; /* Darker blue when clicked */
+}
+/* Base styles for the navbar */
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #b3e8a3;
+    padding: 10px 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    width: 95%; /* Full width for better responsiveness */
+    height: 50px;
+}
+
+/* Mobile-first design: for smaller screens (max-width 768px) */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column; /* Stack items vertically */
+        align-items: flex-start; /* Align items to the left */
+        padding: 15px; /* Add more padding for better touch interaction */
+        height: auto; /* Let the navbar adjust its height */
+    }
+
+    .navbar .logo img {
+        max-width: 100px; /* Scale down the logo size */
+    }
+
+    .navbar button,
+    .navbar a {
+        margin: 5px 0; /* Add spacing between links/buttons */
+        font-size: 14px; /* Smaller font for smaller screens */
+    }
+}
+
+/* Tablet and larger screens (max-width 1024px) */
+@media (max-width: 1024px) {
+    .navbar {
+        padding: 10px 15px; /* Slightly reduce padding */
+    }
+
+    .navbar button,
+    .navbar a {
+        font-size: 16px; /* Adjust font size for better readability */
+    }
 }

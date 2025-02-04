@@ -33,20 +33,19 @@ export default function Details({ recipe }: Readonly<DetailsProps>) {
                 ) : (
                     <div className="no-image">Image not available</div>
                 )}
-                <div className="details-ingredients">
-                    <h3>Ingredients:</h3>
-                    <ul>
-                        {recipe.ingredients.map((ingredient) => (
-                            <li key={ingredient.ingredient.id}>
-                                {ingredient.quantity} {ingredient.ingredient.name}
-                            </li>
-                        ))}
-                    </ul>
+                <div className="ingredient-details">
+                <h3 className="title-ingredient">Ingredients:</h3>
+                <ul>
+                    {recipe.ingredients.map((ingredient) => (
+                        <li key={ingredient.ingredient?.id}>
+                            {ingredient.quantity} {ingredient.ingredient?.name}
+                        </li>
+                    ))}
+                </ul>
                 </div>
-
-
             </div>
             <div className="details-preparation">
+
                 <h3>Preparation:</h3>
                 <ol>
                     {preparationSteps.map((step, index) => (
@@ -54,14 +53,13 @@ export default function Details({ recipe }: Readonly<DetailsProps>) {
                     ))}
                 </ol>
             </div>
-            <div>
-                <button
-                    className="show-more-button"
+            <button
+                type="submit"
                     onClick={() => handleEdit(recipe?.id)}
                 >
                     Edit
                 </button>
-            </div>
+
         </>
     );
 }

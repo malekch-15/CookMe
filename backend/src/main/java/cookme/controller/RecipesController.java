@@ -9,14 +9,15 @@ import cookme.recipesmodel.RecipeIngredient;
 import cookme.services.AppUserService;
 import cookme.services.RecipesService;
 
-import cookme.user.AppUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
+import java.util.NoSuchElementException;
+
+
 
 
 @RestController
@@ -80,8 +81,16 @@ public class RecipesController {
     }
 
     @DeleteMapping("/user/{userId}/ingredients")
-    public void removeIngredientFromUser(@PathVariable String userId, @RequestBody BaseIngredient ingredient) {
-        appUserService.removeIngredientFromUser(userId, ingredient);
+    public ResponseEntity<String> removeIngredientFromUser(@PathVariable String userId, @RequestBody String ingredient) {
+        try {
+            appUserService.removeIngredientFromUser(userId, ingredient);
+            return ResponseEntity.ok("Ingredient removed successfully");
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Ingredient not found");
+        } catch (Exception e) {
+
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred");
+        }
     }
 
     //MealPlan
@@ -103,30 +112,16 @@ public class RecipesController {
     }
 
     @GetMapping("/meal/{mealName}")
-    public Recipe getRecipe(@PathVariable String mealName) {
+    public RecipeDto getRecipe(@PathVariable String mealName) {
 
         Meal meal = apiService.getMealByName(mealName);
 
         // Convert the MealResponse into your Recipe domain model
-        Recipe newRecipe = apiService.convertMealToRecipe(meal);
 
-        // Create RecipeDto from the Recipe
-        RecipeDto recipeToSave = new RecipeDto(
-                newRecipe.name(),
-                newRecipe.description(),
-                newRecipe.time(),
-                newRecipe.imageUrl(),
-                newRecipe.preparation(),
-                newRecipe.status(),
-                newRecipe.ingredients()
-        );
-
-        // Check if the recipe already exists; if not, save it
-        Optional<Recipe> existingRecipe = recipesService.findRecipeByName(newRecipe.name());
-        existingRecipe.orElseGet(() -> {
-            recipesService.saveRecipes(recipeToSave);
-            return null;
-        });
-        return newRecipe;
+        return apiService.convertMealToRecipe(meal);
+    }
+    @PostMapping("/mealApi")
+    public Recipe postRecipeApi(@RequestBody RecipeDto recipeApi) {
+        return recipesService.saveRecipes(recipeApi);
     }
 }

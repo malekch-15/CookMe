@@ -35,21 +35,22 @@ export default function Ingredient(props: Readonly<IngredientProps>) {
 
     return (
         <div>
-            <div>
+            <h1> Add New Ingredient</h1>
+            <div className="data-ingredient">
                 <input
                     type="text"
                     placeholder="add ingredient"
                     onChange={HandelInputIngredient}
                 />
-                <button onClick={handleAddIngredient}>Add</button>
+                <button type="submit" onClick={handleAddIngredient}>Add</button>
             </div>
-            <div>
-                <h3>Current Ingredients:</h3>
+            <div className="remove-ingredient">
+                <h3>Our Ingredient</h3>
                 <ul>
                     {props.ingredient.map((i, index) => (
-                        <li key={i.id}>
+                        <li key={i.id} className="item-name">
                             {i.name}
-                            <button onClick={() => removeIngredient(index)}>Delete</button>
+                            <button className="delete-button" onClick={() => removeIngredient(index)}>Delete</button>
                         </li>
                     ))}
                 </ul>

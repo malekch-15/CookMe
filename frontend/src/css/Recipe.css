@@ -1,4 +1,12 @@
 /* Recipe Card Styling */
+.card-gallery {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: space-around;
+    margin-bottom: 100px;
+}
 .recipe-card {
     position: relative;
     width: 100%;
@@ -10,9 +18,12 @@
     overflow: hidden;
     text-align: center;
 }
+.recipe-image-container{
+    display: flex;
+}
 
 .recipe-card-buttons{
-
+    display: flex;
     width: 280px;
     position: absolute;
     flex-direction: row-reverse;
@@ -80,17 +91,10 @@
 
 .recipe-card-text {
     display: flex;
-    align-content: stretch;
-    align-items: stretch;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 10px;
 
-}
-
-.card-gallery {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 2rem;
-    justify-content: space-around;
 }
 
 .recipe-name {
@@ -107,16 +111,11 @@
     color: #666;
     margin: 0 0 0 0;
 }
-.recipe-time {
-    font-size: 14px;
-    color: #999;
-    margin: 0px 0 0px 0px
-}
 
 /* Action Buttons */
 .recipe-actions {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     flex-direction: row
 }
 
@@ -203,4 +202,40 @@
 
 .clickable:hover {
     transform: scale(1.05); /* Slight zoom effect on hover */
+}
+.home-title{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 50px;
+}
+.home-description{
+    position: relative;
+    text-align: center;
+}
+.button-delete {
+    padding: 10px 20px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: rgb(179, 232, 163);
+    color: #333;
+    transition: background-color 0.3s, transform 0.2s;
+
+}
+.recipe-message{
+    font-size: 16px;
+    line-height: 2;
+    color: #333;
+    margin: 0 0 16px;
+    text-align: center;
+    font-family: serif;
+}
+.meal-header{
+    display: flex;
+    margin-bottom: 60px;
+    margin-top: 50px;
+    flex-direction: column;
+    align-items: center;
+
 }

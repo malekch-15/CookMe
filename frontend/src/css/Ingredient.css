@@ -1,0 +1,78 @@
+.user-ingredient-page{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 50px;
+    margin-top: 40px;
+}
+.add-user-ingredient{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.label-user-ingredient {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: auto;
+}
+.select-user-ingredient{
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    resize: vertical;
+    font-family: "Times New Roman", Times, serif;
+    color: #666;
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
+.remove-ingredient{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.data-ingredient{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: baseline;
+    flex-direction: row;
+    margin-top: 50px;
+}
+.data{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+ul {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px; /* Optional: adds space between list items */
+}
+
+.item-name {
+    margin-right: 10px; /* Creates space between the item name and the delete button */
+}
+
+.delete-button {
+    padding: 5px 10px;
+    background-color: #b3e8a3;
+    border: none;
+    color: #150000;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-left: 20px;
+}
+
+.delete-button:hover {
+    background-color: #047302;
+}

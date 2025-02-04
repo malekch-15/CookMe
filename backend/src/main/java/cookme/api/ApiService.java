@@ -1,10 +1,7 @@
 package cookme.api;
 import cookme.api.dto.*;
 import cookme.exception.MealNotFoundException;
-import cookme.recipesmodel.BaseIngredient;
-import cookme.recipesmodel.Recipe;
-import cookme.recipesmodel.RecipeIngredient;
-import cookme.recipesmodel.Status;
+import cookme.recipesmodel.*;
 import cookme.services.IngredientsService;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
@@ -61,7 +58,7 @@ public ApiService(IngredientsService ingredientsService, RestClient.Builder clie
         return mealResponse.meals().get(0);
     }
 
-    public Recipe convertMealToRecipe(Meal meal) {
+    public RecipeDto convertMealToRecipe(Meal meal) {
         List<RecipeIngredient> ingredients = IntStream.range(1, 21)
                 .mapToObj(i -> {
                     String ingredientName = getIngredientByIndex(meal, i);
@@ -84,10 +81,9 @@ public ApiService(IngredientsService ingredientsService, RestClient.Builder clie
                 .filter(Objects::nonNull)
                 .toList();  // Collect to a list
 
-        return new Recipe(
-                meal.getIdMeal(),
+        return new RecipeDto(
                 meal.getStrMeal(),
-                meal.getStrTags() != null ? meal.getStrTags() : "No tags",
+                meal.getStrTags(),
                 30.0,
                 meal.getStrMealThumb(),
                 meal.getStrInstructions(),

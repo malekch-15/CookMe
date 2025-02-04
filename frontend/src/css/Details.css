@@ -1,10 +1,29 @@
-.details-container {
-    padding: 20px;
-    max-width: 800px;
-    margin: 0 auto;
-    text-align: center;
+.details-header{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 50px;
+    margin-top: 50px;
+}
+.details-title {
+    font-size: 2.5rem;
+    font-weight: bold;
 }
 
+
+.details-description {
+    font-size: 24px;
+    margin: auto;
+    font-family: serif;
+    font-weight: 600
+}
+.details-content{
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+        align-content: space-between;
+        justify-content: space-between;
+}
 .details-image {
     position: relative;
 
@@ -19,84 +38,20 @@
     font-style: italic;
     color: gray;
 }
-
-.details-title {
-    font-size: 2.5rem;
-    font-weight: bold;
+.title-ingredient{
+    margin: 30px;
 }
-
-.details-info {
-    font-size: 1.2rem;
-    margin: 10px 0;
-}
-
-.details-description {
-    font-size: 1.1rem;
-    margin: 20px 0;
-}
-
-.details-ingredients,
-.details-preparation {
-    display: grid;
-    justify-items: center;
-}
-
-.details-ingredients ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-.details-ingredients li {
-    font-size: 1rem;
-}
-
-.details-button-container {
-    margin-top: 20px;
-}
-
-.details-button {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-    font-size: 1rem;
-}
-
-.details-button:hover {
-    background-color: #0056b3;
-}
-
-.details{
-display: flex
-;
-gap: 10px;
-align-items: center;
-flex-direction: row;
-}
-.ingredient-row {
+.ingredient-details{
     display: flex;
-    flex-direction: row;
-    align-items: center; /* Aligns items vertically centered */
-    gap: 10px; /* Adds space between the inputs */
+    flex-direction: column;
+    align-items: center;
+    margin: 30px;
+
 }
 
-.ingredient-row input {
-    flex: 1; /* Ensures inputs take equal width */
-    padding: 5px;
-}
 
-input[type="number"] {
-    width: 80px; /* Optional: Set the width of the quantity input */
-}
-input[type="text"] {
-    width: 80px; /* Optional: Set the width of the quantity input */
-}
-.ingredients_button{
-    display: flex;
-    justify-content: flex-start;
-    flex-direction: row-reverse;
-    align-items: center; /* Aligns items vertically centered */
-    gap: 10px; /* Adds space between the inputs */
-}
+
+
+
+
+

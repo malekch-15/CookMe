@@ -13,29 +13,33 @@ body {
   background-color: #f8f8f8;
 }
 
-
+p{
+  font-size: 16px;
+  line-height: 1.5;
+  color: #333;
+  margin: 0 0 16px;
+  text-align: center;
+}
+p.highlight {
+  background-color: #fffae6; /* Light yellow background */
+  padding: 10px;
+  border-left: 4px solid #ffc107; /* Highlight effect */
+}
+@media (min-width: 768px) {
+  p {
+    font-size: 16px;
+  }
+}
 .wishList-title{
   display: flex;
   padding: 40px 20px;
   margin: 20px;
   align-items: center;
   row-gap: inherit;
-  color: #00000099;
-}
-.home-title{
-
-}
-.home-description{
-  position: relative;
-  text-align: center;
-}
-.TextField{
-  width: 200px;
+  color: black;
+  flex-direction: column;
 }
 
-.New-ingredient{
-  width: 90000px;
-}
 
 
 
