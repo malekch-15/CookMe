@@ -3,7 +3,7 @@ import axios from 'axios';
 import {AppUser} from "../Model/AppUser.ts";
 import {BaseIngredient} from "../Model/BaseIngredient.ts";
 import {useNavigate} from "react-router-dom";
-import './css/ingredient.css'
+import "../css/ingredient.css";
 
 type PropsIngredient={
     user:AppUser|undefined
